@@ -4,18 +4,29 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e1cb5f09-1c33-426a-a423-5e922d744247" name="Changes" comment="controls package">
-      <change afterPath="$PROJECT_DIR$/Design/Mandarin Square Capturing.asta" afterDir="false" />
+    <list default="true" id="e1cb5f09-1c33-426a-a423-5e922d744247" name="Changes" comment="update design pattern">
+      <change afterPath="$PROJECT_DIR$/src/controls/board/Board.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/controls/board/BoardSquare.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/controls/board/CitizenSquare.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/controls/board/MandarinSquare.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/controls/board/BigBoardCell.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/controls/board/BigGem.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/controls/board/Board.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/controls/board/Stone.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/controls/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/controls/Game.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/controls/board/BoardCell.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/controls/board/SmallBoardCell.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/controls/board/SmallGem.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/controls/player/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/controls/player/Player.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
@@ -29,7 +40,9 @@
   &quot;associatedIndex&quot;: 2
 }</component>
   <component name="ProjectId" id="2ge3SKYRISoZPt4HtjBQPTMLIeD" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -44,6 +57,11 @@
     "onboarding.tips.debug.path": "D:/MandarinSquare/src/Main.java"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\MandarinSquare\Design" />
+    </key>
+  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -68,12 +86,21 @@
       <option name="project" value="LOCAL" />
       <updated>1716189782125</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="update design pattern">
+      <option name="closed" value="true" />
+      <created>1716780845913</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1716780845913</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="controls package" />
-    <option name="LAST_COMMIT_MESSAGE" value="controls package" />
+    <MESSAGE value="update design pattern" />
+    <option name="LAST_COMMIT_MESSAGE" value="update design pattern" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
