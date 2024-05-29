@@ -1,15 +1,22 @@
 package controls.board;
 
-abstract class BoardSquare {
-    private int BoardSquare_ID;
+public abstract class BoardSquare {
+    private int boardSquareID;
     private int numberOfCitizens;
 
     public BoardSquare(int BoardSquare_ID, int numberOfCitizens) {
-        this.BoardSquare_ID = BoardSquare_ID;
+        this.boardSquareID = BoardSquare_ID;
         this.numberOfCitizens = numberOfCitizens;
     }
+    
+    
 
-    public int getNumberOfCitizens() {
+    public int getboardSquareID() {
+		return boardSquareID;
+	}
+
+
+	public int getNumberOfCitizens() {
         return this.numberOfCitizens;
     }
     

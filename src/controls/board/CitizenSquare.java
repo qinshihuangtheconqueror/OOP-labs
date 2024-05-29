@@ -1,9 +1,14 @@
 package controls.board;
 
-class CitizenSquare extends BoardSquare {
+public class CitizenSquare extends BoardSquare {
 
     public CitizenSquare(int BoardSquare_ID, int numberOfCitizens) {
         super(BoardSquare_ID, numberOfCitizens);
+    }
+    
+    public boolean isEmpty() {
+    	if(this.getNumberOfCitizens()==0) return true;
+    	else return false;
     }
 
     @Override
