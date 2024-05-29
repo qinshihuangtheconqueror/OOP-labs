@@ -65,9 +65,22 @@ public class Player {
     						// get point
     						if(currentSquareID == 11) currentSquareID = 0;
             				else currentSquareID++;
-    						if(bss.get(currentSquareID).getNumberOfCitizens()>0) {
-    							this.point+=bss.get(currentSquareID).getNumberOfCitizens();
-    							bss.get(currentSquareID).setNumberOfCitizens(0);
+    						if(currentSquareID != 0 && currentSquareID != 6) {
+    							if(bss.get(currentSquareID).getNumberOfCitizens()>0) {
+        							this.point+=bss.get(currentSquareID).getNumberOfCitizens();
+        							bss.get(currentSquareID).setNumberOfCitizens(0);
+        						}
+    						}else {
+    							if(bss.get(currentSquareID).getNumberOfCitizens()>5) {
+    								MandarinSquare ms = (MandarinSquare) bss.get(currentSquareID);
+    								if(ms.isContainMandarin()==true) {
+    									ms.setContainMandarin(false);
+    									this.point+=10;
+    								}
+    								this.point+=bss.get(currentSquareID).getNumberOfCitizens();
+        							ms.setNumberOfCitizens(0);
+        							bss.add(currentSquareID, ms);
+    							}
     						}
     					}
     				}else {
@@ -81,9 +94,22 @@ public class Player {
     						// get point
     						if(currentSquareID == 0) currentSquareID = 11;
             				else currentSquareID--;
-    						if(bss.get(currentSquareID).getNumberOfCitizens()>0) {
-    							this.point+=bss.get(currentSquareID).getNumberOfCitizens();
-    							bss.get(currentSquareID).setNumberOfCitizens(0);
+    						if(currentSquareID != 0 && currentSquareID != 6) {
+    							if(bss.get(currentSquareID).getNumberOfCitizens()>0) {
+        							this.point+=bss.get(currentSquareID).getNumberOfCitizens();
+        							bss.get(currentSquareID).setNumberOfCitizens(0);
+        						}
+    						}else {
+    							if(bss.get(currentSquareID).getNumberOfCitizens()>5) {
+    								MandarinSquare ms = (MandarinSquare) bss.get(currentSquareID);
+    								if(ms.isContainMandarin()==true) {
+    									ms.setContainMandarin(false);
+    									this.point+=10;
+    								}
+    								this.point+=bss.get(currentSquareID).getNumberOfCitizens();
+        							ms.setNumberOfCitizens(0);
+        							bss.add(currentSquareID, ms);
+    							}
     						}
     					}
     				}
