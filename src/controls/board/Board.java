@@ -33,14 +33,14 @@ public class Board {
 		}
 	}
 	
-	public boolean checkGameEnd() {
-		int flag = 0;
-		for(BoardSquare i : this.listOfSquare) {
-			if(i instanceof MandarinSquare) {
-				if(i.isEmpty() == true) flag++;
-			}
-		}
-		if(flag<2) return false;
-		return true;
-	}
+//	public boolean checkGameEnd() {
+//		int flag = 0;
+//		for(BoardSquare i : this.listOfSquare) {
+//			if(i instanceof MandarinSquare) {
+//				if(i.isEmpty() == true) flag++;
+//			}
+//		}
+//		if(flag<2) return false;
+//		return true;
+//	}
 }
