@@ -18,6 +18,20 @@ public class Game {
 		this.player2 = player2;
 		this.isP1Turn = isP1Turn;
 	}
+    
+    
+
+	public boolean isP1Turn() {
+		return isP1Turn;
+	}
+
+
+
+	public void setP1Turn(boolean isP1Turn) {
+		this.isP1Turn = isP1Turn;
+	}
+
+
 
 	public void restart() {
 		myBoard.reset();
@@ -34,5 +48,15 @@ public class Game {
 		if(player1.getPoint()>player2.getPoint()) return player1;
 		else if(player1.getPoint()<player2.getPoint()) return player2;
 		else return null;
+	}
+	
+	public void processMove(int chosenSquareID, boolean isLeftMove) {
+		if(this.isP1Turn==true) {
+			player1.makeMove(myBoard, chosenSquareID, isLeftMove);
+			this.isP1Turn=false;
+		}else {
+			player2.makeMove(myBoard, chosenSquareID, isLeftMove);
+			this.isP1Turn=true;
+		}
 	}
 }

@@ -1,6 +1,7 @@
 package controls.player;
 import java.util.ArrayList;
 
+import controls.Game;
 import controls.board.*;
 
 public class Player {
