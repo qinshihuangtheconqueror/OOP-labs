@@ -87,24 +87,21 @@ public class Player {
 		// Win the target square
 		if(targetSquare instanceof MandarinSquare) {
 			MandarinSquare targetMandarinSquare = (MandarinSquare) targetSquare;
-			// Only allow to capture the Mandarin square when its number of citizens > 5
-			if(targetMandarinSquare.getNumberOfCitizens()>5) {
-				this.point += targetMandarinSquare.getNumberOfCitizens();
-				targetMandarinSquare.setNumberOfCitizens(0);
-				if(targetMandarinSquare.isContainMandarin()==true) {
-					this.point += 10;
-					targetMandarinSquare.setContainMandarin(false);
-				}
-				// update the target square (Mandarin square)
-				listOfSquare.add(targetSquareID, targetMandarinSquare);
-			}else {
-				if(targetSquare.isEmpty()==false) {
-					this.point += targetSquare.getNumberOfCitizens();
-					targetSquare.setNumberOfCitizens(0);
-				}
-				// update the target square (Citizen Square)
-				listOfSquare.add(targetSquareID, targetSquare);
+			this.point += targetMandarinSquare.getNumberOfCitizens();
+			targetMandarinSquare.setNumberOfCitizens(0);
+			if(targetMandarinSquare.isContainMandarin()==true) {
+				this.point += 10;
+				targetMandarinSquare.setContainMandarin(false);
 			}
+			// update the target square (Mandarin square)
+			listOfSquare.set(targetSquareID, targetMandarinSquare);
+		}else {
+			if(targetSquare.isEmpty()==false) {
+				this.point += targetSquare.getNumberOfCitizens();
+				targetSquare.setNumberOfCitizens(0);
+			}
+			// update the target square (Citizen Square)
+			listOfSquare.set(targetSquareID, targetSquare);
 		}
 		// Update the list of Square in the board
 		bss = listOfSquare;
@@ -121,6 +118,9 @@ public class Player {
     		BoardSquare choosenSquare = b.getListOfSquare().get(choosenSquareID);
     		int citizens = choosenSquare.getNumberOfCitizens();
     		int currentSquareID = choosenSquareID;
+    		choosenSquare.setNumberOfCitizens(0);
+    		bss.set(currentSquareID, choosenSquare);
+    		
     		while(citizens>0) {
     			citizens--;
     			if(isLeftMove == true) {
@@ -138,27 +138,66 @@ public class Player {
     				if(isLeftMove == true) {
     					if(currentSquareID == 11) currentSquareID = 0;
         				else currentSquareID++;
-    					if(bss.get(currentSquareID).getNumberOfCitizens()>0) {
-    						// continue
-    						citizens = bss.get(currentSquareID).getNumberOfCitizens();
-    						bss.get(currentSquareID).setNumberOfCitizens(0);
-    					}else if(bss.get(currentSquareID).getNumberOfCitizens()==0) {
-    						// get point
-    						captureSquare(bss, currentSquareID, isLeftMove);
+    					// Capture or continue the turn
+    					if(bss.get(currentSquareID) instanceof MandarinSquare) {
+    						MandarinSquare currentSquare = (MandarinSquare) bss.get(currentSquareID);
+    						if(currentSquare.isEmpty()==true) {
+    							captureSquare(bss,currentSquareID, isLeftMove);
+    						}
+    					}else {
+    						BoardSquare currentSquare = (CitizenSquare) bss.get(currentSquareID);
+    						if(currentSquare.isEmpty()==true) {
+    							captureSquare(bss, currentSquareID, isLeftMove);
+    						}else {
+    							citizens = currentSquare.getNumberOfCitizens();
+    							currentSquare.setNumberOfCitizens(0);
+    							bss.set(currentSquareID, currentSquare);
+    						}
     					}
     				}else {
     					if(currentSquareID == 0) currentSquareID = 11;
         				else currentSquareID--;
-    					if(bss.get(currentSquareID).getNumberOfCitizens()>0) {
-    						// continue
-    						citizens = bss.get(currentSquareID).getNumberOfCitizens();
-    						bss.get(currentSquareID).setNumberOfCitizens(0);
-    					}else if(bss.get(currentSquareID).getNumberOfCitizens()==0) {
-    						// get point
-    						captureSquare(bss, currentSquareID, isLeftMove);    					}
+    					// Capture or continue the turn
+    					if(bss.get(currentSquareID) instanceof MandarinSquare) {
+    						MandarinSquare currentSquare = (MandarinSquare) bss.get(currentSquareID);
+    						if(currentSquare.isEmpty()==true) {
+    							captureSquare(bss,currentSquareID, isLeftMove);
+    						}
+    					}else {
+    						BoardSquare currentSquare = (CitizenSquare) bss.get(currentSquareID);
+    						if(currentSquare.isEmpty()==true) {
+    							captureSquare(bss, currentSquareID, isLeftMove);
+    						}else {
+    							citizens = currentSquare.getNumberOfCitizens();
+    							currentSquare.setNumberOfCitizens(0);
+    							bss.set(currentSquareID, currentSquare);
+    						}
+    					}
     				}
     			}
+    			System.out.print(currentSquareID + " ");
+    			
+    			ArrayList<BoardSquare> listOfSquares = bss;
+    			for(BoardSquare i : listOfSquares) {
+    				if(i.getboardSquareID()==0) {
+    					MandarinSquare ms0 = (MandarinSquare) i;
+    					System.out.print(" ( " + ms0.getNumberOfCitizens() + " " + Boolean.toString(ms0.isContainMandarin()) + " (" + ms0.getboardSquareID() + ") | ");
+    				}else if(i.getboardSquareID()==6) {
+    					MandarinSquare ms6 = (MandarinSquare) i;
+    					System.out.println("" + ms6.getNumberOfCitizens() + " " + Boolean.toString(ms6.isContainMandarin()) + " (" + ms6.getboardSquareID() + ") ) ");
+    					System.out.print("\t\t");
+    				}else if(i.getboardSquareID()>=1 && i.getboardSquareID() <= 5) {
+    					System.out.print(i.getNumberOfCitizens() + " (" + i.getboardSquareID() + ") | ");
+    				}else break;
+    			}
+    			for(int i = 11; i >= 7; i--) {
+    				BoardSquare cb = bss.get(i);
+    				System.out.print(cb.getNumberOfCitizens() + " (" + cb.getboardSquareID() + ") | ");
+    			}
+    			System.out.println("\n");
+
     		}
+    		System.out.println();
     		
     		// update the board square
     		b.setListOfSquare(bss);
