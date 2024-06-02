@@ -21,7 +21,7 @@ public abstract class BoardSquare {
     }
     
     public void setNumberOfCitizens(int i) {
-    	this.setNumberOfCitizens(i);
+    	this.numberOfCitizens = i;
     }
     
     abstract public boolean isEmpty();
