@@ -10,53 +10,59 @@ public class Game {
 	private Player player2;
 	private boolean isP1Turn;
 
-
-    public Game(Board myBoard, Player player1, Player player2, boolean isP1Turn) {
+	public Game(Board myBoard, Player player1, Player player2, boolean isP1Turn) {
 		super();
 		this.myBoard = myBoard;
 		this.player1 = player1;
 		this.player2 = player2;
 		this.isP1Turn = isP1Turn;
 	}
-    
-    
 
 	public boolean isP1Turn() {
 		return isP1Turn;
 	}
 
-
-
 	public void setP1Turn(boolean isP1Turn) {
 		this.isP1Turn = isP1Turn;
 	}
 
+	public Board getMyBoard() {
+		return myBoard;
+	}
 
+	public void setMyBoard(Board myBoard) {
+		this.myBoard = myBoard;
+	}
 
 	public void restart() {
 		myBoard.reset();
-    }
+	}
 
 	public boolean isEndGame() {
 		MandarinSquare ms1 = (MandarinSquare) this.myBoard.getListOfSquare().get(0);
 		MandarinSquare ms2 = (MandarinSquare) this.myBoard.getListOfSquare().get(6);
-		if(ms1.isContainMandarin() == false && ms2.isContainMandarin() == false) return true;
-		else return false;
+		if (ms1.isContainMandarin() == false && ms2.isContainMandarin() == false)
+			return true;
+		else
+			return false;
 	}
-	
+
 	public Player winningPlayer() {
-		if(player1.getPoint()>player2.getPoint()) return player1;
-		else if(player1.getPoint()<player2.getPoint()) return player2;
-		else return null;
+		if (player1.getPoint() > player2.getPoint())
+			return player1;
+		else if (player1.getPoint() < player2.getPoint())
+			return player2;
+		else
+			return null;
 	}
-	
+
 	public void processMove(int chosenSquareID, boolean isLeftMove) {
-		if(this.isP1Turn==true) {
+		if (this.isP1Turn == true) {
 			player1.makeMove(myBoard, chosenSquareID, isLeftMove);
-			this.isP1Turn=false;
-		}else {
+			this.isP1Turn = false;
+		} else {
 			player2.makeMove(myBoard, chosenSquareID, isLeftMove);
-			this.isP1Turn=true;
+			this.isP1Turn = true;
 		}
 	}
 }

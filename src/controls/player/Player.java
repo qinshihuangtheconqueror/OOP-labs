@@ -23,7 +23,7 @@ public class Player {
 		this.validBoardSquare = validBoardSquare;
 	}
 	
-	// Whether the choosen square is in valid board square of the player
+	// Whether the chosen square is in valid board square of the player
 	public boolean isValidMove(Board b, int choosenSquareID, boolean isLeftMove) {
 		for(BoardSquare i : this.validBoardSquare) {
 			if(i.getboardSquareID()==choosenSquareID && i.getNumberOfCitizens()>0) return true;
@@ -31,23 +31,30 @@ public class Player {
 		return false;
 	}
 	
-	public void dispatchCitizens() {
+	public void dispatchCitizens(Board b) {
 		boolean flag = false;
+		int currentSquareID;
+		BoardSquare currentSquare;
 		for(BoardSquare i : this.validBoardSquare) {
-			if(i.isEmpty()==false) {
+			currentSquareID = i.getboardSquareID();
+			if(b.getListOfSquare().get(currentSquareID).isEmpty() == false) {
 				flag = true;
-				break;
 			}
 		}
 		
 		// Dispatch the previous-won citizens when there are not any non-empty citizen squares
+		ArrayList<BoardSquare> listOfSquare = b.getListOfSquare();
 		if(flag==false) {
 			if(this.point>5) {
 				this.point -= 5;
 				for(BoardSquare i: this.validBoardSquare) {
-					i.setNumberOfCitizens(1);
+					currentSquareID = i.getboardSquareID();
+					currentSquare = listOfSquare.get(currentSquareID);
+					currentSquare.setNumberOfCitizens(1);
+					listOfSquare.add(currentSquareID, currentSquare);
 				}
 			}
+			b.setListOfSquare(listOfSquare);
 		}
 		
 	}
@@ -107,8 +114,8 @@ public class Player {
 	// Player makes move (choose citizen square to distribute the citizens in this square)
 	public void makeMove(Board b, int choosenSquareID, boolean isLeftMove) {		
     	if(isValidMove(b, choosenSquareID, isLeftMove)==true) {
-    		// dispatch the citizen before making move (if there is not any non-emqty square)
-    		dispatchCitizens();
+    		// dispatch the citizen before making move (if there is not any non-empty square)
+    		dispatchCitizens(b);
     		// Start to make move
     		ArrayList<BoardSquare> bss = b.getListOfSquare();
     		BoardSquare choosenSquare = b.getListOfSquare().get(choosenSquareID);
