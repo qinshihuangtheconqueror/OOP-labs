@@ -1,27 +1,27 @@
 package controls.board;
 
 public class MandarinSquare extends BoardSquare {
-    private boolean isContainMandarin;
+    public boolean IsContainMandarin;
 
     public MandarinSquare(int BoardSquare_ID, int numberOfCitizens, boolean isContainMandarin) {
         super(BoardSquare_ID, numberOfCitizens);
-        this.isContainMandarin = isContainMandarin;
+        this.IsContainMandarin = isContainMandarin;
     }
     
     
     
     public boolean isContainMandarin() {
-		return isContainMandarin;
+		return IsContainMandarin;
 	}
 
 	public void setContainMandarin(boolean isContainMandarin) {
-		this.isContainMandarin = isContainMandarin;
+		this.IsContainMandarin = isContainMandarin;
 	}
 
 
 
 	public boolean isEmpty() {
-    	if(isContainMandarin==false && this.getNumberOfCitizens()==0) return true;
+    	if(IsContainMandarin==false && this.getNumberOfCitizens()==0) return true;
     	else return false;
     }
 

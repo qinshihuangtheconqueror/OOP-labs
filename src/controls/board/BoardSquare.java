@@ -8,22 +8,22 @@ public abstract class BoardSquare {
         this.boardSquareID = BoardSquare_ID;
         this.numberOfCitizens = numberOfCitizens;
     }
-    
-    
+
+
 
     public int getboardSquareID() {
-		return boardSquareID;
-	}
+        return boardSquareID;
+    }
 
 
-	public int getNumberOfCitizens() {
+    public int getNumberOfCitizens() {
         return this.numberOfCitizens;
     }
-    
+
     public void setNumberOfCitizens(int i) {
-    	this.setNumberOfCitizens(i);
+        this.numberOfCitizens = i;
     }
-    
+
     abstract public boolean isEmpty();
     abstract void operation();
 }
