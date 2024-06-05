@@ -51,7 +51,7 @@ public class Menu extends Application{
     public boolean startGame = false;
     private GraphicsContext gc;
     @Override
-    public void start(Stage primarystage) {
+    public void start(Stage primarystage) throws Exception {
         layout1= createStartMenu();
         scene1 =  new Scene(layout1);
         stage =primarystage;
