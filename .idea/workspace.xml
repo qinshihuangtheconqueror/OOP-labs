@@ -4,21 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e1cb5f09-1c33-426a-a423-5e922d744247" name="Changes" comment="update design pattern">
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/lib.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Menu.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/gui/GameUI.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/gui/sample.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MandarinSquare.iml" beforeDir="false" afterPath="$PROJECT_DIR$/MandarinSquare.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/controls/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/controls/Game.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/controls/board/BoardSquare.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/controls/board/BoardSquare.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/controls/board/MandarinSquare.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/controls/board/MandarinSquare.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/controls/player/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/controls/player/Player.java" afterDir="false" />
-    </list>
+    <list default="true" id="e1cb5f09-1c33-426a-a423-5e922d744247" name="Changes" comment="update design pattern" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -152,7 +138,15 @@
       <option name="project" value="LOCAL" />
       <updated>1716780845913</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="update design pattern">
+      <option name="closed" value="true" />
+      <created>1717563669755</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1717563669755</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
