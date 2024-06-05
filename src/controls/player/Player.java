@@ -24,7 +24,7 @@ public class Player {
 	}
 
 	// Whether the chosen square is in valid board square of the player
-	public boolean isValidMove(Board b, int choosenSquareID, boolean isLeftMove) {
+	public boolean isValidMove(Board b, int choosenSquareID) {
 		for(BoardSquare i : this.validBoardSquare) {
 			if(i.getboardSquareID()==choosenSquareID && i.getNumberOfCitizens()>0) return true;
 		}
@@ -109,98 +109,98 @@ public class Player {
 
 
 	// Player makes move (choose citizen square to distribute the citizens in this square)
-	public void makeMove(Board b, int choosenSquareID, boolean isLeftMove) {
-		if(isValidMove(b, choosenSquareID, isLeftMove)==true) {
-			// dispatch the citizen before making move (if there is not any non-empty square)
-			dispatchCitizens(b);
-			// Start to make move
-			ArrayList<BoardSquare> bss = b.getListOfSquare();
-			BoardSquare choosenSquare = b.getListOfSquare().get(choosenSquareID);
-			int citizens = choosenSquare.getNumberOfCitizens();
-			int currentSquareID = choosenSquareID;
-			choosenSquare.setNumberOfCitizens(0);
-			bss.set(currentSquareID, choosenSquare);
-
-			while(citizens>0) {
-				citizens--;
-				if(isLeftMove == true) {
-					if(currentSquareID == 11) currentSquareID = 0;
-					else currentSquareID++;
-					bss.get(currentSquareID).setNumberOfCitizens(bss.get(currentSquareID).getNumberOfCitizens()+1);
-				}else {
-					if(currentSquareID == 0) currentSquareID = 11;
-					else currentSquareID--;
-					bss.get(currentSquareID).setNumberOfCitizens(bss.get(currentSquareID).getNumberOfCitizens()+1);
-				}
-
-				// decide if the turn is continued or stopped (get point or not)
-				if(citizens==0) {
-					if(isLeftMove == true) {
-						if(currentSquareID == 11) currentSquareID = 0;
-						else currentSquareID++;
-						// Capture or continue the turn
-						if(bss.get(currentSquareID) instanceof MandarinSquare) {
-							MandarinSquare currentSquare = (MandarinSquare) bss.get(currentSquareID);
-							if(currentSquare.isEmpty()==true) {
-								captureSquare(bss,currentSquareID, isLeftMove);
-							}
-						}else {
-							BoardSquare currentSquare = (CitizenSquare) bss.get(currentSquareID);
-							if(currentSquare.isEmpty()==true) {
-								captureSquare(bss, currentSquareID, isLeftMove);
-							}else {
-								citizens = currentSquare.getNumberOfCitizens();
-								currentSquare.setNumberOfCitizens(0);
-								bss.set(currentSquareID, currentSquare);
-							}
-						}
-					}else {
-						if(currentSquareID == 0) currentSquareID = 11;
-						else currentSquareID--;
-						// Capture or continue the turn
-						if(bss.get(currentSquareID) instanceof MandarinSquare) {
-							MandarinSquare currentSquare = (MandarinSquare) bss.get(currentSquareID);
-							if(currentSquare.isEmpty()==true) {
-								captureSquare(bss,currentSquareID, isLeftMove);
-							}
-						}else {
-							BoardSquare currentSquare = (CitizenSquare) bss.get(currentSquareID);
-							if(currentSquare.isEmpty()==true) {
-								captureSquare(bss, currentSquareID, isLeftMove);
-							}else {
-								citizens = currentSquare.getNumberOfCitizens();
-								currentSquare.setNumberOfCitizens(0);
-								bss.set(currentSquareID, currentSquare);
-							}
-						}
-					}
-				}
-				System.out.print(currentSquareID + " ");
-
-				ArrayList<BoardSquare> listOfSquares = bss;
-				for(BoardSquare i : listOfSquares) {
-					if(i.getboardSquareID()==0) {
-						MandarinSquare ms0 = (MandarinSquare) i;
-						System.out.print(" ( " + ms0.getNumberOfCitizens() + " " + Boolean.toString(ms0.isContainMandarin()) + " (" + ms0.getboardSquareID() + ") | ");
-					}else if(i.getboardSquareID()==6) {
-						MandarinSquare ms6 = (MandarinSquare) i;
-						System.out.println("" + ms6.getNumberOfCitizens() + " " + Boolean.toString(ms6.isContainMandarin()) + " (" + ms6.getboardSquareID() + ") ) ");
-						System.out.print("\t\t");
-					}else if(i.getboardSquareID()>=1 && i.getboardSquareID() <= 5) {
-						System.out.print(i.getNumberOfCitizens() + " (" + i.getboardSquareID() + ") | ");
-					}else break;
-				}
-				for(int i = 11; i >= 7; i--) {
-					BoardSquare cb = bss.get(i);
-					System.out.print(cb.getNumberOfCitizens() + " (" + cb.getboardSquareID() + ") | ");
-				}
-				System.out.println("\n");
-
-			}
-			System.out.println();
-
-			// update the board square
-			b.setListOfSquare(bss);
-		}
-	}
+//	public void makeMove(Board b, int choosenSquareID, boolean isLeftMove) {
+//		if(isValidMove(b, choosenSquareID, isLeftMove)==true) {
+//			// dispatch the citizen before making move (if there is not any non-empty square)
+//			dispatchCitizens(b);
+//			// Start to make move
+//			ArrayList<BoardSquare> bss = b.getListOfSquare();
+//			BoardSquare choosenSquare = b.getListOfSquare().get(choosenSquareID);
+//			int citizens = choosenSquare.getNumberOfCitizens();
+//			int currentSquareID = choosenSquareID;
+//			choosenSquare.setNumberOfCitizens(0);
+//			bss.set(currentSquareID, choosenSquare);
+//
+//			while(citizens>0) {
+//				citizens--;
+//				if(isLeftMove == true) {
+//					if(currentSquareID == 11) currentSquareID = 0;
+//					else currentSquareID++;
+//					bss.get(currentSquareID).setNumberOfCitizens(bss.get(currentSquareID).getNumberOfCitizens()+1);
+//				}else {
+//					if(currentSquareID == 0) currentSquareID = 11;
+//					else currentSquareID--;
+//					bss.get(currentSquareID).setNumberOfCitizens(bss.get(currentSquareID).getNumberOfCitizens()+1);
+//				}
+//
+//				// decide if the turn is continued or stopped (get point or not)
+//				if(citizens==0) {
+//					if(isLeftMove == true) {
+//						if(currentSquareID == 11) currentSquareID = 0;
+//						else currentSquareID++;
+//						// Capture or continue the turn
+//						if(bss.get(currentSquareID) instanceof MandarinSquare) {
+//							MandarinSquare currentSquare = (MandarinSquare) bss.get(currentSquareID);
+//							if(currentSquare.isEmpty()==true) {
+//								captureSquare(bss,currentSquareID, isLeftMove);
+//							}
+//						}else {
+//							BoardSquare currentSquare = (CitizenSquare) bss.get(currentSquareID);
+//							if(currentSquare.isEmpty()==true) {
+//								captureSquare(bss, currentSquareID, isLeftMove);
+//							}else {
+//								citizens = currentSquare.getNumberOfCitizens();
+//								currentSquare.setNumberOfCitizens(0);
+//								bss.set(currentSquareID, currentSquare);
+//							}
+//						}
+//					}else {
+//						if(currentSquareID == 0) currentSquareID = 11;
+//						else currentSquareID--;
+//						// Capture or continue the turn
+//						if(bss.get(currentSquareID) instanceof MandarinSquare) {
+//							MandarinSquare currentSquare = (MandarinSquare) bss.get(currentSquareID);
+//							if(currentSquare.isEmpty()==true) {
+//								captureSquare(bss,currentSquareID, isLeftMove);
+//							}
+//						}else {
+//							BoardSquare currentSquare = (CitizenSquare) bss.get(currentSquareID);
+//							if(currentSquare.isEmpty()==true) {
+//								captureSquare(bss, currentSquareID, isLeftMove);
+//							}else {
+//								citizens = currentSquare.getNumberOfCitizens();
+//								currentSquare.setNumberOfCitizens(0);
+//								bss.set(currentSquareID, currentSquare);
+//							}
+//						}
+//					}
+//				}
+//				System.out.print(currentSquareID + " ");
+//
+//				ArrayList<BoardSquare> listOfSquares = bss;
+//				for(BoardSquare i : listOfSquares) {
+//					if(i.getboardSquareID()==0) {
+//						MandarinSquare ms0 = (MandarinSquare) i;
+//						System.out.print(" ( " + ms0.getNumberOfCitizens() + " " + Boolean.toString(ms0.isContainMandarin()) + " (" + ms0.getboardSquareID() + ") | ");
+//					}else if(i.getboardSquareID()==6) {
+//						MandarinSquare ms6 = (MandarinSquare) i;
+//						System.out.println("" + ms6.getNumberOfCitizens() + " " + Boolean.toString(ms6.isContainMandarin()) + " (" + ms6.getboardSquareID() + ") ) ");
+//						System.out.print("\t\t");
+//					}else if(i.getboardSquareID()>=1 && i.getboardSquareID() <= 5) {
+//						System.out.print(i.getNumberOfCitizens() + " (" + i.getboardSquareID() + ") | ");
+//					}else break;
+//				}
+//				for(int i = 11; i >= 7; i--) {
+//					BoardSquare cb = bss.get(i);
+//					System.out.print(cb.getNumberOfCitizens() + " (" + cb.getboardSquareID() + ") | ");
+//				}
+//				System.out.println("\n");
+//
+//			}
+//			System.out.println();
+//
+//			// update the board square
+//			b.setListOfSquare(bss);
+//		}
+//	}
 }

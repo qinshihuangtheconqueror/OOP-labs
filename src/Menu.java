@@ -1,5 +1,6 @@
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.InterruptedIOException;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
@@ -43,27 +44,25 @@ public class Menu extends Application{
     public Scene scene1, scene2;
     public Parent layout1, layout2;
     static JFrame frame ;
-    public ArrayList<ImageView> ImageHolder0 = new ArrayList<ImageView>();
-    public ArrayList<Integer> NumberofStones =  new ArrayList<Integer>();
     public ArrayList<BoardSquare> squares;
-    public ArrayList<viewStones> ImageHolder = new ArrayList<viewStones>();
+    public ArrayList<ViewStone> ImageHolder = new ArrayList<ViewStone>();
     public Game MainGame;
     public boolean startGame = false;
     private GraphicsContext gc;
+
     @Override
     public void start(Stage primarystage) throws Exception {
         layout1= createStartMenu();
         scene1 =  new Scene(layout1);
         stage =primarystage;
-
+        stage.setScene(scene1);
+        setup();
         Canvas canvas = new Canvas(1080, 960);
         gc = canvas.getGraphicsContext2D();
         Timeline timeline = new Timeline(new KeyFrame(Duration.millis(200), e -> run(gc)));
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.play();
 
-        stage.setScene(scene1);
-        setup();
         stage.show();
 
         //layout2 = RenderUI();
@@ -108,27 +107,49 @@ public class Menu extends Application{
 
     }
     private void run(GraphicsContext gc){
+        if (MainGame.isEndGame()){
+            JPanel dialog_panel = new JPanel();
+            JLabel label1 = new JLabel("The Game has ended");
+            JButton button = new JButton("OK");
+            frame = new JFrame("End Game");
 
-        Image man_stone = new Image(getClass().getResource("gui/asset/bigstone1.png").toExternalForm());
-        Image ciz_stone =  new Image(getClass().getResource("gui/asset/stone1.png").toExternalForm());
+            dialog_panel.add(label1);
+            dialog_panel.add(button);
+            frame.add(dialog_panel);
+            frame.setSize(300, 100);
+            frame.setLocationRelativeTo(null);
+            frame.setVisible(true);
+            button.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    if (e.getSource() == button) {
+                        stage.setScene(scene1);
+                        frame.setVisible(false);
+                    }
+                }
+            });
+        }
+        else {
+            Image man_stone = new Image(getClass().getResource("gui/asset/bigstone1.png").toExternalForm());
+            Image ciz_stone = new Image(getClass().getResource("gui/asset/stone1.png").toExternalForm());
 
-        for (int i=0;i<ImageHolder.size();i++){
-            viewStones stone = ImageHolder.get(i);
-            if (stone.type==1) {
-
-                gc.drawImage(man_stone,stone.coordX,stone.coordY,32,32);
+            for (int i = 0; i < ImageHolder.size(); i++) {
+                ViewStone stone = ImageHolder.get(i);
+                if (stone.type == 1) {
+                    gc.drawImage(man_stone, stone.coordX, stone.coordY, 32, 32);
+                } else {
+                    gc.drawImage(ciz_stone, stone.coordX, stone.coordY, 16, 16);
+                }
             }
-            else gc.drawImage(ciz_stone,stone.coordX,stone.coordY,16,16);
         }
 
-
     }
-    public class viewStones{
+    public class ViewStone{
         public int square_id;
         public int coordX;
         public int coordY;
         public int type;
-        public viewStones( int square_id, int coordX, int coordY,int type){
+        public ViewStone( int square_id, int coordX, int coordY,int type){
             this.square_id= square_id;
             this.coordX= coordX;
             this.coordY= coordY;
@@ -136,10 +157,6 @@ public class Menu extends Application{
         }
     }
     public void setup(){
-        Board MainBoard =  new Board(squares);
-        Player player1 =  new Player(1,0);
-        Player player2 = new Player(2,0);
-        MainGame =  new Game(MainBoard,player1,player2, true);
         CitizenSquare CS1 = new CitizenSquare(1, 5);
         CitizenSquare CS2 = new CitizenSquare(2, 5);
         CitizenSquare CS3 = new CitizenSquare(3, 5);
@@ -166,6 +183,10 @@ public class Menu extends Application{
         squares.add(CS9);
         squares.add(CS10);
         squares.add(CS11);
+        Board MainBoard =  new Board(squares);
+        Player player1 =  new Player(1,0);
+        Player player2 = new Player(2,0);
+        MainGame =  new Game(MainBoard,player1,player2, true);
         int step_x= 100;
         for (int i=0;i<squares.size();i++){
             if (i==0) {
@@ -173,13 +194,12 @@ public class Menu extends Application{
                 if (new_square.isContainMandarin()) {
                     int randomNumX = ThreadLocalRandom.current().nextInt(150,210-32);
                     int randomNumY = ThreadLocalRandom.current().nextInt(265,400-32);
-                    ImageHolder.add(new viewStones(i,randomNumX,randomNumY,1));
-
+                    ImageHolder.add(new ViewStone(i,randomNumX,randomNumY,1));
                 }
                 for (int j =1;j<= squares.get(i).getNumberOfCitizens();j++){
                     int randomNumX = ThreadLocalRandom.current().nextInt(150,210-32);
                     int randomNumY = ThreadLocalRandom.current().nextInt(265,385-16);
-                    ImageHolder.add(new viewStones(i,randomNumX,randomNumY,2));
+                    ImageHolder.add(new ViewStone(i,randomNumX,randomNumY,2));
                 }
             }
             else if (i<6){
@@ -187,7 +207,7 @@ public class Menu extends Application{
                 for (int j =1;j<= squares.get(i).getNumberOfCitizens();j++){
                     int randomNumX = ThreadLocalRandom.current().nextInt(step_x,step_x+50-16);
                     int randomNumY = ThreadLocalRandom.current().nextInt(265,320-16);
-                    ImageHolder.add(new viewStones(i,randomNumX,randomNumY,2));
+                    ImageHolder.add(new ViewStone(i,randomNumX,randomNumY,2));
                 }
             }
             else if (i==6) {
@@ -196,13 +216,13 @@ public class Menu extends Application{
                 if (new_square.isContainMandarin()) {
                     int randomNumX = ThreadLocalRandom.current().nextInt(step_x,step_x+50-32);
                     int randomNumY = ThreadLocalRandom.current().nextInt(265,400-32);
-                    ImageHolder.add(new viewStones(i,randomNumX,randomNumY,1));
+                    ImageHolder.add(new ViewStone(i,randomNumX,randomNumY,1));
 
                 }
                 for (int j =1;j<= squares.get(i).getNumberOfCitizens();j++){
                     int randomNumX = ThreadLocalRandom.current().nextInt(step_x,step_x+50-32);
                     int randomNumY = ThreadLocalRandom.current().nextInt(265,385-16);
-                    ImageHolder.add(new viewStones(i,randomNumX,randomNumY,2));
+                    ImageHolder.add(new ViewStone(i,randomNumX,randomNumY,2));
                 }
             }
             else {
@@ -210,7 +230,7 @@ public class Menu extends Application{
                 for (int j =1;j<= squares.get(i).getNumberOfCitizens();j++){
                     int randomNumX = ThreadLocalRandom.current().nextInt(step_x,step_x+50-16);
                     int randomNumY = ThreadLocalRandom.current().nextInt(395,445-16);
-                    ImageHolder.add(new viewStones(i,randomNumX,randomNumY,2));
+                    ImageHolder.add(new ViewStone(i,randomNumX,randomNumY,2));
                 }
             }
         }
@@ -235,70 +255,274 @@ public class Menu extends Application{
 
 
 
-    public void ChoosePivot(int id){
-        int direction =0;
-        // phần này code logic của lượt chơi người chơi 1 và 2
-        boolean player1turn = MainGame.isP1Turn();
-        if (player1turn) {
-            if (id <7){
-                JPanel dialog_panel = new JPanel();
-                JLabel label1 =  new JLabel("Player 1 can only pick the squares in the row below");
-                JButton button =  new JButton("OK");
-                frame = new JFrame("Dialog");
+    public void ShowInvalidMove(int player_id) {
+        JPanel dialog_panel = new JPanel();
+        JLabel label1 = new JLabel("Player" +player_id +" can only pick the squares in the row below");
+        JButton button = new JButton("OK");
+        frame = new JFrame("Dialog");
 
-                dialog_panel.add(label1);
-                dialog_panel.add(button);
-                frame.add(dialog_panel);
-                frame.setSize(300,100);
-                frame.setLocationRelativeTo(null);
-               frame.setVisible(true);
+        dialog_panel.add(label1);
+        dialog_panel.add(button);
+        frame.add(dialog_panel);
+        frame.setSize(300, 100);
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
 
-                button.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        if (e.getSource()==button){
-                            frame.setVisible(false);
-                        }
-                    }
-                });
+        button.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (e.getSource() == button) {
+                    frame.setVisible(false);
+                }
             }
-            else{
-                JPanel direction_panel = new JPanel();
-                JLabel label1 =  new JLabel("What directions do you want to choose?");
-                JButton buttonLeft =  new JButton("Left");
-                JButton buttonRight =  new JButton("Right");
+        });
+    }
 
-                frame = new JFrame("Chooose directions");
+    public void ChoosePivot(int id) {
+        if (MainGame.isP1Turn()) {
+            if (MainGame.getPlayer1().isValidMove(MainGame.getMyBoard(), id)) {
+                JPanel direction_panel = new JPanel();
+                JLabel label1 = new JLabel("What directions do you want to choose?");
+                JButton buttonLeft = new JButton("Left");
+                JButton buttonRight = new JButton("Right");
+
+                frame = new JFrame("Choose directions");
                 direction_panel.add(label1);
                 direction_panel.add(buttonLeft);
                 direction_panel.add(buttonRight);
                 frame.add(direction_panel);
-                frame.setSize(300,100);
+                frame.setSize(300, 100);
                 frame.setLocationRelativeTo(null);
                 frame.setVisible(true);
                 buttonLeft.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        if (e.getSource()==buttonLeft){
-
+                        if (e.getSource() == buttonLeft) {
                             frame.setVisible(false);
+                            makeMove(MainGame.getMyBoard(), id, true, MainGame.getPlayer1());
                         }
                     }
                 });
-
                 buttonRight.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        if (e.getSource()==buttonRight){
-
+                        if (e.getSource() == buttonRight) {
                             frame.setVisible(false);
+                            makeMove(MainGame.getMyBoard(), id, false, MainGame.getPlayer1());
+
+                        }
+                    }
+                });
+            } else {
+                ShowInvalidMove(1);
+            }
+        } else {
+            if (MainGame.getPlayer2().isValidMove(MainGame.getMyBoard(), id)) {
+                JPanel direction_panel = new JPanel();
+                JLabel label1 = new JLabel("What directions do you want to choose?");
+                JButton buttonLeft = new JButton("Left");
+                JButton buttonRight = new JButton("Right");
+
+                frame = new JFrame("Choose directions");
+                direction_panel.add(label1);
+                direction_panel.add(buttonLeft);
+                direction_panel.add(buttonRight);
+                frame.add(direction_panel);
+                frame.setSize(300, 100);
+                frame.setLocationRelativeTo(null);
+                frame.setVisible(true);
+                buttonLeft.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        if (e.getSource() == buttonLeft) {
+                            frame.setVisible(false);
+                            makeMove(MainGame.getMyBoard(), id, true, MainGame.getPlayer2());
+                        }
+                    }
+                });
+                buttonRight.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        if (e.getSource() == buttonRight) {
+                            frame.setVisible(false);
+                            makeMove(MainGame.getMyBoard(), id, false, MainGame.getPlayer2());
                         }
                     }
                 });
             }
-
+            else {
+                ShowInvalidMove(2);
+            }
         }
+    }
+//            else{
+//                JPanel direction_panel = new JPanel();
+//                JLabel label1 =  new JLabel("What directions do you want to choose?");
+//                JButton buttonLeft =  new JButton("Left");
+//                JButton buttonRight =  new JButton("Right");
+//
+//                frame = new JFrame("Chooose directions");
+//                direction_panel.add(label1);
+//                direction_panel.add(buttonLeft);
+//                direction_panel.add(buttonRight);
+//                frame.add(direction_panel);
+//                frame.setSize(300,100);
+//                frame.setLocationRelativeTo(null);
+//                frame.setVisible(true);
+//                buttonLeft.addActionListener(new ActionListener() {
+//                    @Override
+//                    public void actionPerformed(ActionEvent e) {
+//                        if (e.getSource()==buttonLeft){
+//
+//                            frame.setVisible(false);
+//                        }
+//                    }
+//                });
+//
+//                buttonRight.addActionListener(new ActionListener() {
+//                    @Override
+//                    public void actionPerformed(ActionEvent e) {
+//                        if (e.getSource()==buttonRight){
+//
+//                            frame.setVisible(false);
+//                        }
+//                    }
+//                });
+//            }
+//
+//        }
+//
+//
+    public void collectCitizen(int squareID){
+        for ( int i= ImageHolder.size()-1;i>=0;i--){
+            if (ImageHolder.get(i).square_id== squareID){
+                gc.clearRect(ImageHolder.get(i).coordX, ImageHolder.get(i).coordY, 16,16);
+                ImageHolder.remove(i);
+                System.out.println(ImageHolder.size());
+            }
+        }
+    }
+    public void distributeCitizen(int squareID){
+        if (squareID==0) {
+                int randomNumX = ThreadLocalRandom.current().nextInt(150,210-32);
+                int randomNumY = ThreadLocalRandom.current().nextInt(265,400-32);
+                ImageHolder.add(new ViewStone(squareID,randomNumX,randomNumY,2));
+            }
+        else if (squareID<6){
+            int randomNumX = ThreadLocalRandom.current().nextInt(150+ squareID* 110, 210+ squareID*110-32);
+            int randomNumY = ThreadLocalRandom.current().nextInt(265, 400-32);
+                ImageHolder.add(new ViewStone(squareID,randomNumX,randomNumY,2));
+        }
+        else if (squareID==6) {
+            int randomNumX = ThreadLocalRandom.current().nextInt(150 + squareID * 110, 150 + squareID * 110 + 50 - 32);
+            int randomNumY = ThreadLocalRandom.current().nextInt(265, 400 - 32);
+            ImageHolder.add(new ViewStone(squareID, randomNumX, randomNumY, 2));
+        }
+        else {
+                int randomNumX = ThreadLocalRandom.current().nextInt(150+ (12-squareID)*110,150+(12-squareID)*110+50-16);
+                int randomNumY = ThreadLocalRandom.current().nextInt(395,445-16);
+                ImageHolder.add(new ViewStone(squareID,randomNumX,randomNumY,2));
+        }
+    }
+    public void makeMove(Board b, int choosenSquareID, boolean isLeftMove, Player player) {
+            player.dispatchCitizens(b);
+            // Start to make move
+            ArrayList<BoardSquare> bss = b.getListOfSquare();
+            BoardSquare choosenSquare = b.getListOfSquare().get(choosenSquareID);
+            int citizens = choosenSquare.getNumberOfCitizens();
+            int currentSquareID = choosenSquareID;
+            choosenSquare.setNumberOfCitizens(0);
+            collectCitizen(currentSquareID);
+            bss.set(currentSquareID, choosenSquare);
 
+            while(citizens>0) {
+                try{
+                Thread.sleep(500);}
+                catch(InterruptedException e) {
+                    System.out.println("Error@##");
+                }
+
+                citizens--;
+                if(isLeftMove == true) {
+                    if(currentSquareID == 11) currentSquareID = 0;
+                    else currentSquareID++;
+                    bss.get(currentSquareID).setNumberOfCitizens(bss.get(currentSquareID).getNumberOfCitizens()+1);
+                }else {
+                    if(currentSquareID == 0) currentSquareID = 11;
+                    else currentSquareID--;
+                    bss.get(currentSquareID).setNumberOfCitizens(bss.get(currentSquareID).getNumberOfCitizens()+1);
+                }
+                distributeCitizen(currentSquareID);
+
+                // decide if the turn is continued or stopped (get point or not)
+                if(citizens==0) {
+                    if(isLeftMove == true) {
+                        if(currentSquareID == 11) currentSquareID = 0;
+                        else currentSquareID++;
+                        // Capture or continue the turn
+                        if(bss.get(currentSquareID) instanceof MandarinSquare) {
+                            MandarinSquare currentSquare = (MandarinSquare) bss.get(currentSquareID);
+                            if(currentSquare.isEmpty()==true) {
+                                player.captureSquare(bss,currentSquareID, isLeftMove);
+                            }
+                        }else {
+                            BoardSquare currentSquare = (CitizenSquare) bss.get(currentSquareID);
+                            if(currentSquare.isEmpty()==true) {
+                                player.captureSquare(bss, currentSquareID, isLeftMove);
+                            }else {
+                                citizens = currentSquare.getNumberOfCitizens();
+                                collectCitizen(currentSquareID);
+                                currentSquare.setNumberOfCitizens(0);
+                                bss.set(currentSquareID, currentSquare);
+                            }
+                        }
+                    }else {
+                        if(currentSquareID == 0) currentSquareID = 11;
+                        else currentSquareID--;
+                        // Capture or continue the turn
+                        if(bss.get(currentSquareID) instanceof MandarinSquare) {
+                            MandarinSquare currentSquare = (MandarinSquare) bss.get(currentSquareID);
+                            if(currentSquare.isEmpty()==true) {
+                                player.captureSquare(bss,currentSquareID, isLeftMove);
+                            }
+                        }else {
+                            BoardSquare currentSquare = (CitizenSquare) bss.get(currentSquareID);
+                            if(currentSquare.isEmpty()==true) {
+                                player.captureSquare(bss, currentSquareID, isLeftMove);
+                            }else {
+                                citizens = currentSquare.getNumberOfCitizens();
+                                currentSquare.setNumberOfCitizens(0);
+                                bss.set(currentSquareID, currentSquare);
+                            }
+                        }
+                    }
+                }
+                System.out.print(currentSquareID + " ");
+
+                ArrayList<BoardSquare> listOfSquares = bss;
+                for(BoardSquare i : listOfSquares) {
+                    if(i.getboardSquareID()==0) {
+                        MandarinSquare ms0 = (MandarinSquare) i;
+                        System.out.print(" ( " + ms0.getNumberOfCitizens() + " " + Boolean.toString(ms0.isContainMandarin()) + " (" + ms0.getboardSquareID() + ") | ");
+                    }else if(i.getboardSquareID()==6) {
+                        MandarinSquare ms6 = (MandarinSquare) i;
+                        System.out.println("" + ms6.getNumberOfCitizens() + " " + Boolean.toString(ms6.isContainMandarin()) + " (" + ms6.getboardSquareID() + ") ) ");
+                        System.out.print("\t\t");
+                    }else if(i.getboardSquareID()>=1 && i.getboardSquareID() <= 5) {
+                        System.out.print(i.getNumberOfCitizens() + " (" + i.getboardSquareID() + ") | ");
+                    }else break;
+                }
+                for(int i = 11; i >= 7; i--) {
+                    BoardSquare cb = bss.get(i);
+                    System.out.print(cb.getNumberOfCitizens() + " (" + cb.getboardSquareID() + ") | ");
+                }
+                System.out.println("\n");
+
+            }
+            System.out.println();
+
+            // update the board square
+            b.setListOfSquare(bss);
     }
     private class CitizenSquareUI extends StackPane{
         CitizenSquareUI(String name, Runnable action,int width, int height, int id) {
@@ -308,7 +532,7 @@ public class Menu extends Application{
             );
 
             Rectangle bg = new Rectangle(width, height);
-            Text text = new Text("Current citizen: " + Integer.toString(squares.get(id).getNumberOfCitizens()));
+            Text text = new Text("Square number: "+ id +" \nCurrent Citizen: "+ Integer.toString(squares.get(id).getNumberOfCitizens()));
             text.setFont(Font.font(10.0));
             text.fillProperty().bind(
               Bindings.when(bg.hoverProperty()).then(Color.BLUE).otherwise(Color.TRANSPARENT)
@@ -373,8 +597,6 @@ public class Menu extends Application{
     }
 
     public static void main(String[] args){
-
-
         launch(args);
     }
 }

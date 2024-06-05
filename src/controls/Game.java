@@ -56,8 +56,8 @@ public class Game {
 	}
 
 	public boolean isEndGame() {
-		MandarinSquare ms1 = (MandarinSquare) this.myBoard.getListOfSquare().get(0);
-		MandarinSquare ms2 = (MandarinSquare) this.myBoard.getListOfSquare().get(6);
+		MandarinSquare ms1 = (MandarinSquare) this.getMyBoard().getListOfSquare().get(0);
+		MandarinSquare ms2 = (MandarinSquare) this.getMyBoard().getListOfSquare().get(6);
 		if (ms1.isContainMandarin() == false && ms2.isContainMandarin() == false)
 			return true;
 		else
@@ -73,13 +73,5 @@ public class Game {
 			return null;
 	}
 
-	public void processMove(int chosenSquareID, boolean isLeftMove) {
-		if (this.isP1Turn == true) {
-			player1.makeMove(myBoard, chosenSquareID, isLeftMove);
-			this.isP1Turn = false;
-		} else {
-			player2.makeMove(myBoard, chosenSquareID, isLeftMove);
-			this.isP1Turn = true;
-		}
-	}
+
 }
