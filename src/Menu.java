@@ -1,8 +1,6 @@
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.InterruptedIOException;
 import java.util.ArrayList;
-import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 import controls.Game;
 import controls.board.Board;
@@ -15,8 +13,6 @@ import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
-import javafx.fxml.FXMLLoader;
-import javafx.geometry.Pos;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -31,11 +27,10 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.LinearGradient;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.control.Button;
 import javafx.scene.canvas.Canvas;
 import javax.swing.*;
-import java.awt.*;
-import gui.*;
+import javax.swing.text.View;
+
 import javafx.util.Duration;
 
 
@@ -45,7 +40,7 @@ public class Menu extends Application{
     public Parent layout1, layout2;
     static JFrame frame ;
     public ArrayList<BoardSquare> squares;
-    public ArrayList<ViewStone> ImageHolder = new ArrayList<ViewStone>();
+    public ArrayList<ViewStone> ImageHolder = new ArrayList<>();
     public Game MainGame;
     public boolean startGame = false;
     private GraphicsContext gc;
@@ -119,22 +114,21 @@ public class Menu extends Application{
             frame.setSize(300, 100);
             frame.setLocationRelativeTo(null);
             frame.setVisible(true);
-            button.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    if (e.getSource() == button) {
-                        stage.setScene(scene1);
-                        frame.setVisible(false);
-                    }
-                }
-            });
+            try{
+                Thread.sleep(500);}
+            catch(InterruptedException e) {
+                System.out.println("Error@##");
+            }
+            frame.setVisible(false);
+            stage.setScene(scene1);
+            MainGame.restart();
+
         }
         else {
             Image man_stone = new Image(getClass().getResource("gui/asset/bigstone1.png").toExternalForm());
             Image ciz_stone = new Image(getClass().getResource("gui/asset/stone1.png").toExternalForm());
 
-            for (int i = 0; i < ImageHolder.size(); i++) {
-                ViewStone stone = ImageHolder.get(i);
+            for (ViewStone stone : ImageHolder) {
                 if (stone.type == 1) {
                     gc.drawImage(man_stone, stone.coordX, stone.coordY, 32, 32);
                 } else {
@@ -144,7 +138,7 @@ public class Menu extends Application{
         }
 
     }
-    public class ViewStone{
+    public static class ViewStone{
         public int square_id;
         public int coordX;
         public int coordY;
@@ -336,7 +330,7 @@ public class Menu extends Application{
                     public void actionPerformed(ActionEvent e) {
                         if (e.getSource() == buttonLeft) {
                             frame.setVisible(false);
-                            makeMove(MainGame.getMyBoard(), id, true, MainGame.getPlayer2());
+                            makeMove(MainGame.getMyBoard(), id, false, MainGame.getPlayer2());
                         }
                     }
                 });
@@ -345,7 +339,7 @@ public class Menu extends Application{
                     public void actionPerformed(ActionEvent e) {
                         if (e.getSource() == buttonRight) {
                             frame.setVisible(false);
-                            makeMove(MainGame.getMyBoard(), id, false, MainGame.getPlayer2());
+                            makeMove(MainGame.getMyBoard(), id, true, MainGame.getPlayer2());
                         }
                     }
                 });
@@ -396,7 +390,8 @@ public class Menu extends Application{
     public void collectCitizen(int squareID){
         for ( int i= ImageHolder.size()-1;i>=0;i--){
             if (ImageHolder.get(i).square_id== squareID){
-                gc.clearRect(ImageHolder.get(i).coordX, ImageHolder.get(i).coordY, 16,16);
+                if (ImageHolder.get(i).type==2) gc.clearRect(ImageHolder.get(i).coordX, ImageHolder.get(i).coordY, 16,16);
+                else gc.clearRect(ImageHolder.get(i).coordX, ImageHolder.get(i).coordY, 32,32);
                 ImageHolder.remove(i);
                 System.out.println(ImageHolder.size());
             }
@@ -468,8 +463,13 @@ public class Menu extends Application{
                         	else targetSquareID = currentSquareID+1;
                         	if(bss.get(targetSquareID).isEmpty()==false) {
                         		player.captureSquare(bss, currentSquareID, isLeftMove);
+                                try{
+                                    Thread.sleep(500);}
+                                catch(InterruptedException e) {
+                                    System.out.println("Error@##");
+                                }
                         		collectCitizen(targetSquareID);
-                        		if(currentSquareID==11) currentSquareID = 1;
+                                if(currentSquareID==11) currentSquareID = 1;
                             	else if(currentSquareID == 10) currentSquareID = 0;
                             	else currentSquareID += 2;
                         	}
@@ -480,6 +480,11 @@ public class Menu extends Application{
                         if(bss.get(currentSquareID) instanceof CitizenSquare) {
                         	BoardSquare currentSquare = (CitizenSquare) bss.get(currentSquareID);
                         	citizens = currentSquare.getNumberOfCitizens();
+                            try{
+                                Thread.sleep(500);}
+                            catch(InterruptedException e) {
+                                System.out.println("Error@##");
+                            }
                             collectCitizen(currentSquareID);
                             currentSquare.setNumberOfCitizens(0);
                             bss.set(currentSquareID, currentSquare);
@@ -497,6 +502,11 @@ public class Menu extends Application{
                         	else targetSquareID = currentSquareID-1;
                         	if(bss.get(targetSquareID).isEmpty()==false) {
                         		player.captureSquare(bss, currentSquareID, isLeftMove);
+                                try{
+                                    Thread.sleep(500);}
+                                catch(InterruptedException e) {
+                                    System.out.println("Error@##");
+                                }
                         		collectCitizen(targetSquareID);
                         		if(currentSquareID==1) currentSquareID = 11;
                             	else if(currentSquareID == 0) currentSquareID = 10;
@@ -509,6 +519,11 @@ public class Menu extends Application{
                         if(bss.get(currentSquareID) instanceof CitizenSquare) {
                         	BoardSquare currentSquare = (CitizenSquare) bss.get(currentSquareID);
                         	citizens = currentSquare.getNumberOfCitizens();
+                            try{
+                                Thread.sleep(500);}
+                            catch(InterruptedException e) {
+                                System.out.println("Error@##");
+                            }
                             collectCitizen(currentSquareID);
                             currentSquare.setNumberOfCitizens(0);
                             bss.set(currentSquareID, currentSquare);
