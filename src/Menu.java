@@ -168,8 +168,8 @@ public class Menu extends Application{
         CitizenSquare CS10 = new CitizenSquare(10, 5);
         CitizenSquare CS11 = new CitizenSquare(11, 5);
 
-        MandarinSquare MQ0=  new MandarinSquare(0, 0,true);
-        MandarinSquare MQ6=  new MandarinSquare(6, 0,true);
+        MandarinSquare MQ0=  new MandarinSquare(0, 0, true);
+        MandarinSquare MQ6=  new MandarinSquare(6, 0, true);
         squares = new ArrayList<BoardSquare>();
         squares.add(MQ0);
         squares.add(CS1);
@@ -460,41 +460,94 @@ public class Menu extends Application{
                         if(currentSquareID == 11) currentSquareID = 0;
                         else currentSquareID++;
                         // Capture or continue the turn
-                        if(bss.get(currentSquareID) instanceof MandarinSquare) {
-                            MandarinSquare currentSquare = (MandarinSquare) bss.get(currentSquareID);
-                            if(currentSquare.isEmpty()==true) {
-                            	player.captureSquare(bss,currentSquareID, isLeftMove);
-                            }
-                        }else {
-                            BoardSquare currentSquare = (CitizenSquare) bss.get(currentSquareID);
-                            if(currentSquare.isEmpty()==true) {
-                                player.captureSquare(bss, currentSquareID, isLeftMove);
-                            }else {
-                                citizens = currentSquare.getNumberOfCitizens();
-                                collectCitizen(currentSquareID);
-                                currentSquare.setNumberOfCitizens(0);
-                                bss.set(currentSquareID, currentSquare);
-                            }
+                        
+                        boolean flag = true;
+                        
+                        while(bss.get(currentSquareID).isEmpty()) {
+                        	int targetSquareID;
+                        	if(currentSquareID == 11) targetSquareID = 0;
+                        	else targetSquareID = currentSquareID+1;
+                        	if(bss.get(targetSquareID).isEmpty()==false) {
+                        		player.captureSquare(bss, currentSquareID, isLeftMove);
+                        		collectCitizen(targetSquareID);
+                        		if(currentSquareID==11) currentSquareID = 1;
+                            	else if(currentSquareID == 10) currentSquareID = 0;
+                            	else currentSquareID += 2;
+                        	}
+                        	flag = false;
                         }
+                        if(flag == false) break;
+                        
+                        if(bss.get(currentSquareID) instanceof CitizenSquare) {
+                        	BoardSquare currentSquare = (CitizenSquare) bss.get(currentSquareID);
+                        	citizens = currentSquare.getNumberOfCitizens();
+                            collectCitizen(currentSquareID);
+                            currentSquare.setNumberOfCitizens(0);
+                            bss.set(currentSquareID, currentSquare);
+                        }
+                        
+                        
+//                        if(bss.get(currentSquareID) instanceof MandarinSquare) {
+//                            MandarinSquare currentSquare = (MandarinSquare) bss.get(currentSquareID);
+//                            if(currentSquare.isEmpty()==true) {
+//                            	player.captureSquare(bss,currentSquareID, isLeftMove);
+//                            }
+//                        }else {
+//                            BoardSquare currentSquare = (CitizenSquare) bss.get(currentSquareID);
+//                            if(currentSquare.isEmpty()==true) {
+//                                player.captureSquare(bss, currentSquareID, isLeftMove);
+//                            }else {
+//                                citizens = currentSquare.getNumberOfCitizens();
+//                                collectCitizen(currentSquareID);
+//                                currentSquare.setNumberOfCitizens(0);
+//                                bss.set(currentSquareID, currentSquare);
+//                            }
+//                        }
                     }else {
                         if(currentSquareID == 0) currentSquareID = 11;
                         else currentSquareID--;
                         // Capture or continue the turn
-                        if(bss.get(currentSquareID) instanceof MandarinSquare) {
-                            MandarinSquare currentSquare = (MandarinSquare) bss.get(currentSquareID);
-                            if(currentSquare.isEmpty()==true) {
-                                player.captureSquare(bss,currentSquareID, isLeftMove);
-                            }
-                        }else {
-                            BoardSquare currentSquare = (CitizenSquare) bss.get(currentSquareID);
-                            if(currentSquare.isEmpty()==true) {
-                                player.captureSquare(bss, currentSquareID, isLeftMove);
-                            }else {
-                                citizens = currentSquare.getNumberOfCitizens();
-                                currentSquare.setNumberOfCitizens(0);
-                                bss.set(currentSquareID, currentSquare);
-                            }
+                        
+                        boolean flag = true;
+                        
+                        while(bss.get(currentSquareID).isEmpty()) {
+                        	int targetSquareID;
+                        	if(currentSquareID == 0) targetSquareID = 11;
+                        	else targetSquareID = currentSquareID-1;
+                        	if(bss.get(targetSquareID).isEmpty()==false) {
+                        		player.captureSquare(bss, currentSquareID, isLeftMove);
+                        		collectCitizen(targetSquareID);
+                        		if(currentSquareID==1) currentSquareID = 11;
+                            	else if(currentSquareID == 0) currentSquareID = 10;
+                            	else currentSquareID -= 2;
+                        	}
+                        	flag = false;
                         }
+                        if(flag == false) break;
+                        
+                        if(bss.get(currentSquareID) instanceof CitizenSquare) {
+                        	BoardSquare currentSquare = (CitizenSquare) bss.get(currentSquareID);
+                        	citizens = currentSquare.getNumberOfCitizens();
+                            collectCitizen(currentSquareID);
+                            currentSquare.setNumberOfCitizens(0);
+                            bss.set(currentSquareID, currentSquare);
+                        }
+//                        
+//                        if(bss.get(currentSquareID) instanceof MandarinSquare) {
+//                            MandarinSquare currentSquare = (MandarinSquare) bss.get(currentSquareID);
+//                            if(currentSquare.isEmpty()==true) {
+//                                player.captureSquare(bss,currentSquareID, isLeftMove);
+//                            }
+//                        }else {
+//                            BoardSquare currentSquare = (CitizenSquare) bss.get(currentSquareID);
+//                            if(currentSquare.isEmpty()==true) {
+//                                player.captureSquare(bss, currentSquareID, isLeftMove);
+//                            }else {
+//                                citizens = currentSquare.getNumberOfCitizens();
+//                                currentSquare.setNumberOfCitizens(0);
+//                                bss.set(currentSquareID, currentSquare);
+//                            }
+//                        }
                     }
                 }
                 System.out.print(currentSquareID + " ");
