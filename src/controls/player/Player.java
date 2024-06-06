@@ -18,6 +18,10 @@ public class Player {
 	public int getPoint() {
 		return point;
 	}
+	
+	public int getPlayerID() {
+		return playerID;
+	}
 
 	public void setValidBoardSquare(ArrayList<BoardSquare> validBoardSquare) {
 		this.validBoardSquare = validBoardSquare;
