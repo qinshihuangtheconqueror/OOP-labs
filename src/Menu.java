@@ -463,7 +463,7 @@ public class Menu extends Application{
                         if(bss.get(currentSquareID) instanceof MandarinSquare) {
                             MandarinSquare currentSquare = (MandarinSquare) bss.get(currentSquareID);
                             if(currentSquare.isEmpty()==true) {
-                                player.captureSquare(bss,currentSquareID, isLeftMove);
+                            	player.captureSquare(bss,currentSquareID, isLeftMove);
                             }
                         }else {
                             BoardSquare currentSquare = (CitizenSquare) bss.get(currentSquareID);
@@ -496,7 +496,7 @@ public class Menu extends Application{
                             }
                         }
                     }
-                } 
+                }
                 System.out.print(currentSquareID + " ");
 
                 ArrayList<BoardSquare> listOfSquares = bss;
@@ -523,6 +523,11 @@ public class Menu extends Application{
 
             // update the board square
             b.setListOfSquare(bss);
+            if(MainGame.getPlayer1().equals(player)) {
+            	MainGame.setP1Turn(false);
+            }else {
+            	MainGame.setP1Turn(true);
+            }
     }
     private class CitizenSquareUI extends StackPane{
         CitizenSquareUI(String name, Runnable action,int width, int height, int id) {
