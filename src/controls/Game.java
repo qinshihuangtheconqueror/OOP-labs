@@ -58,7 +58,7 @@ public class Game {
 	public boolean isEndGame() {
 		MandarinSquare ms1 = (MandarinSquare) this.getMyBoard().getListOfSquare().get(0);
 		MandarinSquare ms2 = (MandarinSquare) this.getMyBoard().getListOfSquare().get(6);
-		if (ms1.isContainMandarin() == false && ms2.isContainMandarin() == false)
+		if (ms1.isEmpty() == true && ms2.isEmpty() == true)
 			return true;
 		else
 			return false;
