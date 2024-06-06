@@ -496,7 +496,7 @@ public class Menu extends Application{
                             }
                         }
                     }
-                }
+                } 
                 System.out.print(currentSquareID + " ");
 
                 ArrayList<BoardSquare> listOfSquares = bss;
