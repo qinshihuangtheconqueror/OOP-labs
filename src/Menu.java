@@ -49,7 +49,7 @@ public class Menu extends Application{
     public void start(Stage primarystage) throws Exception {
         layout1= createStartMenu();
         scene1 =  new Scene(layout1);
-        stage =primarystage;
+        stage = primarystage;
         stage.setScene(scene1);
         setup();
         Canvas canvas = new Canvas(1080, 960);
@@ -101,31 +101,47 @@ public class Menu extends Application{
 
 
     }
-    private void run(GraphicsContext gc){
-//        if (MainGame.isEndGame()){
-//            JPanel dialog_panel = new JPanel();
-//            JLabel label1 = new JLabel("The Game has ended");
-//            JButton button = new JButton("OK");
-//            frame = new JFrame("End Game");
-//
-//            dialog_panel.add(label1);
-//            dialog_panel.add(button);
-//            frame.add(dialog_panel);
-//            frame.setSize(300, 100);
-//            frame.setLocationRelativeTo(null);
-//            frame.setVisible(true);
-//            try{
-//                Thread.sleep(500);}
-//            catch(InterruptedException e) {
-//                System.out.println("Error@##");
-//            }
-//            frame.setVisible(false);
-//            stage.setScene(scene1);
-//            MainGame.restart();
+    
+    public void setScene(Scene scene) {
+    	Canvas canvas = new Canvas(1080, 960);
+    	gc = canvas.getGraphicsContext2D();
+    	Image bgImage = new Image(getClass().getResource("gui/asset/mandarin_background.png").toExternalForm());
+        ImageView img_view =  new ImageView(bgImage);
+        img_view.setY(0);
+        img_view.setX(0);
+        HBox Squares_row1 = new HBox(
+                new CitizenSquareUI("Square 1",()->ChoosePivot(1),110,120,1),
+                new CitizenSquareUI("Square 2",()->ChoosePivot(2),110,120,2),
+                new CitizenSquareUI("Square 3",()->ChoosePivot(3),105,120,3),
+                new CitizenSquareUI("Square 4",()->ChoosePivot(4),110,120,4),
+                new CitizenSquareUI("Square 5",()->ChoosePivot(5),110,120,5)
+        );
 
-//        }
-//        else {
-//        	System.out.println("Not end game");
+        Squares_row1.setTranslateX(210);
+        Squares_row1.setTranslateY(265);
+        HBox Squares_row2 = new HBox(
+                new CitizenSquareUI("Square 11",()->ChoosePivot(11),110,120,11),
+                new CitizenSquareUI("Square 10",()->ChoosePivot(10),110,120,10),
+                new CitizenSquareUI("Square 9",()->ChoosePivot(9),105,120,9),
+                new CitizenSquareUI("Square 8",()->ChoosePivot(8),110,120,8),
+                new CitizenSquareUI("Square 7",()->ChoosePivot(7),110,120,7)
+        );
+        Squares_row2.setTranslateX(210);
+        Squares_row2.setTranslateY(395);
+        HBox Mandarin_Square1 = new HBox(
+                new CitizenSquareUI("Mandarin Square 6",()->{},110,240,6)
+        );
+        Mandarin_Square1.setTranslateX(755);
+        Mandarin_Square1.setTranslateY(265);
+        HBox Mandarin_Square2 = new HBox(
+                new CitizenSquareUI("Mandarin Square 0",()->{},110,240,0)
+        );
+        Mandarin_Square2.setTranslateX(100);
+        Mandarin_Square2.setTranslateY(265);
+        scene = new Scene(new Pane(img_view,canvas,Squares_row1,Squares_row2,Mandarin_Square1,Mandarin_Square2));
+    }
+    
+    private void run(GraphicsContext gc){
             Image man_stone = new Image(getClass().getResource("gui/asset/bigstone1.png").toExternalForm());
             Image ciz_stone = new Image(getClass().getResource("gui/asset/stone1.png").toExternalForm());
 
@@ -151,38 +167,9 @@ public class Menu extends Application{
             this.type= type;
         }
     }
-    public void setup(){
-        CitizenSquare CS1 = new CitizenSquare(1, 5);
-        CitizenSquare CS2 = new CitizenSquare(2, 5);
-        CitizenSquare CS3 = new CitizenSquare(3, 5);
-        CitizenSquare CS4 = new CitizenSquare(4, 5);
-        CitizenSquare CS5 = new CitizenSquare(5, 5);
-        CitizenSquare CS7 = new CitizenSquare(7, 5);
-        CitizenSquare CS8= new CitizenSquare(8, 5);
-        CitizenSquare CS9 = new CitizenSquare(9, 5);
-        CitizenSquare CS10 = new CitizenSquare(10, 5);
-        CitizenSquare CS11 = new CitizenSquare(11, 0);
-
-        MandarinSquare MQ0=  new MandarinSquare(0, 0, true);
-        MandarinSquare MQ6=  new MandarinSquare(6, 0, true);
-        squares = new ArrayList<BoardSquare>();
-        squares.add(MQ0);
-        squares.add(CS1);
-        squares.add(CS2);
-        squares.add(CS3);
-        squares.add(CS4);
-        squares.add(CS5);
-        squares.add(MQ6);
-        squares.add(CS7);
-        squares.add(CS8);
-        squares.add(CS9);
-        squares.add(CS10);
-        squares.add(CS11);
-        Board MainBoard =  new Board(squares);
-        Player player1 =  new Player(1,0);
-        Player player2 = new Player(2,0);
-        MainGame =  new Game(MainBoard,player1,player2, true);
-        int step_x= 100;
+    
+    public void loadImageHolder() {
+    	int step_x= 100;
         for (int i=0;i<squares.size();i++){
             if (i==0) {
                 MandarinSquare new_square = (MandarinSquare) squares.get(i);
@@ -230,6 +217,41 @@ public class Menu extends Application{
             }
         }
 
+    }
+    
+    public void setup(){
+        CitizenSquare CS1 = new CitizenSquare(1, 5);
+        CitizenSquare CS2 = new CitizenSquare(2, 5);
+        CitizenSquare CS3 = new CitizenSquare(3, 5);
+        CitizenSquare CS4 = new CitizenSquare(4, 5);
+        CitizenSquare CS5 = new CitizenSquare(5, 5);
+        CitizenSquare CS7 = new CitizenSquare(7, 5);
+        CitizenSquare CS8= new CitizenSquare(8, 5);
+        CitizenSquare CS9 = new CitizenSquare(9, 1);
+        CitizenSquare CS10 = new CitizenSquare(10, 5);
+        CitizenSquare CS11 = new CitizenSquare(11, 0);
+
+        MandarinSquare MQ0=  new MandarinSquare(0, 0, true);
+        MandarinSquare MQ6=  new MandarinSquare(6, 0, false);
+        squares = new ArrayList<BoardSquare>();
+        squares.add(MQ0);
+        squares.add(CS1);
+        squares.add(CS2);
+        squares.add(CS3);
+        squares.add(CS4);
+        squares.add(CS5);
+        squares.add(MQ6);
+        squares.add(CS7);
+        squares.add(CS8);
+        squares.add(CS9);
+        squares.add(CS10);
+        squares.add(CS11);
+        Board MainBoard =  new Board(squares);
+        Player player1 =  new Player(1,0);
+        Player player2 = new Player(2,0);
+        MainGame =  new Game(MainBoard,player1,player2, true);
+        
+        loadImageHolder();
 
         ArrayList<BoardSquare> validsquare1 = new ArrayList<BoardSquare>();
         validsquare1.add(CS11);
@@ -251,26 +273,7 @@ public class Menu extends Application{
 
 
     public void ShowInvalidMove(int player_id) {
-        JPanel dialog_panel = new JPanel();
-        JLabel label1 = new JLabel("Player" +player_id +" can only pick the squares in the row below");
-        JButton button = new JButton("OK");
-        frame = new JFrame("Dialog");
-
-        dialog_panel.add(label1);
-        dialog_panel.add(button);
-        frame.add(dialog_panel);
-        frame.setSize(300, 100);
-        frame.setLocationRelativeTo(null);
-        frame.setVisible(true);
-
-        button.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (e.getSource() == button) {
-                    frame.setVisible(false);
-                }
-            }
-        });
+    	JOptionPane.showMessageDialog(null, "Please choose another square", "Invalid chosen square", JOptionPane.ERROR_MESSAGE);
     }
     
     public void chooseDirection(Player player, int id) {
@@ -516,7 +519,6 @@ public class Menu extends Application{
             }
 //            System.out.println();
 
-            // update the board square
             b.setListOfSquare(bss);
             if(MainGame.getPlayer1().equals(player)) {
             	MainGame.setP1Turn(false);
@@ -551,6 +553,19 @@ public class Menu extends Application{
 						if(e.getSource()==buttonLeft) {
 							frame.setVisible(false);
 							MainGame.restart();
+							for(int i = 0; i <= 11; i++) {
+								collectCitizen(i);
+							}
+							loadImageHolder();
+							run(gc);
+							
+							Platform.runLater(new Runnable() {
+							    @Override
+							    public void run() {
+							        // do your GUI stuff here
+							    	stage.setScene(scene2);
+							    }
+							});
 						}
 					}
 				});
@@ -562,13 +577,23 @@ public class Menu extends Application{
 						// TODO Auto-generated method stub
 						if(e.getSource()==buttonRight) {
 							frame.setVisible(false);
-							stage.setScene(scene1);
+							MainGame.restart();
+							for(int i = 0; i <= 11; i++) {
+								collectCitizen(i);
+							}
+							loadImageHolder();
+							run(gc);
+							Platform.runLater(new Runnable() {
+							    @Override
+							    public void run() {
+							        // do your GUI stuff here
+							    	stage.setScene(scene1);
+							    }
+							});
 						}
 					}
 				});
                 
-//                frame.setVisible(false);
-//                stage.setScene(scene1);
             }
             System.out.println("End make move");
     }
