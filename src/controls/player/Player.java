@@ -19,6 +19,10 @@ public class Player {
 		return point;
 	}
 	
+	public void setPoint(int point) {
+		this.point = point;
+	}
+	
 	public int getPlayerID() {
 		return playerID;
 	}
@@ -34,33 +38,9 @@ public class Player {
 		}
 		return false;
 	}
-
-	public void dispatchCitizens(Board b) {
-		boolean flag = false;
-		int currentSquareID;
-		BoardSquare currentSquare;
-		for (BoardSquare i : this.validBoardSquare) {
-			currentSquareID = i.getboardSquareID();
-			if (b.getListOfSquare().get(currentSquareID).isEmpty() == false) {
-				flag = true;
-			}
-		}
-
-		// Dispatch the previous-won citizens when there are not any non-empty citizen squares
-		ArrayList<BoardSquare> listOfSquare = b.getListOfSquare();
-		if (flag == false) {
-			if (this.point > 5) {
-				this.point -= 5;
-				for (BoardSquare i : this.validBoardSquare) {
-					currentSquareID = i.getboardSquareID();
-					currentSquare = listOfSquare.get(currentSquareID);
-					currentSquare.setNumberOfCitizens(1);
-					listOfSquare.add(currentSquareID, currentSquare);
-				}
-			}
-			b.setListOfSquare(listOfSquare);
-		}
-
+	
+	public ArrayList<BoardSquare> getValidBoardSquare() {
+		return validBoardSquare;
 	}
 
 	public void captureSquare(ArrayList<BoardSquare> bss, int currentSquareID, boolean isLeftMove) {

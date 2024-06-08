@@ -227,12 +227,12 @@ public class Menu extends Application{
         CitizenSquare CS5 = new CitizenSquare(5, 5);
         CitizenSquare CS7 = new CitizenSquare(7, 5);
         CitizenSquare CS8= new CitizenSquare(8, 5);
-        CitizenSquare CS9 = new CitizenSquare(9, 1);
+        CitizenSquare CS9 = new CitizenSquare(9, 5);
         CitizenSquare CS10 = new CitizenSquare(10, 5);
-        CitizenSquare CS11 = new CitizenSquare(11, 0);
+        CitizenSquare CS11 = new CitizenSquare(11, 5);
 
         MandarinSquare MQ0=  new MandarinSquare(0, 0, true);
-        MandarinSquare MQ6=  new MandarinSquare(6, 0, false);
+        MandarinSquare MQ6=  new MandarinSquare(6, 0, true);
         squares = new ArrayList<BoardSquare>();
         squares.add(MQ0);
         squares.add(CS1);
@@ -349,6 +349,8 @@ public class Menu extends Application{
             }
         }
     }
+    
+    
     public void collectCitizen(int squareID){
         for ( int i= ImageHolder.size()-1;i>=0;i--){
             if (ImageHolder.get(i).square_id== squareID){
@@ -380,6 +382,33 @@ public class Menu extends Application{
                 ImageHolder.add(new ViewStone(squareID,randomNumX,randomNumY,2));
         }
     }
+    
+	public void dispatchCitizens(Board b, Player player) {
+		boolean flag = false;
+		int currentSquareID;
+		BoardSquare currentSquare;
+		for (BoardSquare i : player.getValidBoardSquare()) {
+			currentSquareID = i.getboardSquareID();
+			if (b.getListOfSquare().get(currentSquareID).isEmpty() == false) {
+				flag = true;
+			}
+		}
+
+		// Dispatch the previous-won citizens when there are not any non-empty citizen squares
+		ArrayList<BoardSquare> listOfSquare = b.getListOfSquare();
+		if (flag == false) {
+				player.setPoint(player.getPoint()-5);
+				for (BoardSquare i : player.getValidBoardSquare()) {
+					currentSquareID = i.getboardSquareID();
+					currentSquare = listOfSquare.get(currentSquareID);
+					currentSquare.setNumberOfCitizens(1);
+					listOfSquare.set(currentSquareID, currentSquare);
+					distributeCitizen(currentSquareID);
+				}
+			b.setListOfSquare(listOfSquare);
+		}
+		System.out.println("Dispatch citizen of player " + player.getPlayerID());
+	}
     public void makeMove(Board b, int choosenSquareID, boolean isLeftMove, Player player) {
             // Start to make move
             ArrayList<BoardSquare> bss = b.getListOfSquare();
@@ -495,37 +524,37 @@ public class Menu extends Application{
                         }
                     }
                 }
-//                System.out.print(currentSquareID + " ");
-//
-//                ArrayList<BoardSquare> listOfSquares = bss;
-//                for(BoardSquare i : listOfSquares) {
-//                    if(i.getboardSquareID()==0) {
-//                        MandarinSquare ms0 = (MandarinSquare) i;
-//                        System.out.print(" ( " + ms0.getNumberOfCitizens() + " " + Boolean.toString(ms0.isContainMandarin()) + " (" + ms0.getboardSquareID() + ") | ");
-//                    }else if(i.getboardSquareID()==6) {
-//                        MandarinSquare ms6 = (MandarinSquare) i;
-//                        System.out.println("" + ms6.getNumberOfCitizens() + " " + Boolean.toString(ms6.isContainMandarin()) + " (" + ms6.getboardSquareID() + ") ) ");
-//                        System.out.print("\t\t");
-//                    }else if(i.getboardSquareID()>=1 && i.getboardSquareID() <= 5) {
-//                        System.out.print(i.getNumberOfCitizens() + " (" + i.getboardSquareID() + ") | ");
-//                    }else break;
-//                }
-//                for(int i = 11; i >= 7; i--) {
-//                    BoardSquare cb = bss.get(i);
-//                    System.out.print(cb.getNumberOfCitizens() + " (" + cb.getboardSquareID() + ") | ");
-//                }
-//                System.out.println("\n");
+                System.out.print(currentSquareID + " ");
+
+                ArrayList<BoardSquare> listOfSquares = bss;
+                for(BoardSquare i : listOfSquares) {
+                    if(i.getboardSquareID()==0) {
+                        MandarinSquare ms0 = (MandarinSquare) i;
+                        System.out.print(" ( " + ms0.getNumberOfCitizens() + " " + Boolean.toString(ms0.isContainMandarin()) + " (" + ms0.getboardSquareID() + ") | ");
+                    }else if(i.getboardSquareID()==6) {
+                        MandarinSquare ms6 = (MandarinSquare) i;
+                        System.out.println("" + ms6.getNumberOfCitizens() + " " + Boolean.toString(ms6.isContainMandarin()) + " (" + ms6.getboardSquareID() + ") ) ");
+                        System.out.print("\t\t");
+                    }else if(i.getboardSquareID()>=1 && i.getboardSquareID() <= 5) {
+                        System.out.print(i.getNumberOfCitizens() + " (" + i.getboardSquareID() + ") | ");
+                    }else break;
+                }
+                for(int i = 11; i >= 7; i--) {
+                    BoardSquare cb = bss.get(i);
+                    System.out.print(cb.getNumberOfCitizens() + " (" + cb.getboardSquareID() + ") | ");
+                }
+                System.out.println("\n");
 
             }
-//            System.out.println();
+            System.out.println();
 
             b.setListOfSquare(bss);
             if(MainGame.getPlayer1().equals(player)) {
             	MainGame.setP1Turn(false);
-            	MainGame.getPlayer2().dispatchCitizens(b);
+            	dispatchCitizens(b, MainGame.getPlayer2());
             }else {
             	MainGame.setP1Turn(true);
-            	MainGame.getPlayer1().dispatchCitizens(b);
+            	dispatchCitizens(b, MainGame.getPlayer1());
             }
             if(MainGame.isEndGame()) {
             	JPanel dialog_panel = new JPanel();
@@ -557,7 +586,6 @@ public class Menu extends Application{
 								collectCitizen(i);
 							}
 							loadImageHolder();
-							run(gc);
 							
 							Platform.runLater(new Runnable() {
 							    @Override
@@ -582,7 +610,6 @@ public class Menu extends Application{
 								collectCitizen(i);
 							}
 							loadImageHolder();
-							run(gc);
 							Platform.runLater(new Runnable() {
 							    @Override
 							    public void run() {
