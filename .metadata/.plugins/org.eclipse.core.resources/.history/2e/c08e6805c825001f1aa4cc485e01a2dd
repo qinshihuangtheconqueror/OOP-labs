@@ -1,0 +1,5 @@
+package controls.player;
+
+public class Bot extends Player {
+
+}
