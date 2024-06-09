@@ -1437,6 +1437,12 @@ public class Menu extends Application{
             System.out.println();
 
             b.setListOfSquare(bss);
+        Image p1TurnImage = new Image(getClass().getResource("gui/asset/P1turn.png").toExternalForm());
+        Image p2TurnImage = new Image(getClass().getResource("gui/asset/P2turn.png").toExternalForm());
+
+        ImageView p1TurnImageView = new ImageView(p1TurnImage);
+        ImageView p2TurnImageView = new ImageView(p2TurnImage);
+
             
             if(MainGame.isEndGame()) {
             	endGameDialog();
@@ -1446,9 +1452,13 @@ public class Menu extends Application{
             if(MainGame.getPlayer1().equals(player)) {
             	MainGame.setP1Turn(false);
             	dispatchCitizens(b, MainGame.getPlayer2());
+                gc.clearRect(180, 100, 171, 31);
+                gc.drawImage(p2TurnImage, 180, 100, 171, 31);
             }else {
             	MainGame.setP1Turn(true);
             	dispatchCitizens(b, MainGame.getPlayer1());
+                gc.clearRect(180, 100, 171, 31);
+                gc.drawImage(p1TurnImage, 180, 100, 171, 31);
             }
             
             System.out.println("End make move");

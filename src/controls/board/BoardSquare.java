@@ -4,6 +4,7 @@ public abstract class BoardSquare {
     private int boardSquareID;
     private int numberOfCitizens;
 
+
     public BoardSquare(int BoardSquare_ID, int numberOfCitizens) {
         this.boardSquareID = BoardSquare_ID;
         this.numberOfCitizens = numberOfCitizens;
