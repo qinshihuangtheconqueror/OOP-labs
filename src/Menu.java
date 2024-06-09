@@ -1094,7 +1094,90 @@ public class Menu extends Application{
                 gc.drawImage(stone.image, stone.coordX, stone.coordY, 16, 16);
             }
         }
-//        }
+        int player1Point = MainGame.getPlayer1().getPoint();
+        int player2Point = MainGame.getPlayer2().getPoint();
+        int xPoint2 = 750;
+        int yPoint2 = 130;
+        int xPoint1 = 280;
+        int yPoint1 = 600;
+        
+        while(player1Point>=0) {
+        	xPoint1 -= 50;
+        	gc.clearRect(xPoint1, yPoint1, 64, 57);
+        	int printNum = player1Point % 10;
+        	player1Point/=10;
+        	if(printNum==1) {
+        		Image number1 = new Image(getClass().getResource("gui/asset/1_resize.png").toExternalForm());
+        		gc.drawImage(number1, xPoint1, yPoint1);
+        	}else if(printNum==2) {
+        		Image number2 = new Image(getClass().getResource("gui/asset/2_resize.png").toExternalForm());
+        		gc.drawImage(number2, xPoint1, yPoint1);
+        	}else if(printNum==3) {
+        		Image number3 = new Image(getClass().getResource("gui/asset/3_resize.png").toExternalForm());
+        		gc.drawImage(number3, xPoint1, yPoint1);
+        	}else if(printNum==4) {
+        		Image number4 = new Image(getClass().getResource("gui/asset/4_resize.png").toExternalForm());
+        		gc.drawImage(number4, xPoint1, yPoint1);
+        	}else if(printNum==5) {
+        		Image number5 = new Image(getClass().getResource("gui/asset/5_resize.png").toExternalForm());
+        		gc.drawImage(number5, xPoint1, yPoint1);
+        	}else if(printNum==6) {
+        		Image number6 = new Image(getClass().getResource("gui/asset/6_resize.png").toExternalForm());
+        		gc.drawImage(number6, xPoint1, yPoint1);
+        	}else if(printNum==7) {
+        		Image number7 = new Image(getClass().getResource("gui/asset/7_resize.png").toExternalForm());
+        		gc.drawImage(number7, xPoint1, yPoint1);
+        	}else if(printNum==8) {
+        		Image number8 = new Image(getClass().getResource("gui/asset/8_resize.png").toExternalForm());
+        		gc.drawImage(number8, xPoint1, yPoint1);
+        	}else if(printNum==9) {
+        		Image number9 = new Image(getClass().getResource("gui/asset/9_resize.png").toExternalForm());
+        		gc.drawImage(number9, xPoint1, yPoint1);
+        	}else if(printNum==0) {
+        		Image number0 = new Image(getClass().getResource("gui/asset/0_resize.png").toExternalForm());
+        		gc.drawImage(number0, xPoint1, yPoint1);
+        	}
+        	if(player1Point==0) player1Point-=1;
+        }
+        
+        while(player2Point>=0) {
+        	xPoint2 -= 50;
+        	gc.clearRect(xPoint2, yPoint2, 64, 57);
+        	int printNum = player2Point % 10;
+        	player2Point/=10;
+        	if(printNum==1) {
+        		Image number1 = new Image(getClass().getResource("gui/asset/1_resize.png").toExternalForm());
+        		gc.drawImage(number1, xPoint2, yPoint2);
+        	}else if(printNum==2) {
+        		Image number2 = new Image(getClass().getResource("gui/asset/2_resize.png").toExternalForm());
+        		gc.drawImage(number2, xPoint2, yPoint2);
+        	}else if(printNum==3) {
+        		Image number3 = new Image(getClass().getResource("gui/asset/3_resize.png").toExternalForm());
+        		gc.drawImage(number3, xPoint2, yPoint2);
+        	}else if(printNum==4) {
+        		Image number4 = new Image(getClass().getResource("gui/asset/4_resize.png").toExternalForm());
+        		gc.drawImage(number4, xPoint2, yPoint2);
+        	}else if(printNum==5) {
+        		Image number5 = new Image(getClass().getResource("gui/asset/5_resize.png").toExternalForm());
+        		gc.drawImage(number5, xPoint2, yPoint2);
+        	}else if(printNum==6) {
+        		Image number6 = new Image(getClass().getResource("gui/asset/6_resize.png").toExternalForm());
+        		gc.drawImage(number6, xPoint2, yPoint2);
+        	}else if(printNum==7) {
+        		Image number7 = new Image(getClass().getResource("gui/asset/7_resize.png").toExternalForm());
+        		gc.drawImage(number7, xPoint2, yPoint2);
+        	}else if(printNum==8) {
+        		Image number8 = new Image(getClass().getResource("gui/asset/8_resize.png").toExternalForm());
+        		gc.drawImage(number8, xPoint2, yPoint2);
+        	}else if(printNum==9) {
+        		Image number9 = new Image(getClass().getResource("gui/asset/9_resize.png").toExternalForm());
+        		gc.drawImage(number9, xPoint2, yPoint2);
+        	}else if(printNum==0) {
+        		Image number0 = new Image(getClass().getResource("gui/asset/0_resize.png").toExternalForm());
+        		gc.drawImage(number0, xPoint2, yPoint2);
+        	}
+        	if(player2Point==0) player2Point-=1;
+        }
 
     }
     public static class ViewStone{
