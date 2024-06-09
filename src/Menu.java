@@ -1,3 +1,4 @@
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.net.URL;
@@ -63,7 +64,6 @@ public class Menu extends Application{
         timeline.play();
 
         stage.show();
-
         //layout2 = RenderUI();
         Image bgImage = new Image(getClass().getResource("gui/asset/mandarin_background.png").toExternalForm());
         ImageView img_view =  new ImageView(bgImage);
@@ -161,6 +161,9 @@ public class Menu extends Application{
             leftTransitionScattering.setByY(500);
             leftTransitionScattering.play();
         });
+
+
+
         
      // back to menu button
         Image backImage = new Image("gui/asset/BACK.png");
@@ -988,6 +991,8 @@ public class Menu extends Application{
 
         scene9 = new Scene(new Pane(helpView6, winningRuleView,
                 leftButtonWinning, backButtonWinning));
+        // point counting
+
     }
     
     public void setScene(Scene scene) {
@@ -1026,6 +1031,7 @@ public class Menu extends Application{
         );
         Mandarin_Square2.setTranslateX(100);
         Mandarin_Square2.setTranslateY(265);
+
         scene = new Scene(new Pane(img_view,canvas,Squares_row1,Squares_row2,Mandarin_Square1,Mandarin_Square2));
     }
     
@@ -1354,6 +1360,7 @@ public class Menu extends Application{
                             	else currentSquareID += 2;
                         	}else break;
                         	flag = false;
+
                         }
                         if(flag == false) break;
                         
