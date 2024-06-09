@@ -53,6 +53,8 @@ public class Game {
 
 	public void restart() {
 		myBoard.reset();
+		player1.setPoint(0);
+		player2.setPoint(0);
 	}
 
 	public boolean isEndGame() {

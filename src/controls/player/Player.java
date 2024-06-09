@@ -74,7 +74,7 @@ public class Player {
 			this.point += targetMandarinSquare.getNumberOfCitizens();
 			targetMandarinSquare.setNumberOfCitizens(0);
 			if (targetMandarinSquare.isContainMandarin() == true) {
-				this.point += 10;
+				this.point += 5;
 				targetMandarinSquare.setContainMandarin(false);
 			}
 			// update the target square (Mandarin square)

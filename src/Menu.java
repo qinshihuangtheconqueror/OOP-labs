@@ -1085,6 +1085,15 @@ public class Menu extends Application{
     }
 
     private void run(GraphicsContext gc){
+    	if(MainGame.isP1Turn()) {
+    		Image p1TurnImage = new Image(getClass().getResource("gui/asset/P1turn.png").toExternalForm());
+            gc.clearRect(180, 100, 171, 31);
+            gc.drawImage(p1TurnImage, 180, 100, 171, 31);
+    	}else {
+    		Image p2TurnImage = new Image(getClass().getResource("gui/asset/P2turn.png").toExternalForm());
+    		gc.clearRect(180, 100, 171, 31);
+            gc.drawImage(p2TurnImage, 180, 100, 171, 31);
+    	}
         Image man_stone = new Image(getClass().getResource("gui/asset/ManStone.png").toExternalForm());
 
         for (ViewStone stone : ImageHolder) {
@@ -1269,6 +1278,7 @@ public class Menu extends Application{
             Image stone = new Image(getClass().getResource(image).toExternalForm());
             this.ciz_stones.add(stone);
         }
+        
 
         CitizenSquare CS1 = new CitizenSquare(1, 0);
         CitizenSquare CS2 = new CitizenSquare(2, 0);
@@ -1651,11 +1661,11 @@ public class Menu extends Application{
         System.out.println();
 
         b.setListOfSquare(bss);
-        Image p1TurnImage = new Image(getClass().getResource("gui/asset/P1turn.png").toExternalForm());
-        Image p2TurnImage = new Image(getClass().getResource("gui/asset/P2turn.png").toExternalForm());
-
-        ImageView p1TurnImageView = new ImageView(p1TurnImage);
-        ImageView p2TurnImageView = new ImageView(p2TurnImage);
+//        Image p1TurnImage = new Image(getClass().getResource("gui/asset/P1turn.png").toExternalForm());
+//        Image p2TurnImage = new Image(getClass().getResource("gui/asset/P2turn.png").toExternalForm());
+//
+//        ImageView p1TurnImageView = new ImageView(p1TurnImage);
+//        ImageView p2TurnImageView = new ImageView(p2TurnImage);
 
 
         if(MainGame.isEndGame()) {
@@ -1666,13 +1676,13 @@ public class Menu extends Application{
         if(MainGame.getPlayer1().equals(player)) {
             MainGame.setP1Turn(false);
             dispatchCitizens(b, MainGame.getPlayer2());
-            gc.clearRect(180, 100, 171, 31);
-            gc.drawImage(p2TurnImage, 180, 100, 171, 31);
+//            gc.clearRect(180, 100, 171, 31);
+//            gc.drawImage(p2TurnImage, 180, 100, 171, 31);
         }else {
             MainGame.setP1Turn(true);
             dispatchCitizens(b, MainGame.getPlayer1());
-            gc.clearRect(180, 100, 171, 31);
-            gc.drawImage(p1TurnImage, 180, 100, 171, 31);
+//            gc.clearRect(180, 100, 171, 31);
+//            gc.drawImage(p1TurnImage, 180, 100, 171, 31);
         }
 
         System.out.println("End make move");
@@ -1680,7 +1690,8 @@ public class Menu extends Application{
 
     public void endGameDialog() {
         JPanel dialog_panel = new JPanel();
-        JLabel label1 = new JLabel("The Game has ended");
+        Player player = MainGame.winningPlayer();
+        JLabel label1 = new JLabel("Player " + player.getPlayerID() + " has won");
 
         JPanel buttonPanel = new JPanel();
         JButton buttonLeft = new JButton("Restart");
