@@ -108,11 +108,10 @@ public class Menu extends Application{
             for(int i = 0; i <= 11; i++) {
                 collectCitizen(i);
             }
-            stage.setScene(scene1);
-//            gc.clearRect(0, 0, 960, 796);
+            loadImageHolder();
+            
 
-//            MainGame.restart();
-            setup();
+            stage.setScene(scene1);
         });
 
         HBox Squares_row1 = new HBox(
