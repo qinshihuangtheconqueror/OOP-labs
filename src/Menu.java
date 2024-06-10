@@ -104,10 +104,14 @@ public class Menu extends Application{
             }
         });
         homeButton.setOnAction(event -> {
+        	MainGame.restart();
+            for(int i = 0; i <= 11; i++) {
+                collectCitizen(i);
+            }
             stage.setScene(scene1);
-            gc.clearRect(0, 0, 960, 796);
+//            gc.clearRect(0, 0, 960, 796);
 
-            MainGame.restart();
+//            MainGame.restart();
             setup();
         });
 
@@ -1109,10 +1113,14 @@ public class Menu extends Application{
         int yPoint2 = 130;
         int xPoint1 = 280;
         int yPoint1 = 600;
+        gc.clearRect(xPoint1-50, yPoint1, 64, 57);
+        gc.clearRect(xPoint1-100, yPoint1, 64, 57);
+        gc.clearRect(xPoint2-50, yPoint2, 64, 57);
+        gc.clearRect(xPoint2-100, yPoint2, 64, 57);
         
         while(player1Point>=0) {
         	xPoint1 -= 50;
-        	gc.clearRect(xPoint1, yPoint1, 64, 57);
+//        	gc.clearRect(xPoint1, yPoint1, 64, 57);
         	int printNum = player1Point % 10;
         	player1Point/=10;
         	if(printNum==1) {
@@ -1151,7 +1159,7 @@ public class Menu extends Application{
         
         while(player2Point>=0) {
         	xPoint2 -= 50;
-        	gc.clearRect(xPoint2, yPoint2, 64, 57);
+//        	gc.clearRect(xPoint2, yPoint2, 64, 57);
         	int printNum = player2Point % 10;
         	player2Point/=10;
         	if(printNum==1) {
@@ -1187,8 +1195,98 @@ public class Menu extends Application{
         	}
         	if(player2Point==0) player2Point-=1;
         }
+        
+        int numCiz11 = MainGame.getMyBoard().getListOfSquare().get(11).getNumberOfCitizens();
+        int numCiz10 = MainGame.getMyBoard().getListOfSquare().get(10).getNumberOfCitizens();
+        int numCiz9 = MainGame.getMyBoard().getListOfSquare().get(9).getNumberOfCitizens();
+        int numCiz8 = MainGame.getMyBoard().getListOfSquare().get(8).getNumberOfCitizens();
+        int numCiz7 = MainGame.getMyBoard().getListOfSquare().get(7).getNumberOfCitizens();
+        int numCiz6 = MainGame.getMyBoard().getListOfSquare().get(6).getNumberOfCitizens();
+        int numCiz5 = MainGame.getMyBoard().getListOfSquare().get(5).getNumberOfCitizens();
+        int numCiz4 = MainGame.getMyBoard().getListOfSquare().get(4).getNumberOfCitizens();
+        int numCiz3 = MainGame.getMyBoard().getListOfSquare().get(3).getNumberOfCitizens();
+        int numCiz2 = MainGame.getMyBoard().getListOfSquare().get(2).getNumberOfCitizens();
+        int numCiz1 = MainGame.getMyBoard().getListOfSquare().get(1).getNumberOfCitizens();
+        int numCiz0 = MainGame.getMyBoard().getListOfSquare().get(0).getNumberOfCitizens();
+        int ySquare1 = 530;
+        int xSquare11 = 290;        
+        displayNumberOfCitizen(numCiz11, xSquare11, ySquare1);
+        int xSquare10 = xSquare11+110;
+        displayNumberOfCitizen(numCiz10, xSquare10, ySquare1);
+        int xSquare9 = xSquare10+110;
+        displayNumberOfCitizen(numCiz9, xSquare9, ySquare1);
+        int xSquare8 = xSquare9+110;
+        displayNumberOfCitizen(numCiz8, xSquare8, ySquare1);
+        int xSquare7 = xSquare8+110;
+        displayNumberOfCitizen(numCiz7, xSquare7, ySquare1);
+        
+        int ySquare2 = 230;
+        int xSquare1 = 290;
+        displayNumberOfCitizen(numCiz1, xSquare1, ySquare2);
+        int xSquare2 = xSquare1+110;
+        displayNumberOfCitizen(numCiz2, xSquare2, ySquare2);
+        int xSquare3 = xSquare2+110;
+        displayNumberOfCitizen(numCiz3, xSquare3, ySquare2);
+        int xSquare4 = xSquare3+110;
+        displayNumberOfCitizen(numCiz4, xSquare4, ySquare2);
+        int xSquare5 = xSquare4+110;
+        displayNumberOfCitizen(numCiz5, xSquare5, ySquare2);
+        
+        
+        int yMandarinSquare = 380;
+        int xMandarinSquare0 = 95;
+        displayNumberOfCitizen(numCiz0, xMandarinSquare0, yMandarinSquare);
+        int xMandarinSquare6 = xMandarinSquare0+810;
+        displayNumberOfCitizen(numCiz6, xMandarinSquare6, yMandarinSquare);
+        
 
     }
+    
+    void displayNumberOfCitizen(int numberOfCitizen, int xPoint, int yPoint) {
+    	int x = xPoint;
+    	int y = yPoint;
+    	gc.clearRect(x-20, y, 34, 30);
+    	gc.clearRect(x-40, y, 34, 30);
+    	int nc = numberOfCitizen;
+    	while(nc>=0) {
+    		x-=20;
+    		int printNum = nc%10;
+    		nc/=10;
+    		if(printNum==0) {
+    			Image image = new Image(getClass().getResource("gui/asset/0_citizen.png").toExternalForm());
+    			gc.drawImage(image, x, y);
+    		}else if(printNum==1) {
+    			Image image = new Image(getClass().getResource("gui/asset/1_citizen.png").toExternalForm());
+    			gc.drawImage(image, x, y);
+    		}else if(printNum==2) {
+    			Image image = new Image(getClass().getResource("gui/asset/2_citizen.png").toExternalForm());
+    			gc.drawImage(image, x, y);
+    		}else if(printNum==3) {
+    			Image image = new Image(getClass().getResource("gui/asset/3_citizen.png").toExternalForm());
+    			gc.drawImage(image, x, y);
+    		}else if(printNum==4) {
+    			Image image = new Image(getClass().getResource("gui/asset/4_citizen.png").toExternalForm());
+    			gc.drawImage(image, x, y);
+    		}else if(printNum==5) {
+    			Image image = new Image(getClass().getResource("gui/asset/5_citizen.png").toExternalForm());
+    			gc.drawImage(image, x, y);
+    		}else if(printNum==6) {
+    			Image image = new Image(getClass().getResource("gui/asset/6_citizen.png").toExternalForm());
+    			gc.drawImage(image, x, y);
+    		}else if(printNum==7) {
+    			Image image = new Image(getClass().getResource("gui/asset/7_citizen.png").toExternalForm());
+    			gc.drawImage(image, x, y);
+    		}else if(printNum==8) {
+    			Image image = new Image(getClass().getResource("gui/asset/8_citizen.png").toExternalForm());
+    			gc.drawImage(image, x, y);
+    		}else if(printNum==9) {
+    			Image image = new Image(getClass().getResource("gui/asset/9_citizen.png").toExternalForm());
+    			gc.drawImage(image, x, y);
+    		}
+    		if(nc==0) nc-=1;
+    	}
+    }
+    
     public static class ViewStone{
         public int square_id;
         public int coordX;
@@ -1469,7 +1567,7 @@ public class Menu extends Application{
     public void distributeCitizen(int squareID){
         if (squareID==0) {
             int randomNumX = ThreadLocalRandom.current().nextInt(150,210-32);
-            int randomNumY = ThreadLocalRandom.current().nextInt(265,400-32);
+            int randomNumY = ThreadLocalRandom.current().nextInt(350,400-32);
             Image ciz_stone = this.ciz_stones.get(ThreadLocalRandom.current().nextInt(0, 9));
             ImageHolder.add(new ViewStone(squareID, randomNumX, randomNumY, 2, ciz_stone));
         }
@@ -1481,7 +1579,7 @@ public class Menu extends Application{
         }
         else if (squareID==6) {
             int randomNumX = ThreadLocalRandom.current().nextInt(150 + squareID * 110, 150 + squareID * 110 + 50 - 32);
-            int randomNumY = ThreadLocalRandom.current().nextInt(265, 400 - 32);
+            int randomNumY = ThreadLocalRandom.current().nextInt(350, 400 - 32);
             Image ciz_stone = this.ciz_stones.get(ThreadLocalRandom.current().nextInt(0, 9));
             ImageHolder.add(new ViewStone(squareID, randomNumX, randomNumY, 2, ciz_stone));
         }
@@ -1691,7 +1789,13 @@ public class Menu extends Application{
     public void endGameDialog() {
         JPanel dialog_panel = new JPanel();
         Player player = MainGame.winningPlayer();
-        JLabel label1 = new JLabel("Player " + player.getPlayerID() + " has won");
+        JLabel label1;
+        if(player!=null) {
+            label1 = new JLabel("Player " + player.getPlayerID() + " has won");
+        }else {
+            label1 = new JLabel("Draw");
+
+        }
 
         JPanel buttonPanel = new JPanel();
         JButton buttonLeft = new JButton("Restart");
@@ -1719,6 +1823,7 @@ public class Menu extends Application{
                         collectCitizen(i);
                     }
                     loadImageHolder();
+                    
 
                     Platform.runLater(new Runnable() {
                         @Override

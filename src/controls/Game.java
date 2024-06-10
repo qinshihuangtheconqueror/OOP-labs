@@ -67,7 +67,7 @@ public class Game {
 	}
 
 	public Player winningPlayer() {
-		if (player1.getPoint() >= player2.getPoint())
+		if (player1.getPoint() > player2.getPoint())
 			return player1;
 		else if (player1.getPoint() < player2.getPoint())
 			return player2;
