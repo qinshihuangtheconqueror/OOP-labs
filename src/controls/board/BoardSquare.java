@@ -24,6 +24,10 @@ public abstract class BoardSquare {
     public void setNumberOfCitizens(int i) {
         this.numberOfCitizens = i;
     }
+    
+    public void setBoardSquareID(int boardSquareID) {
+		this.boardSquareID = boardSquareID;
+	}
 
     abstract public boolean isEmpty();
     abstract void operation();

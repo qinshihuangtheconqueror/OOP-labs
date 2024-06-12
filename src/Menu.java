@@ -1378,14 +1378,14 @@ public class Menu extends Application{
         
 
         CitizenSquare CS1 = new CitizenSquare(1, 0);
-        CitizenSquare CS2 = new CitizenSquare(2, 0);
+        CitizenSquare CS2 = new CitizenSquare(2, 5);
         CitizenSquare CS3 = new CitizenSquare(3, 0);
-        CitizenSquare CS4 = new CitizenSquare(4, 0);
-        CitizenSquare CS5 = new CitizenSquare(5, 0);
+        CitizenSquare CS4 = new CitizenSquare(4, 5);
+        CitizenSquare CS5 = new CitizenSquare(5, 1);
         CitizenSquare CS7 = new CitizenSquare(7, 0);
-        CitizenSquare CS8= new CitizenSquare(8, 0);
-        CitizenSquare CS9 = new CitizenSquare(9, 1);
-        CitizenSquare CS10 = new CitizenSquare(10, 0);
+        CitizenSquare CS8= new CitizenSquare(8, 5);
+        CitizenSquare CS9 = new CitizenSquare(9, 0);
+        CitizenSquare CS10 = new CitizenSquare(10, 5);
         CitizenSquare CS11 = new CitizenSquare(11, 0);
 
         MandarinSquare MQ0=  new MandarinSquare(0, 0, false);
@@ -1406,7 +1406,7 @@ public class Menu extends Application{
         Board MainBoard =  new Board(squares);
         Player player1 =  new Player(1,0);
         Player player2 = new Player(2,0);
-        MainGame =  new Game(MainBoard,player1,player2, true);
+        MainGame =  new Game(MainBoard,player1,player2, false);
 
         loadImageHolder();
 

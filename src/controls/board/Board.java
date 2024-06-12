@@ -9,6 +9,23 @@ public class Board {
 		this.listOfSquare = listOfSquare;
 	}
 	
+	public Board() {
+		listOfSquare = new ArrayList<BoardSquare>();
+	}
+	
+	public Board(Board b) {
+		ArrayList<BoardSquare> bss = new ArrayList<BoardSquare>();
+		for(BoardSquare i : b.getListOfSquare()) {
+			if(i instanceof MandarinSquare) {
+				MandarinSquare sq = new MandarinSquare((MandarinSquare) i);
+				bss.add(sq);
+			}else {
+				CitizenSquare sq = new CitizenSquare((CitizenSquare) i);
+				bss.add(sq);
+			}
+		}
+		this.listOfSquare = bss;
+	}
 	
 	
 	public ArrayList<BoardSquare> getListOfSquare() {
@@ -32,15 +49,4 @@ public class Board {
 			}
 		}
 	}
-	
-//	public boolean checkGameEnd() {
-//		int flag = 0;
-//		for(BoardSquare i : this.listOfSquare) {
-//			if(i instanceof MandarinSquare) {
-//				if(i.isEmpty() == true) flag++;
-//			}
-//		}
-//		if(flag<2) return false;
-//		return true;
-//	}
 }

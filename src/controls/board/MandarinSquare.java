@@ -7,7 +7,10 @@ public class MandarinSquare extends BoardSquare {
         super(BoardSquare_ID, numberOfCitizens);
         this.IsContainMandarin = isContainMandarin;
     }
-    
+    public MandarinSquare(MandarinSquare ms) {
+        super(ms.getboardSquareID(), ms.getNumberOfCitizens());
+        this.IsContainMandarin = ms.IsContainMandarin;
+    }
     
     
     public boolean isContainMandarin() {
