@@ -11,6 +11,7 @@ import controls.board.Board;
 import controls.board.BoardSquare;
 import controls.board.CitizenSquare;
 import controls.board.MandarinSquare;
+import controls.player.MinimaxBot;
 import controls.player.Player;
 import javafx.animation.*;
 import javafx.application.Application;
@@ -1377,18 +1378,18 @@ public class Menu extends Application{
         }
         
 
-        CitizenSquare CS1 = new CitizenSquare(1, 0);
+        CitizenSquare CS1 = new CitizenSquare(1, 5);
         CitizenSquare CS2 = new CitizenSquare(2, 5);
-        CitizenSquare CS3 = new CitizenSquare(3, 0);
+        CitizenSquare CS3 = new CitizenSquare(3, 5);
         CitizenSquare CS4 = new CitizenSquare(4, 5);
-        CitizenSquare CS5 = new CitizenSquare(5, 1);
-        CitizenSquare CS7 = new CitizenSquare(7, 0);
+        CitizenSquare CS5 = new CitizenSquare(5, 5);
+        CitizenSquare CS7 = new CitizenSquare(7, 5);
         CitizenSquare CS8= new CitizenSquare(8, 5);
-        CitizenSquare CS9 = new CitizenSquare(9, 0);
+        CitizenSquare CS9 = new CitizenSquare(9, 5);
         CitizenSquare CS10 = new CitizenSquare(10, 5);
-        CitizenSquare CS11 = new CitizenSquare(11, 0);
+        CitizenSquare CS11 = new CitizenSquare(11, 5);
 
-        MandarinSquare MQ0=  new MandarinSquare(0, 0, false);
+        MandarinSquare MQ0=  new MandarinSquare(0, 0, true);
         MandarinSquare MQ6=  new MandarinSquare(6, 0, true);
         squares = new ArrayList<BoardSquare>();
         squares.add(MQ0);
@@ -1406,7 +1407,8 @@ public class Menu extends Application{
         Board MainBoard =  new Board(squares);
         Player player1 =  new Player(1,0);
         Player player2 = new Player(2,0);
-        MainGame =  new Game(MainBoard,player1,player2, false);
+        Player botPlayer = new MinimaxBot(2, 0);
+        MainGame =  new Game(MainBoard,player1,botPlayer, true);
 
         loadImageHolder();
 
@@ -1425,6 +1427,7 @@ public class Menu extends Application{
         validsquare2.add(CS4);
         validsquare2.add(CS5);
         player2.setValidBoardSquare(validsquare2);
+        botPlayer.setValidBoardSquare(validsquare2);
     }
 
 
@@ -1544,13 +1547,54 @@ public class Menu extends Application{
                 ShowInvalidMove(1);
             }
         } else {
-            if (MainGame.getPlayer2().isValidMove(MainGame.getMyBoard(), id)) {
-                chooseDirection(MainGame.getPlayer2(), id);            }
-            else {
-                System.out.println("Invalid Move player 2");
-                ShowInvalidMove(2);
+            if(MainGame.getPlayer2() instanceof MinimaxBot) {
+            	MinimaxBot bot = (MinimaxBot) MainGame.getPlayer2();
+            	int chosenMovement = bot.makeMove(MainGame.getMyBoard());
+            	if(chosenMovement%2==0) {
+            		int chosenSquareID = chosenMovement/2;
+            		confirmBotMove(bot, chosenSquareID, false);
+//            		makeMove(MainGame.getMyBoard(), chosenSquareID, false, MainGame.getPlayer2());
+            	}else {
+            		int chosenSquareID = chosenMovement/2;
+            		confirmBotMove(bot, chosenSquareID, true);
+//            		makeMove(MainGame.getMyBoard(), chosenSquareID, true, MainGame.getPlayer2());
+            	}
+            }else {
+            	if (MainGame.getPlayer2().isValidMove(MainGame.getMyBoard(), id)) {
+                    chooseDirection(MainGame.getPlayer2(), id);            }
+                else {
+                    System.out.println("Invalid Move player 2");
+                    ShowInvalidMove(2);
+                }
             }
         }
+    }
+    
+    public void confirmBotMove(MinimaxBot bot, int chosenSquareID, boolean isMoveLeft) {
+    	JPanel direction_panel = new JPanel();
+        JLabel label1 = new JLabel("*********Start the bot turn?*********");
+        JButton button = new JButton("Confirm!");
+
+        frame = new JFrame("Confirm bot movement");
+        direction_panel.add(label1);
+        direction_panel.add(button);
+        frame.add(direction_panel);
+        frame.setSize(300, 100);
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
+        button.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				if(e.getSource()==button) {
+					frame.setVisible(false);
+					makeMove(MainGame.getMyBoard(), chosenSquareID, isMoveLeft, bot);
+				}
+				
+			}
+		});
+        
     }
 
 
