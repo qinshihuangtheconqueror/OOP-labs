@@ -83,13 +83,43 @@ public class MinimaxBot extends Player {
         }
         System.out.println("\n");
 	}
+	
+	public void dispatch(Board b, int chosenSquare) {
+		boolean flag = true;
+		if(chosenSquare<=5) {
+			for(int i = 1; i <= 5; i++) {
+				if(!b.getListOfSquare().get(i).isEmpty()) {
+					flag = false;
+					break;
+				}
+			}
+			if(flag == true) {
+				for(int i = 1; i <= 5; i++) {
+					b.getListOfSquare().get(i).setNumberOfCitizens(1);
+				}
+			}
+		}else {
+			for(int i = 7; i <= 11; i++) {
+				if(!b.getListOfSquare().get(i).isEmpty()) {
+					flag = false;
+					break;
+				}
+			}
+			if(flag == true) {
+				for(int i = 7; i <= 11; i++) {
+					b.getListOfSquare().get(i).setNumberOfCitizens(1);
+				}
+			}
+		}
+	}
 
 	private int score(Board b, int chosenSquareID, boolean isMoveLeft) {
+		
 		int score = 0;
+//		dispatch(b, chosenSquareID);
 		citizens = b.getListOfSquare().get(chosenSquareID).getNumberOfCitizens();
 		b.getListOfSquare().get(chosenSquareID).setNumberOfCitizens(0);
 		currentSquareID = chosenSquareID;
-		// first move
 		while(citizens>0) {
 			distribute(b, isMoveLeft);
 			if(citizens==0) {
@@ -115,33 +145,45 @@ public class MinimaxBot extends Player {
 
 	
 	private int minimax(Board b, int depth, int h, boolean isMaximizing, int chosenSquare, boolean isMoveLeft) {
-		// Stop condition
 		Board board = new Board(b);
-//		display(b);
+		String dir;
+		if(isMoveLeft) {
+			dir="left";
+		}else {
+			dir="right";
+		}
+		display(board);
+		System.out.println("Depth: " + depth);
+		System.out.println("Direction: " + dir);
+		System.out.println("Chosen square: " + chosenSquare);
 		int score = score(board, chosenSquare, isMoveLeft);
-//		display(board);
-//		String dir;
-//		if(isMoveLeft) dir = "left";
-//		else dir = "right";
-//		System.out.print(depth + " " + chosenSquare + " " + dir + " " + score);
-//		System.out.println();
+		System.out.println("Score: " + score);
+		display(board);
+		System.out.println("-----------------------------");
 		if(depth==h || (board.getListOfSquare().get(0).isEmpty() && board.getListOfSquare().get(6).isEmpty())) {
 			return score;
 		}
-		// recursively maximize and minimize
 		if(!isMaximizing) {
 			int value = Integer.MIN_VALUE;
+			dispatch(board, 1);
 			for(int i = 1; i <= 5; i++) {
-				value = Math.max(value, minimax(board, depth+1, h, !isMaximizing, i, isMoveLeft));
-				value = Math.max(value, minimax(board, depth+1, h, !isMaximizing, i, !isMoveLeft));
+				if(!board.getListOfSquare().get(i).isEmpty()==false) {
+					value = Math.max(value, minimax(board, depth+1, h, !isMaximizing, i, isMoveLeft)-score);
+					value = Math.max(value, minimax(board, depth+1, h, !isMaximizing, i, !isMoveLeft)-score);					
+				}
 			}
 			return value;
 		}else {
 			int value = Integer.MAX_VALUE;
+			dispatch(board, 7);
 			for(int i = 7; i <= 11; i++) {
-				value = Math.min(value, minimax(board, depth+1, h, !isMaximizing, i, isMoveLeft));
-				value = Math.min(value, minimax(board, depth+1, h, !isMaximizing, i, !isMoveLeft));
+				if(board.getListOfSquare().get(i).isEmpty()==false) {
+					value = Math.min(value, score-minimax(board, depth+1, h, !isMaximizing, i, isMoveLeft));
+					value = Math.min(value, score-minimax(board, depth+1, h, !isMaximizing, i, !isMoveLeft));
+				}
 			}
+			System.out.println("Square ID: " + chosenSquare);
+			System.out.println("Value: " + value);
 			return value;
 		}
 	}
@@ -159,23 +201,32 @@ public class MinimaxBot extends Player {
 		for(int i = 1; i <= 5; i++) {
 			if(!b.getListOfSquare().get(i).isEmpty()) {
 				int squareID = i;
-				int value1 = minimax(b, 0, 0, true, squareID, isMoveLeft);
-				int value2 = minimax(b, 0, 0, true, squareID, !isMoveLeft);
-				if(bestScore<value1) {
+				int value1 = minimax(b, 0, 2, true, squareID, isMoveLeft);
+				int value2 = minimax(b, 0, 2, true, squareID, !isMoveLeft);
+				if(bestScore<=value1) {
 					bestScore=value1;
 					bestMove = isMoveLeft;
 					bestSquareID = squareID;
 				}
-				if(bestScore<value2) {
+				if(bestScore<=value2) {
 					bestScore = value2;
-					bestMove = isMoveLeft;
+					bestMove = !isMoveLeft;
 					bestSquareID = squareID;
 				}
-//				System.out.println("Square ID: " + squareID);
-//				System.out.println("Value1: " + value1);
-//				System.out.println("Value2: " + value2);
+				System.out.println("**Square ID: " + squareID);
+				System.out.println("**Value 1: " + value1);
+				System.out.println("**Value 2: " + value2);
+				display(b);
 			}
 		}
+		String dir;
+		if(bestMove) {
+			dir="left";
+		}else {
+			dir="right";
+		}
+		System.out.println("Best choice: " + (bestSquareID)/2);
+		System.out.println("Best direction: " + dir);
 		if(bestMove) {
 			move +=1;
 			move += bestSquareID*2;
@@ -183,15 +234,5 @@ public class MinimaxBot extends Player {
 			move += bestSquareID*2;
 		}
 		return move;
-//		System.out.println();
-//		System.out.println("Best score: " + bestScore);
-//		System.out.println("Best Square ID" + bestSquareID);
-//		String dir = "";
-//		if(bestMove) {
-//			dir = "left";
-//		}else {
-//			dir = "right";
-//		}
-//		System.out.println("Best Move: " + dir);
 	}
 }

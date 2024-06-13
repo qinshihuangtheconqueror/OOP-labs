@@ -1389,8 +1389,8 @@ public class Menu extends Application{
         CitizenSquare CS10 = new CitizenSquare(10, 5);
         CitizenSquare CS11 = new CitizenSquare(11, 5);
 
-        MandarinSquare MQ0=  new MandarinSquare(0, 0, true);
-        MandarinSquare MQ6=  new MandarinSquare(6, 0, true);
+        MandarinSquare MQ0=  new MandarinSquare(0, 5, true);
+        MandarinSquare MQ6=  new MandarinSquare(6, 5, true);
         squares = new ArrayList<BoardSquare>();
         squares.add(MQ0);
         squares.add(CS1);
@@ -1408,7 +1408,7 @@ public class Menu extends Application{
         Player player1 =  new Player(1,0);
         Player player2 = new Player(2,0);
         Player botPlayer = new MinimaxBot(2, 0);
-        MainGame =  new Game(MainBoard,player1,botPlayer, true);
+        MainGame =  new Game(MainBoard,player1,botPlayer, false);
 
         loadImageHolder();
 
@@ -1836,7 +1836,7 @@ public class Menu extends Application{
         if(player!=null) {
             label1 = new JLabel("Player " + player.getPlayerID() + " has won");
         }else {
-            label1 = new JLabel("Draw");
+            label1 = new JLabel("*********** Draw **********");
 
         }
 
@@ -2023,11 +2023,6 @@ public class Menu extends Application{
             }
         });
         exitButton.setOnAction(event -> {Platform.exit();});
-
-
-//        box.setBackground(new Background(new BackgroundFill(Color.web("black", 0.6),null,null)));
-//        box.setTranslateX(350);
-//        box.setTranslateY(250) ;
         root.getChildren().addAll(
                 new ImageView(bgImage),
                 startButton,
@@ -2045,25 +2040,6 @@ public class Menu extends Application{
             stage.setScene(scene2);
         }
     }
-//    private static class MenuItem extends StackPane {
-//        MenuItem(String name, Runnable action){
-//            LinearGradient gradient = new LinearGradient(0, 0.5, 1, 0.5, true, CycleMethod.NO_CYCLE,
-//                    new Stop(0.1, Color.web("black",0.75)),
-//                    new Stop(1.0, Color.web("black",0.15))
-//            );
-//
-//            Rectangle bg = new Rectangle(250,30,gradient);
-//            Text text  = new Text(name);
-//            text.setFont(Font.font(22.0));
-//            text.fillProperty().bind(
-//                    Bindings.when(hoverProperty()).then(Color.WHITE).otherwise(Color.GRAY)
-//            );
-//
-//            setOnMouseClicked(e->action.run());
-//            getChildren().addAll(bg, text);
-//
-//        }
-//    }
 
     public static void main(String[] args){
         launch(args);
