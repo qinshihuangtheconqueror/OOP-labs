@@ -55,6 +55,7 @@ public class Game {
 		myBoard.reset();
 		player1.setPoint(0);
 		player2.setPoint(0);
+		setP1Turn(true);
 	}
 
 	public boolean isEndGame() {

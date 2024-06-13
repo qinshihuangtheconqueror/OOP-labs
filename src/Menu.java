@@ -51,8 +51,12 @@ public class Menu extends Application{
     public Game MainGame;
     public boolean startGame = false;
     private GraphicsContext gc;
-    private Image pickImage;
-    private Image holdImage;
+    public ArrayList<Image> take_animation= new ArrayList<Image>();
+    public ArrayList<Image> drop_animation= new ArrayList<Image>();
+    public int take_animation_slide=-1;
+    public int drop_animation_slide=-1;
+    public int takeID;
+    public int dropID;
     public ArrayList<Image> ciz_stones;
     public ArrayList<String> stoneImages;
 
@@ -65,7 +69,7 @@ public class Menu extends Application{
         setup();
         Canvas canvas = new Canvas(1080, 960);
         gc = canvas.getGraphicsContext2D();
-        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(200), e -> run(gc)));
+        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(100), e -> run(gc)));
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.play();
 
@@ -123,12 +127,7 @@ public class Menu extends Application{
                 new CitizenSquareUI("Square 5",()->ChoosePivot(5),110,120,5)
         );
 
-        Image takeImage = new Image(Objects.requireNonNull(getClass().getResource("gui/asset/tay1.gif")).toExternalForm());
-        Image dropImage = new Image(Objects.requireNonNull(Objects.requireNonNull(getClass().getResource("gui/asset/tay1.gif"))).toExternalForm());
-        ImageView takeView = new ImageView(takeImage);
-        ImageView dropView = new ImageView(dropImage);
-        takeView.setVisible(false);
-        dropView.setVisible(false);
+
 
         Squares_row1.setTranslateX(210);
         Squares_row1.setTranslateY(265);
@@ -151,7 +150,7 @@ public class Menu extends Application{
         );
         Mandarin_Square2.setTranslateX(100);
         Mandarin_Square2.setTranslateY(265);
-        scene2 = new Scene(new Pane(img_view,canvas,Squares_row1,Squares_row2,Mandarin_Square1,Mandarin_Square2,takeView, dropView, inGameBackgroundView, homeButton));
+        scene2 = new Scene(new Pane(img_view,canvas,Squares_row1,Squares_row2,Mandarin_Square1,Mandarin_Square2, inGameBackgroundView, homeButton));
 
 
         System.out.println("Running...");
@@ -1099,13 +1098,21 @@ public class Menu extends Application{
             gc.drawImage(p2TurnImage, 180, 100, 171, 31);
     	}
         Image man_stone = new Image(getClass().getResource("gui/asset/ManStone.png").toExternalForm());
-
+        gc.clearRect(100, 265,770,320);
         for (ViewStone stone : ImageHolder) {
             if (stone.type == 1) {
                 gc.drawImage(man_stone, stone.coordX, stone.coordY, 32, 32);
             } else {
                 gc.drawImage(stone.image, stone.coordX, stone.coordY, 16, 16);
             }
+        }
+        if (this.take_animation_slide==0) this.take_animation_slide=-1;
+        else if (this.take_animation_slide!=-1){
+            take(this.takeID);
+        }
+        if (this.drop_animation_slide==6) this.drop_animation_slide=-1;
+        else if (this.drop_animation_slide!=-1){
+            drop(this.dropID);
         }
         int player1Point = MainGame.getPlayer1().getPoint();
         int player2Point = MainGame.getPlayer2().getPoint();
@@ -1428,6 +1435,25 @@ public class Menu extends Application{
         validsquare2.add(CS5);
         player2.setValidBoardSquare(validsquare2);
         botPlayer.setValidBoardSquare(validsquare2);
+
+        Image img = new Image(getClass().getResource("gui/asset/anim1.png").toExternalForm());
+        this.take_animation.add(img);
+        this.drop_animation.add(img);
+        img = new Image(getClass().getResource("gui/asset/anim1.png").toExternalForm());
+        this.take_animation.add(img);
+        img = new Image(getClass().getResource("gui/asset/anim6.png").toExternalForm());
+        this.take_animation.add(img);
+        this.drop_animation.add(img);
+        img = new Image(getClass().getResource("gui/asset/anim4.png").toExternalForm());
+        this.take_animation.add(img);
+        this.drop_animation.add(img);
+        img = new Image(getClass().getResource("gui/asset/anim5.png").toExternalForm());
+        this.take_animation.add(img);
+        this.drop_animation.add(img);
+        img = new Image(getClass().getResource("gui/asset/anim3.png").toExternalForm());
+        this.take_animation.add(img);
+        this.drop_animation.add(img);
+        this.drop_animation.add(img);
     }
 
 
@@ -1437,49 +1463,53 @@ public class Menu extends Application{
     }
 
     public void take(int squareID) {
-        if (squareID >= 1 && squareID <= 5) {
-            ((Pane) scene2.getRoot()).getChildren().get(7).setTranslateX(((Pane) scene2.getRoot()).getChildren().get(2).getTranslateX() + (squareID - 1) * 110);
-            ((Pane) scene2.getRoot()).getChildren().get(7).setTranslateY(((Pane) scene2.getRoot()).getChildren().get(2).getTranslateY());
-        } else if (squareID >= 7 && squareID <= 11) {
-            ((Pane) scene2.getRoot()).getChildren().get(7).setTranslateX(((Pane) scene2.getRoot()).getChildren().get(3).getTranslateX() + (11 - squareID) * 110);
-            ((Pane) scene2.getRoot()).getChildren().get(7).setTranslateY(((Pane) scene2.getRoot()).getChildren().get(3).getTranslateY());
-        } else if (squareID == 0) {
-            ((Pane) scene2.getRoot()).getChildren().get(7).setTranslateX(((Pane) scene2.getRoot()).getChildren().get(5).getTranslateX());
-            ((Pane) scene2.getRoot()).getChildren().get(7).setTranslateY(((Pane) scene2.getRoot()).getChildren().get(5).getTranslateY());
-        } else {
-            ((Pane) scene2.getRoot()).getChildren().get(7).setTranslateX(((Pane) scene2.getRoot()).getChildren().get(4).getTranslateX());
-            ((Pane) scene2.getRoot()).getChildren().get(7).setTranslateY(((Pane) scene2.getRoot()).getChildren().get(4).getTranslateY());
-        }
-
-        Duration visibleDuration = Duration.millis(500);
-        Timeline timeline = new Timeline(
-                new KeyFrame(Duration.ZERO, e -> ((Pane) scene2.getRoot()).getChildren().get(7).setVisible(true)),
-                new KeyFrame(visibleDuration, e -> ((Pane) scene2.getRoot()).getChildren().get(7).setVisible(false))
-        );
-        timeline.play();
+        this.takeID =  squareID;
+       int coordX;
+       int coordY;
+       if (squareID==0){
+           coordX = 200;
+           coordY = 400;
+       }
+       else if (squareID ==6){
+           coordX =  850;
+           coordY = 400;
+       }
+       else if(squareID>0 && squareID <6){
+           coordX =  280 + (squareID - 1) * 110;
+           coordY =  385;
+       }
+       else {
+           coordX =  280 + (11 - squareID)*110;
+           coordY =  485;
+       }
+       this.take_animation_slide--;
+       Image img =  this.take_animation.get(this.take_animation_slide);
+       gc.drawImage(img,coordX-img.getWidth(), coordY-img.getHeight(),img.getWidth(),img.getHeight());
     }
 
     public void drop(int squareID) {
-        if (squareID >= 1 && squareID <= 5) {
-            ((Pane) scene2.getRoot()).getChildren().get(7).setTranslateX(((Pane) scene2.getRoot()).getChildren().get(2).getTranslateX() + (squareID - 1) * 110);
-            ((Pane) scene2.getRoot()).getChildren().get(7).setTranslateY(((Pane) scene2.getRoot()).getChildren().get(2).getTranslateY());
-        } else if (squareID >= 7 && squareID <= 11) {
-            ((Pane) scene2.getRoot()).getChildren().get(7).setTranslateX(((Pane) scene2.getRoot()).getChildren().get(3).getTranslateX() + (11 - squareID) * 110);
-            ((Pane) scene2.getRoot()).getChildren().get(7).setTranslateY(((Pane) scene2.getRoot()).getChildren().get(3).getTranslateY());
-        } else if (squareID == 0) {
-            ((Pane) scene2.getRoot()).getChildren().get(7).setTranslateX(((Pane) scene2.getRoot()).getChildren().get(5).getTranslateX());
-            ((Pane) scene2.getRoot()).getChildren().get(7).setTranslateY(((Pane) scene2.getRoot()).getChildren().get(5).getTranslateY());
-        } else {
-            ((Pane) scene2.getRoot()).getChildren().get(7).setTranslateX(((Pane) scene2.getRoot()).getChildren().get(4).getTranslateX());
-            ((Pane) scene2.getRoot()).getChildren().get(7).setTranslateY(((Pane) scene2.getRoot()).getChildren().get(4).getTranslateY());
+        this.dropID =  squareID;
+        int coordX;
+        int coordY;
+        if (squareID==0){
+            coordX = 200;
+            coordY = 400;
         }
-
-        Duration visibleDuration = Duration.millis(500);
-        Timeline timeline = new Timeline(
-                new KeyFrame(Duration.ZERO, e -> ((Pane) scene2.getRoot()).getChildren().get(7).setVisible(true)),
-                new KeyFrame(visibleDuration, e -> ((Pane) scene2.getRoot()).getChildren().get(7).setVisible(false))
-        );
-        timeline.play();
+        else if (squareID ==6){
+            coordX =  850;
+            coordY = 400;
+        }
+        else if(squareID>0 && squareID <6){
+            coordX =  280 + (squareID -1)*110;
+            coordY =  385;
+        }
+        else {
+            coordX =  280 + (11 - squareID)*110;
+            coordY =  485;
+        }
+        Image img =  this.drop_animation.get(this.drop_animation_slide);
+        this.drop_animation_slide++;
+        gc.drawImage(img,coordX- img.getWidth(), coordY-img.getHeight(),img.getWidth(),img.getHeight());
     }
 
     public void chooseDirection(Player player, int id) {
@@ -1553,11 +1583,11 @@ public class Menu extends Application{
             	if(chosenMovement%2==0) {
             		int chosenSquareID = chosenMovement/2;
             		confirmBotMove(bot, chosenSquareID, false);
-//            		makeMove(MainGame.getMyBoard(), chosenSquareID, false, MainGame.getPlayer2());
+            		makeMove(MainGame.getMyBoard(), chosenSquareID, false, MainGame.getPlayer2());
             	}else {
             		int chosenSquareID = chosenMovement/2;
             		confirmBotMove(bot, chosenSquareID, true);
-//            		makeMove(MainGame.getMyBoard(), chosenSquareID, true, MainGame.getPlayer2());
+            		makeMove(MainGame.getMyBoard(), chosenSquareID, true, MainGame.getPlayer2());
             	}
             }else {
             	if (MainGame.getPlayer2().isValidMove(MainGame.getMyBoard(), id)) {
@@ -1583,7 +1613,7 @@ public class Menu extends Application{
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
         button.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
@@ -1591,10 +1621,10 @@ public class Menu extends Application{
 					frame.setVisible(false);
 					makeMove(MainGame.getMyBoard(), chosenSquareID, isMoveLeft, bot);
 				}
-				
+
 			}
 		});
-        
+//
     }
 
 
@@ -1606,6 +1636,8 @@ public class Menu extends Application{
                 ImageHolder.remove(i);
             }
         }
+        this.take_animation_slide=6;
+        take(squareID);
     }
     public void distributeCitizen(int squareID){
         if (squareID==0) {
@@ -1632,6 +1664,7 @@ public class Menu extends Application{
             Image ciz_stone = this.ciz_stones.get(ThreadLocalRandom.current().nextInt(0, 9));
             ImageHolder.add(new ViewStone(squareID, randomNumX, randomNumY, 2, ciz_stone));
         }
+        this.drop_animation_slide =0;
         drop(squareID);
     }
 
@@ -1674,7 +1707,7 @@ public class Menu extends Application{
         while(citizens>0) {
             System.out.println(citizens);
             try{
-                Thread.sleep(500);}
+                Thread.sleep(600);}
             catch(InterruptedException e) {
                 System.out.println("Error@##");
             }
@@ -1708,7 +1741,7 @@ public class Menu extends Application{
                         if(bss.get(targetSquareID).isEmpty()==false) {
                             player.captureSquare(bss, currentSquareID, isLeftMove);
                             try{
-                                Thread.sleep(500);}
+                                Thread.sleep(600);}
                             catch(InterruptedException e) {
                                 System.out.println("Error@##");
                             }
@@ -1727,7 +1760,7 @@ public class Menu extends Application{
                         BoardSquare currentSquare = (CitizenSquare) bss.get(currentSquareID);
                         citizens = currentSquare.getNumberOfCitizens();
                         try{
-                            Thread.sleep(500);}
+                            Thread.sleep(600);}
                         catch(InterruptedException e) {
                             System.out.println("Error@##");
                         }
@@ -1749,7 +1782,7 @@ public class Menu extends Application{
                         if(bss.get(targetSquareID).isEmpty()==false) {
                             player.captureSquare(bss, currentSquareID, isLeftMove);
                             try{
-                                Thread.sleep(500);}
+                                Thread.sleep(600);}
                             catch(InterruptedException e) {
                                 System.out.println("Error@##");
                             }
@@ -1767,7 +1800,7 @@ public class Menu extends Application{
                         BoardSquare currentSquare = (CitizenSquare) bss.get(currentSquareID);
                         citizens = currentSquare.getNumberOfCitizens();
                         try{
-                            Thread.sleep(500);}
+                            Thread.sleep(600);}
                         catch(InterruptedException e) {
                             System.out.println("Error@##");
                         }
