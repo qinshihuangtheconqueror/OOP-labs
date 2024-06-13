@@ -67,7 +67,7 @@ public class TestBot {
 //        bot.display(MainBoard);
 //        bot.dispatch(MainBoard, 5);
 //        bot.display(MainBoard);
-        bot.makeMove(mainGame.getMyBoard());
+        bot.makeBotMove(mainGame.getMyBoard());
 //        Scanner sc = new Scanner(System.in);
 //        System.out.println("Choose square ID for bot: ");
 //        int chosenSquareID = sc.nextInt();

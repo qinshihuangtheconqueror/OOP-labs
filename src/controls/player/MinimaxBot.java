@@ -190,7 +190,7 @@ public class MinimaxBot extends Player {
 	
 	
 	
-	public int makeMove(Board boards) {
+	public int makeBotMove(Board boards) {
 		int move = 0;
 		final Board b = new Board(boards);
 		boolean isMoveLeft = true;
@@ -201,8 +201,8 @@ public class MinimaxBot extends Player {
 		for(int i = 1; i <= 5; i++) {
 			if(!b.getListOfSquare().get(i).isEmpty()) {
 				int squareID = i;
-				int value1 = minimax(b, 0, 2, true, squareID, isMoveLeft);
-				int value2 = minimax(b, 0, 2, true, squareID, !isMoveLeft);
+				int value1 = minimax(b, 0, 2, false, squareID, isMoveLeft);
+				int value2 = minimax(b, 0, 2, false, squareID, !isMoveLeft);
 				if(bestScore<=value1) {
 					bestScore=value1;
 					bestMove = isMoveLeft;

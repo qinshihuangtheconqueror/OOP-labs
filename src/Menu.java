@@ -59,6 +59,7 @@ public class Menu extends Application{
     public int dropID;
     public ArrayList<Image> ciz_stones;
     public ArrayList<String> stoneImages;
+    public Timeline mainTimeline;
 
     @Override
     public void start(Stage primarystage) throws Exception {
@@ -69,9 +70,9 @@ public class Menu extends Application{
         setup();
         Canvas canvas = new Canvas(1080, 960);
         gc = canvas.getGraphicsContext2D();
-        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(100), e -> run(gc)));
-        timeline.setCycleCount(Timeline.INDEFINITE);
-        timeline.play();
+        mainTimeline = new Timeline(new KeyFrame(Duration.millis(100), e -> run(gc)));
+        mainTimeline.setCycleCount(Timeline.INDEFINITE);
+        mainTimeline.play();
 
         stage.show();
         //layout2 = RenderUI();
@@ -1396,8 +1397,8 @@ public class Menu extends Application{
         CitizenSquare CS10 = new CitizenSquare(10, 5);
         CitizenSquare CS11 = new CitizenSquare(11, 5);
 
-        MandarinSquare MQ0=  new MandarinSquare(0, 5, true);
-        MandarinSquare MQ6=  new MandarinSquare(6, 5, true);
+        MandarinSquare MQ0=  new MandarinSquare(0, 0, true);
+        MandarinSquare MQ6=  new MandarinSquare(6, 0, true);
         squares = new ArrayList<BoardSquare>();
         squares.add(MQ0);
         squares.add(CS1);
@@ -1415,7 +1416,7 @@ public class Menu extends Application{
         Player player1 =  new Player(1,0);
         Player player2 = new Player(2,0);
         Player botPlayer = new MinimaxBot(2, 0);
-        MainGame =  new Game(MainBoard,player1,botPlayer, false);
+        MainGame =  new Game(MainBoard,player1,botPlayer, true);
 
         loadImageHolder();
 
@@ -1579,15 +1580,23 @@ public class Menu extends Application{
         } else {
             if(MainGame.getPlayer2() instanceof MinimaxBot) {
             	MinimaxBot bot = (MinimaxBot) MainGame.getPlayer2();
-            	int chosenMovement = bot.makeMove(MainGame.getMyBoard());
+                mainTimeline.stop();
+                System.out.println("Interrupted");
+            	int chosenMovement = bot.makeBotMove(MainGame.getMyBoard());
+                try{
+                    Thread.sleep(1000);}
+                catch(InterruptedException e) {
+                    System.out.println("Error@##");
+                }
+                mainTimeline.play();
             	if(chosenMovement%2==0) {
             		int chosenSquareID = chosenMovement/2;
             		confirmBotMove(bot, chosenSquareID, false);
-            		makeMove(MainGame.getMyBoard(), chosenSquareID, false, MainGame.getPlayer2());
+//            		makeMove(MainGame.getMyBoard(), chosenSquareID, false, MainGame.getPlayer2());
             	}else {
             		int chosenSquareID = chosenMovement/2;
             		confirmBotMove(bot, chosenSquareID, true);
-            		makeMove(MainGame.getMyBoard(), chosenSquareID, true, MainGame.getPlayer2());
+//            		makeMove(MainGame.getMyBoard(), chosenSquareID, true, MainGame.getPlayer2());
             	}
             }else {
             	if (MainGame.getPlayer2().isValidMove(MainGame.getMyBoard(), id)) {
@@ -1702,6 +1711,11 @@ public class Menu extends Application{
         int currentSquareID = choosenSquareID;
         choosenSquare.setNumberOfCitizens(0);
         collectCitizen(currentSquareID);
+        try{
+            Thread.sleep(600);}
+        catch(InterruptedException e) {
+            System.out.println("Error@##");
+        }
         bss.set(currentSquareID, choosenSquare);
 
         while(citizens>0) {
@@ -1943,13 +1957,13 @@ public class Menu extends Application{
             );
 
             Rectangle bg = new Rectangle(width, height);
-            Text text = new Text("Square number: "+ id +" \nCurrent Citizen: "+ Integer.toString(squares.get(id).getNumberOfCitizens()));
-            text.setFont(Font.font(10.0));
+            Text text = new Text("Square number: "+ id);
+            text.setFont(Font.font(12.0));
             text.fillProperty().bind(
-                    Bindings.when(bg.hoverProperty()).then(Color.BLUE).otherwise(Color.TRANSPARENT)
+                    Bindings.when(bg.hoverProperty()).then(Color.GRAY).otherwise(Color.TRANSPARENT)
             );
             bg.fillProperty().bind(
-                    Bindings.when(hoverProperty()).then(Color.GRAY).otherwise(Color.TRANSPARENT)
+                    Bindings.when(hoverProperty()).then(Color.TRANSPARENT).otherwise(Color.TRANSPARENT)
             );
             setOnMouseClicked(e -> action.run());
 
