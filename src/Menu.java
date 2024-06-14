@@ -22,6 +22,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.layout.*;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.CycleMethod;
 import javafx.scene.paint.Stop;
@@ -37,6 +39,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.control.Button;
 import javafx.scene.canvas.Canvas;
 import javax.swing.*;
+import java.io.File;
 
 import javafx.util.Duration;
 
@@ -60,6 +63,7 @@ public class Menu extends Application{
     public ArrayList<Image> ciz_stones;
     public ArrayList<String> stoneImages;
     public Timeline mainTimeline;
+    public Utils MPlayer;
 
     @Override
     public void start(Stage primarystage) throws Exception {
@@ -102,6 +106,7 @@ public class Menu extends Application{
         homeButton.setStyle("-fx-background-color: #ffffff00;");
         homeButton.setGraphic(homeImageView);
 
+
         homeButton.hoverProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean show) -> {
             if (show) {
                 homeButton.setGraphic(homeImageView2);
@@ -111,12 +116,9 @@ public class Menu extends Application{
         });
         homeButton.setOnAction(event -> {
         	MainGame.restart();
-            for(int i = 0; i <= 11; i++) {
-                collectCitizen(i);
-            }
+            ImageHolder.clear();
             loadImageHolder();
-            
-
+            this.MPlayer.mediaPlayer.stop();
             stage.setScene(scene1);
         });
 
@@ -151,7 +153,30 @@ public class Menu extends Application{
         );
         Mandarin_Square2.setTranslateX(100);
         Mandarin_Square2.setTranslateY(265);
-        scene2 = new Scene(new Pane(img_view,canvas,Squares_row1,Squares_row2,Mandarin_Square1,Mandarin_Square2, inGameBackgroundView, homeButton));
+
+        Image sound_button_image = new Image(getClass().getResource("gui/asset/unmute.png").toExternalForm());
+        ImageView sound_button_view = new ImageView(sound_button_image);
+        Image mute_button_image = new Image(getClass().getResource("gui/asset/mute.png").toExternalForm());
+        ImageView mute_button_view = new ImageView(mute_button_image);
+
+        Button soundButton =  new Button();
+        soundButton.setTranslateX(1000);
+        soundButton.setTranslateY(600);
+        soundButton.setPrefSize(80, 80);
+        soundButton.setStyle("-fx-background-color: #ffffff00;");
+        soundButton.setGraphic(sound_button_view);
+        soundButton.setOnAction(event -> {
+            if (soundButton.getGraphic() == sound_button_view){
+                soundButton.setGraphic(mute_button_view);
+                this.MPlayer.mediaPlayer.pause();
+            }
+            else {
+                soundButton.setGraphic(sound_button_view);
+                this.MPlayer.mediaPlayer.play();
+            }
+        });
+
+        scene2 = new Scene(new Pane(img_view,canvas,Squares_row1,Squares_row2,Mandarin_Square1,Mandarin_Square2, inGameBackgroundView, homeButton,soundButton));
 
 
         System.out.println("Running...");
@@ -1384,20 +1409,20 @@ public class Menu extends Application{
             Image stone = new Image(getClass().getResource(image).toExternalForm());
             this.ciz_stones.add(stone);
         }
-        
 
-        CitizenSquare CS1 = new CitizenSquare(1, 5);
-        CitizenSquare CS2 = new CitizenSquare(2, 5);
-        CitizenSquare CS3 = new CitizenSquare(3, 5);
-        CitizenSquare CS4 = new CitizenSquare(4, 5);
-        CitizenSquare CS5 = new CitizenSquare(5, 5);
-        CitizenSquare CS7 = new CitizenSquare(7, 5);
-        CitizenSquare CS8= new CitizenSquare(8, 5);
-        CitizenSquare CS9 = new CitizenSquare(9, 5);
-        CitizenSquare CS10 = new CitizenSquare(10, 5);
-        CitizenSquare CS11 = new CitizenSquare(11, 5);
+        this.MPlayer =  new Utils(new File("src/gui/asset/bg_music.mp3").toURI().toString());
+        CitizenSquare CS1 = new CitizenSquare(1, 0);
+        CitizenSquare CS2 = new CitizenSquare(2, 0);
+        CitizenSquare CS3 = new CitizenSquare(3, 0);
+        CitizenSquare CS4 = new CitizenSquare(4, 0);
+        CitizenSquare CS5 = new CitizenSquare(5, 0);
+        CitizenSquare CS7 = new CitizenSquare(7, 0);
+        CitizenSquare CS8= new CitizenSquare(8, 0);
+        CitizenSquare CS9 = new CitizenSquare(9, 1);
+        CitizenSquare CS10 = new CitizenSquare(10, 0);
+        CitizenSquare CS11 = new CitizenSquare(11, 0);
 
-        MandarinSquare MQ0=  new MandarinSquare(0, 0, true);
+        MandarinSquare MQ0=  new MandarinSquare(0, 0, false);
         MandarinSquare MQ6=  new MandarinSquare(6, 0, true);
         squares = new ArrayList<BoardSquare>();
         squares.add(MQ0);
@@ -1648,7 +1673,7 @@ public class Menu extends Application{
         this.take_animation_slide=6;
         take(squareID);
     }
-    public void distributeCitizen(int squareID){
+    public void distributeCitizen(int squareID, boolean onDispatch){
         if (squareID==0) {
             int randomNumX = ThreadLocalRandom.current().nextInt(150,210-32);
             int randomNumY = ThreadLocalRandom.current().nextInt(350,400-32);
@@ -1673,8 +1698,9 @@ public class Menu extends Application{
             Image ciz_stone = this.ciz_stones.get(ThreadLocalRandom.current().nextInt(0, 9));
             ImageHolder.add(new ViewStone(squareID, randomNumX, randomNumY, 2, ciz_stone));
         }
+        if (!onDispatch){
         this.drop_animation_slide =0;
-        drop(squareID);
+        drop(squareID);}
     }
 
     public void dispatchCitizens(Board b, Player player) {
@@ -1697,7 +1723,7 @@ public class Menu extends Application{
                 currentSquare = listOfSquare.get(currentSquareID);
                 currentSquare.setNumberOfCitizens(1);
                 listOfSquare.set(currentSquareID, currentSquare);
-                distributeCitizen(currentSquareID);
+                distributeCitizen(currentSquareID,true);
             }
             b.setListOfSquare(listOfSquare);
         }
@@ -1736,7 +1762,7 @@ public class Menu extends Application{
                 else currentSquareID--;
                 bss.get(currentSquareID).setNumberOfCitizens(bss.get(currentSquareID).getNumberOfCitizens()+1);
             }
-            distributeCitizen(currentSquareID);
+            distributeCitizen(currentSquareID,false);
 
             // decide if the turn is continued or stopped (get point or not)
             if(citizens==0) {
@@ -1778,7 +1804,8 @@ public class Menu extends Application{
                         catch(InterruptedException e) {
                             System.out.println("Error@##");
                         }
-                        collectCitizen(currentSquareID);
+                        if (!bss.get(currentSquareID).isEmpty())
+                            collectCitizen(currentSquareID);
                         currentSquare.setNumberOfCitizens(0);
                         bss.set(currentSquareID, currentSquare);
                     }
@@ -1818,7 +1845,8 @@ public class Menu extends Application{
                         catch(InterruptedException e) {
                             System.out.println("Error@##");
                         }
-                        collectCitizen(currentSquareID);
+                        if (!bss.get(currentSquareID).isEmpty())
+                            collectCitizen(currentSquareID);
                         currentSquare.setNumberOfCitizens(0);
                         bss.set(currentSquareID, currentSquare);
                     }
@@ -1909,9 +1937,7 @@ public class Menu extends Application{
                 if(e.getSource()==buttonLeft) {
                     frame.setVisible(false);
                     MainGame.restart();
-                    for(int i = 0; i <= 11; i++) {
-                        collectCitizen(i);
-                    }
+                    ImageHolder.clear();
                     loadImageHolder();
                     
 
@@ -1934,10 +1960,9 @@ public class Menu extends Application{
                 if(e.getSource()==buttonRight) {
                     frame.setVisible(false);
                     MainGame.restart();
-                    for(int i = 0; i <= 11; i++) {
-                        collectCitizen(i);
-                    }
+                    ImageHolder.clear();
                     loadImageHolder();
+                    MPlayer.mediaPlayer.stop();
                     Platform.runLater(new Runnable() {
                         @Override
                         public void run() {
@@ -2001,7 +2026,7 @@ public class Menu extends Application{
                 startButton.setGraphic(startView);
             }
         });
-        startButton.setOnAction(event-> stage.setScene(scene2));
+        startButton.setOnAction(event-> {stage.setScene(scene2); this.MPlayer.mediaPlayer.play();});
 
 
         Image helpImage = new Image("gui/asset/HELP.png");
