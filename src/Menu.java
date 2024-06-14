@@ -832,7 +832,7 @@ public class Menu extends Application{
             this.ciz_stones.add(stone);
         }
 
-        this.MPlayer =  new Utils(new File("src/gui/asset/soundtrack_2.mp3").toURI().toString());
+        this.MPlayer =  new Utils(new File("gui/asset/soundtrack_2.mp3").toURI().toString());
         CitizenSquare CS1 = new CitizenSquare(1, 0);
         CitizenSquare CS2 = new CitizenSquare(2, 0);
         CitizenSquare CS3 = new CitizenSquare(3, 0);
@@ -1029,21 +1029,14 @@ public class Menu extends Application{
             	MinimaxBot bot = (MinimaxBot) MainGame.getPlayer2();
                 mainTimeline.stop();
                 System.out.println("Interrupted");
-            	int chosenMovement = bot.makeBotMove(MainGame.getMyBoard());
-                try{
-                    Thread.sleep(1000);}
-                catch(InterruptedException e) {
-                    System.out.println("Error@##");
-                }
+            	int chosenMovement = bot.makeHardBotMove(MainGame.getMyBoard());
                 mainTimeline.play();
             	if(chosenMovement%2==0) {
             		int chosenSquareID = chosenMovement/2;
             		confirmBotMove(bot, chosenSquareID, false);
-//            		makeMove(MainGame.getMyBoard(), chosenSquareID, false, MainGame.getPlayer2());
             	}else {
             		int chosenSquareID = chosenMovement/2;
             		confirmBotMove(bot, chosenSquareID, true);
-//            		makeMove(MainGame.getMyBoard(), chosenSquareID, true, MainGame.getPlayer2());
             	}
             }else {
             	if (MainGame.getPlayer2().isValidMove(MainGame.getMyBoard(), id)) {
@@ -1299,28 +1292,35 @@ public class Menu extends Application{
         System.out.println();
 
         b.setListOfSquare(bss);
-//        Image p1TurnImage = new Image(getClass().getResource("gui/asset/P1turn.png").toExternalForm());
-//        Image p2TurnImage = new Image(getClass().getResource("gui/asset/P2turn.png").toExternalForm());
-//
-//        ImageView p1TurnImageView = new ImageView(p1TurnImage);
-//        ImageView p2TurnImageView = new ImageView(p2TurnImage);
-
 
         if(MainGame.isEndGame()) {
             endGameDialog();
+            // Collect all the remaining citizens of player's valid squares
+            for(int i = 1; i <= 5; i++) {
+            	if(!MainGame.getMyBoard().getListOfSquare().get(i).isEmpty()) {
+            		MainGame.getPlayer2().setPoint(MainGame.getPlayer2().getPoint()
+            				+ MainGame.getMyBoard().getListOfSquare().get(i).getNumberOfCitizens());
+            		MainGame.getMyBoard().getListOfSquare().get(i).setNumberOfCitizens(0);
+            		collectCitizen(i);
+            	}
+            }
+            for(int i = 7; i <= 11; i++) {
+            	if(!MainGame.getMyBoard().getListOfSquare().get(i).isEmpty()) {
+            		MainGame.getPlayer1().setPoint(MainGame.getPlayer1().getPoint()
+            				+ MainGame.getMyBoard().getListOfSquare().get(i).getNumberOfCitizens());
+            		MainGame.getMyBoard().getListOfSquare().get(i).setNumberOfCitizens(0);
+            		collectCitizen(i);
+            	}
+            }
             return;
         }
 
         if(MainGame.getPlayer1().equals(player)) {
             MainGame.setP1Turn(false);
             dispatchCitizens(b, MainGame.getPlayer2());
-//            gc.clearRect(180, 100, 171, 31);
-//            gc.drawImage(p2TurnImage, 180, 100, 171, 31);
         }else {
             MainGame.setP1Turn(true);
             dispatchCitizens(b, MainGame.getPlayer1());
-//            gc.clearRect(180, 100, 171, 31);
-//            gc.drawImage(p1TurnImage, 180, 100, 171, 31);
         }
 
         System.out.println("End make move");
