@@ -49,6 +49,7 @@ import javafx.util.Duration;
 public class Menu extends Application{
     public Stage stage;
     public Scene scene1, scene2, scene3, scene4, scene5, scene6, scene7, scene8, scene9;
+    public ArrayList<Scene> scenes = new ArrayList<Scene>();
     public Parent layout1, layout2;
     static JFrame frame;
     public ArrayList<BoardSquare> squares;
@@ -183,897 +184,316 @@ public class Menu extends Application{
 
         System.out.println("Running...");
 
+        // arraylist of rule boards's path
+        ArrayList<String> rulePaths = new ArrayList<String>();
+        rulePaths.add("gui/asset/Setup.png");
+        rulePaths.add("gui/asset/Scattering.png");
+        rulePaths.add("gui/asset/Scattering2.png");
+        rulePaths.add("gui/asset/Capturing.png");
+        rulePaths.add("gui/asset/Passing.png");
+        rulePaths.add("gui/asset/Dispatching.png");
+        rulePaths.add("gui/asset/Winning.png");
+
+
         // help scene - scene3
-        Image helpMenuImage = new Image(getClass().getResource("gui/asset/MenuScene.png").toExternalForm());
-        ImageView helpView = new ImageView(helpMenuImage);
-        helpView.setY(0);
-        helpView.setX(0);
-
-        // rule board
-        Image setupRule = new Image("gui/asset/Setup.png");
-        ImageView setupRuleView = new ImageView(setupRule);
-        setupRuleView.setTranslateX(0);
-        setupRuleView.setTranslateY(-500);
-
-        // right button
-        Image rightImageSetup = new Image("gui/asset/RIGHT.png");
-        ImageView rightViewSetup = new ImageView(rightImageSetup);
-        Image rightImageSetup2 = new Image("gui/asset/RIGHT2.png");
-        ImageView rightViewSetup2 = new ImageView(rightImageSetup2);
-
-        rightViewSetup.setFitHeight(80);
-        rightViewSetup.setFitWidth(80);
-        rightViewSetup2.setFitHeight(80);
-        rightViewSetup2.setFitWidth(80);
-
-        Button rightButtonSetup = new Button();
-        rightButtonSetup.setTranslateX(740);
-        rightButtonSetup.setTranslateY(-415);
-        rightButtonSetup.setPrefSize(80, 80);
-        rightButtonSetup.setStyle("-fx-background-color: #ffffff00;");
-        rightButtonSetup.setGraphic(rightViewSetup);
-
-        rightButtonSetup.hoverProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean show) -> {
-            if (show) {
-                rightButtonSetup.setGraphic(rightViewSetup2);
-            } else {
-                rightButtonSetup.setGraphic(rightViewSetup);
-            }
-        });
-
-        rightButtonSetup.setOnAction(event -> {
-            stage.setScene(scene4);
-            setupRuleView.setTranslateY(-500);
-            rightButtonSetup.setTranslateY(-415);
-
-            TranslateTransition scatteringBoardTransition = new TranslateTransition(Duration.seconds(1), ((Pane) scene4.getRoot()).getChildren().get(1));
-            scatteringBoardTransition.setByY(500);
-            scatteringBoardTransition.setInterpolator(Interpolator.EASE_OUT);
-            scatteringBoardTransition.play();
-
-            TranslateTransition rightTransitionScattering = new TranslateTransition(Duration.seconds(1), ((Pane) scene4.getRoot()).getChildren().get(2));
-            rightTransitionScattering.setInterpolator(Interpolator.EASE_OUT);
-            rightTransitionScattering.setByY(500);
-            rightTransitionScattering.play();
-
-            TranslateTransition leftTransitionScattering = new TranslateTransition(Duration.seconds(1), ((Pane) scene4.getRoot()).getChildren().get(3));
-            leftTransitionScattering.setInterpolator(Interpolator.EASE_OUT);
-            leftTransitionScattering.setByY(500);
-            leftTransitionScattering.play();
-        });
-
-
-
-
-        // back to menu button
-        Image backImage = new Image("gui/asset/BACK.png");
-        ImageView backView = new ImageView(backImage);
-        Image backImage2 = new Image("gui/asset/BACK2.png");
-        ImageView backView2 = new ImageView(backImage2);
-
-        backView.setFitHeight(80);
-        backView.setFitWidth(80);
-        backView2.setFitHeight(80);
-        backView2.setFitWidth(80);
-
-        Button backButton = new Button();
-        backButton.setTranslateX(0);
-        backButton.setTranslateY(0);
-        backButton.setPrefSize(80, 80);
-        backButton.setStyle("-fx-background-color: #ffffff00;");
-        backButton.setGraphic(backView);
-
-        backButton.hoverProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean show) -> {
-            if (show) {
-                backButton.setGraphic(backView2);
-            } else {
-                backButton.setGraphic(backView);
-            }
-        });
-        backButton.setOnAction(event -> {
-            stage.setScene(scene1);
-            setupRuleView.setTranslateY(-500);
-            rightButtonSetup.setTranslateY(-415);
-
-//            setupRuleView.setTranslateY(-500);
-//            rightButtonSetup.setTranslateX(740);
-//            rightButtonSetup.setTranslateY(-415);
-        });
+        ImageView helpView = imageView("gui/asset/MenuScene.png", 0, 0);
+        ImageView setupRuleView = imageView("gui/asset/Setup.png", 0, -500);
+        ImageView rightViewSetup = buttonImageView("gui/asset/RIGHT.png");
+        ImageView rightViewSetup2 = buttonImageView("gui/asset/RIGHT2.png");
+        Button rightButtonSetup = button(740, -415, rightViewSetup);
+        setActionRightButton(rightButtonSetup, rightViewSetup2, rightViewSetup, 3,
+        setupRuleView, rightButtonSetup, null);
+        ImageView backView = buttonImageView("gui/asset/BACk.png");
+        ImageView backView2 = buttonImageView("gui/asset/BACK2.png");
+        Button backButton = button(0, 0, backView);
+        setActionBackButton(backButton, backView, backView2, 3,
+        setupRuleView, rightButtonSetup, null);
 
         scene3 = new Scene(new Pane(helpView, setupRuleView, rightButtonSetup, backButton));
 
 
         // help scene - scene4
-        Image helpMenuImage1 = new Image(getClass().getResource("gui/asset/MenuScene.png").toExternalForm());
-        ImageView helpView1 = new ImageView(helpMenuImage1);
-        helpView.setY(0);
-        helpView.setX(0);
-
-        // rule board
-        Image scatteringRule = new Image("gui/asset/Scattering.png");
-        ImageView scatteringRuleView = new ImageView(scatteringRule);
-        scatteringRuleView.setTranslateX(0);
-        scatteringRuleView.setTranslateY(-500);
-
-//        // right button
-        Image rightImageScattering = new Image("gui/asset/RIGHT.png");
-        ImageView rightViewScattering = new ImageView(rightImageScattering);
-        Image rightImageScattering2 = new Image("gui/asset/RIGHT2.png");
-        ImageView rightViewScattering2 = new ImageView(rightImageScattering2);
-
-        rightViewScattering.setFitHeight(80);
-        rightViewScattering.setFitWidth(80);
-        rightViewScattering2.setFitHeight(80);
-        rightViewScattering2.setFitWidth(80);
-
-        Button rightButtonScattering = new Button();
-        rightButtonScattering.setTranslateX(725);
-        rightButtonScattering.setTranslateY(-410);
-        rightButtonScattering.setPrefSize(80, 80);
-        rightButtonScattering.setStyle("-fx-background-color: #ffffff00;");
-        rightButtonScattering.setGraphic(rightViewScattering);
-
-        // left button scattering
-        Image leftImageScattering = new Image("gui/asset/LEFT.png");
-        ImageView leftViewScattering = new ImageView(leftImageScattering);
-        Image leftImageScattering2 = new Image("gui/asset/LEFT2.png");
-        ImageView leftViewScattering2 = new ImageView(leftImageScattering2);
-
-        leftViewScattering.setFitHeight(80);
-        leftViewScattering.setFitWidth(80);
-        leftViewScattering2.setFitHeight(80);
-        leftViewScattering2.setFitWidth(80);
-
-        Button leftButtonScattering = new Button();
-        leftButtonScattering.setTranslateX(240);
-        leftButtonScattering.setTranslateY(-410);
-        leftButtonScattering.setPrefSize(80, 80);
-        leftButtonScattering.setStyle("-fx-background-color: #ffffff00;");
-        leftButtonScattering.setGraphic(leftViewScattering);
-
-        rightButtonScattering.hoverProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean show) -> {
-            if (show) {
-                rightButtonScattering.setGraphic(rightViewScattering2);
-            } else {
-                rightButtonScattering.setGraphic(rightViewScattering);
-            }
-        });
-        rightButtonScattering.setOnAction(event -> {
-            stage.setScene(scene5);
-            scatteringRuleView.setTranslateY(-500);
-            rightButtonScattering.setTranslateY(-410);
-            leftButtonScattering.setTranslateY(-410);
-
-            TranslateTransition scatteringBoardTransitionSecond = new TranslateTransition(Duration.seconds(1), ((Pane) scene5.getRoot()).getChildren().get(1));
-            scatteringBoardTransitionSecond.setByY(500);
-            scatteringBoardTransitionSecond.setInterpolator(Interpolator.EASE_OUT);
-            scatteringBoardTransitionSecond.play();
-
-            TranslateTransition rightTransitionScatteringSecond = new TranslateTransition(Duration.seconds(1), ((Pane) scene5.getRoot()).getChildren().get(2));
-            rightTransitionScatteringSecond.setInterpolator(Interpolator.EASE_OUT);
-            rightTransitionScatteringSecond.setByY(500);
-            rightTransitionScatteringSecond.play();
-
-            TranslateTransition leftTransitionScatteringSecond = new TranslateTransition(Duration.seconds(1), ((Pane) scene5.getRoot()).getChildren().get(3));
-            leftTransitionScatteringSecond.setInterpolator(Interpolator.EASE_OUT);
-            leftTransitionScatteringSecond.setByY(500);
-            leftTransitionScatteringSecond.play();
-        });
-
-        leftButtonScattering.hoverProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean show) -> {
-            if (show) {
-                leftButtonScattering.setGraphic(leftViewScattering2);
-            } else {
-                leftButtonScattering.setGraphic(leftViewScattering);
-            }
-        });
-        leftButtonScattering.setOnAction(event -> {
-            stage.setScene(scene3);
-            scatteringRuleView.setTranslateY(-500);
-            rightButtonScattering.setTranslateY(-410);
-            leftButtonScattering.setTranslateY(-410);
-
-            TranslateTransition setupBoardTransition = new TranslateTransition(Duration.seconds(1), ((Pane) scene3.getRoot()).getChildren().get(1));
-            setupBoardTransition.setByY(500);
-            setupBoardTransition.setInterpolator(Interpolator.EASE_OUT);
-            setupBoardTransition.play();
-
-            TranslateTransition rightTransitionSetup = new TranslateTransition(Duration.seconds(1), ((Pane) scene3.getRoot()).getChildren().get(2));
-            rightTransitionSetup.setInterpolator(Interpolator.EASE_OUT);
-            rightTransitionSetup.setByY(500);
-            rightTransitionSetup.play();
-        });
-
-        // back to menu button
-        Image backImageScattering = new Image("gui/asset/BACK.png");
-        ImageView backViewScattering = new ImageView(backImageScattering);
-        Image backImageScattering2 = new Image("gui/asset/BACK2.png");
-        ImageView backViewScattering2 = new ImageView(backImageScattering2);
-
-        backViewScattering.setFitHeight(80);
-        backViewScattering.setFitWidth(80);
-        backViewScattering2.setFitHeight(80);
-        backViewScattering2.setFitWidth(80);
-
-        Button backButtonScattering = new Button();
-        backButtonScattering.setTranslateX(0);
-        backButtonScattering.setTranslateY(0);
-        backButtonScattering.setPrefSize(80, 80);
-        backButtonScattering.setStyle("-fx-background-color: #ffffff00;");
-        backButtonScattering.setGraphic(backViewScattering);
-
-        backButtonScattering.hoverProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean show) -> {
-            if (show) {
-                backButtonScattering.setGraphic(backViewScattering2);
-            } else {
-                backButtonScattering.setGraphic(backViewScattering);
-            }
-        });
-        backButtonScattering.setOnAction(event -> {
-            stage.setScene(scene1);
-            scatteringRuleView.setTranslateY(-500);
-            rightButtonScattering.setTranslateY(-410);
-            leftButtonScattering.setTranslateY(-410);
-        });
+        ImageView helpView1 = imageView("gui/asset/MenuScene.png", 0, 0);
+        ImageView scatteringRuleView = imageView("gui/asset/Scattering.png", 0, -500);
+        ImageView rightViewScattering = buttonImageView("gui/asset/RIGHT.png");
+        ImageView rightViewScattering2 = buttonImageView("gui/asset/RIGHT2.png");
+        Button rightButtonScattering = button(725, -410, rightViewScattering);
+        ImageView leftViewScattering = buttonImageView("gui/asset/LEFT.png");
+        ImageView leftViewScattering2 = buttonImageView("gui/asset/LEFT2.png");
+        Button leftButtonScattering= button(240, -410, leftViewScattering);
+        setActionRightButton(rightButtonScattering, rightViewScattering2, rightViewScattering, 4,
+        scatteringRuleView, rightButtonScattering, leftButtonScattering);
+        setActionLeftButton(leftButtonScattering, leftViewScattering2, leftViewScattering, 4,
+        scatteringRuleView, rightButtonScattering, leftButtonScattering);
+        ImageView backViewScattering = buttonImageView("gui/asset/BACK.png");
+        ImageView backViewScattering2 = buttonImageView("gui/asset/BACK2.png");
+        Button backButtonScattering = button(0, 0, backViewScattering);
+        setActionBackButton(backButtonScattering, backViewScattering, backViewScattering2, 4,
+        scatteringRuleView, rightButtonScattering, leftButtonScattering);
 
         scene4 = new Scene(new Pane(helpView1, scatteringRuleView, rightButtonScattering, leftButtonScattering, backButtonScattering));
 
+
         // 2th scattering scene - scene5
-        Image helpMenuImage2 = new Image(getClass().getResource("gui/asset/MenuScene.png").toExternalForm());
-        ImageView helpView2 = new ImageView(helpMenuImage2);
-        helpView2.setY(0);
-        helpView2.setX(0);
-
-        // rule board
-        Image scatteringRuleSecond = new Image("gui/asset/Scattering2.png");
-        ImageView scatteringRuleViewSecond = new ImageView(scatteringRuleSecond);
-        scatteringRuleViewSecond.setTranslateX(0);
-        scatteringRuleViewSecond.setTranslateY(-500);
-
-        // right button
-        Image rightImageScatteringSecond = new Image("gui/asset/RIGHT.png");
-        ImageView rightViewScatteringSecond = new ImageView(rightImageScatteringSecond);
-        Image rightImageScatteringSecond2 = new Image("gui/asset/RIGHT2.png");
-        ImageView rightViewScatteringSecond2 = new ImageView(rightImageScatteringSecond2);
-
-        rightViewScatteringSecond.setFitHeight(80);
-        rightViewScatteringSecond.setFitWidth(80);
-        rightViewScatteringSecond2.setFitHeight(80);
-        rightViewScatteringSecond2.setFitWidth(80);
-
-        Button rightButtonScatteringSecond = new Button();
-        rightButtonScatteringSecond.setTranslateX(725);
-        rightButtonScatteringSecond.setTranslateY(-410);
-        rightButtonScatteringSecond.setPrefSize(80, 80);
-        rightButtonScatteringSecond.setStyle("-fx-background-color: #ffffff00;");
-        rightButtonScatteringSecond.setGraphic(rightViewScatteringSecond);
-
-        // left button scattering
-        Image leftImageScatteringSecond = new Image("gui/asset/LEFT.png");
-        ImageView leftViewScatteringSecond = new ImageView(leftImageScatteringSecond);
-        Image leftImageScatteringSecond2 = new Image("gui/asset/LEFT2.png");
-        ImageView leftViewScatteringSecond2 = new ImageView(leftImageScatteringSecond2);
-
-        leftViewScatteringSecond.setFitHeight(80);
-        leftViewScatteringSecond.setFitWidth(80);
-        leftViewScatteringSecond2.setFitHeight(80);
-        leftViewScatteringSecond2.setFitWidth(80);
-
-        Button leftButtonScatteringSecond = new Button();
-        leftButtonScatteringSecond.setTranslateX(240);
-        leftButtonScatteringSecond.setTranslateY(-410);
-        leftButtonScatteringSecond.setPrefSize(80, 80);
-        leftButtonScatteringSecond.setStyle("-fx-background-color: #ffffff00;");
-        leftButtonScatteringSecond.setGraphic(leftViewScatteringSecond);
-
-        rightButtonScatteringSecond.hoverProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean show) -> {
-            if (show) {
-                rightButtonScatteringSecond.setGraphic(rightViewScatteringSecond2);
-            } else {
-                rightButtonScatteringSecond.setGraphic(rightViewScatteringSecond);
-            }
-        });
-        rightButtonScatteringSecond.setOnAction(event -> {
-            stage.setScene(scene6);
-            scatteringRuleViewSecond.setTranslateY(-500);
-            rightButtonScatteringSecond.setTranslateY(-410);
-            leftButtonScatteringSecond.setTranslateY(-410);
-
-            TranslateTransition capturingBoardTransition = new TranslateTransition(Duration.seconds(1), ((Pane) scene6.getRoot()).getChildren().get(1));
-            capturingBoardTransition.setByY(500);
-            capturingBoardTransition.setInterpolator(Interpolator.EASE_OUT);
-            capturingBoardTransition.play();
-
-            TranslateTransition rightTransitionCapturing = new TranslateTransition(Duration.seconds(1), ((Pane) scene6.getRoot()).getChildren().get(2));
-            rightTransitionCapturing.setInterpolator(Interpolator.EASE_OUT);
-            rightTransitionCapturing.setByY(500);
-            rightTransitionCapturing.play();
-
-            TranslateTransition leftTransitionCapturing = new TranslateTransition(Duration.seconds(1), ((Pane) scene6.getRoot()).getChildren().get(3));
-            leftTransitionCapturing.setInterpolator(Interpolator.EASE_OUT);
-            leftTransitionCapturing.setByY(500);
-            leftTransitionCapturing.play();
-        });
-
-        leftButtonScatteringSecond.hoverProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean show) -> {
-            if (show) {
-                leftButtonScatteringSecond.setGraphic(leftViewScatteringSecond2);
-            } else {
-                leftButtonScatteringSecond.setGraphic(leftViewScatteringSecond);
-            }
-        });
-        leftButtonScatteringSecond.setOnAction(event -> {
-            stage.setScene(scene4);
-            scatteringRuleViewSecond.setTranslateY(-500);
-            rightButtonScatteringSecond.setTranslateY(-410);
-            leftButtonScatteringSecond.setTranslateY(-410);
-
-            TranslateTransition scatteringBoardTransition = new TranslateTransition(Duration.seconds(1), ((Pane) scene4.getRoot()).getChildren().get(1));
-            scatteringBoardTransition.setByY(500);
-            scatteringBoardTransition.setInterpolator(Interpolator.EASE_OUT);
-            scatteringBoardTransition.play();
-
-            TranslateTransition rightTransitionScattering = new TranslateTransition(Duration.seconds(1), ((Pane) scene4.getRoot()).getChildren().get(2));
-            rightTransitionScattering.setInterpolator(Interpolator.EASE_OUT);
-            rightTransitionScattering.setByY(500);
-            rightTransitionScattering.play();
-
-            TranslateTransition leftTransitionScattering = new TranslateTransition(Duration.seconds(1), ((Pane) scene4.getRoot()).getChildren().get(3));
-            leftTransitionScattering.setInterpolator(Interpolator.EASE_OUT);
-            leftTransitionScattering.setByY(500);
-            leftTransitionScattering.play();
-        });
-
-        // back to menu button
-        Image backImageScatteringSecond = new Image("gui/asset/BACK.png");
-        ImageView backViewScatteringSecond = new ImageView(backImageScatteringSecond);
-        Image backImageScatteringSecond2 = new Image("gui/asset/BACK2.png");
-        ImageView backViewScatteringSecond2 = new ImageView(backImageScatteringSecond2);
-
-        backViewScatteringSecond.setFitHeight(80);
-        backViewScatteringSecond.setFitWidth(80);
-        backViewScatteringSecond2.setFitHeight(80);
-        backViewScatteringSecond2.setFitWidth(80);
-
-        Button backButtonScatteringSecond = new Button();
-        backButtonScatteringSecond.setTranslateX(0);
-        backButtonScatteringSecond.setTranslateY(0);
-        backButtonScatteringSecond.setPrefSize(80, 80);
-        backButtonScatteringSecond.setStyle("-fx-background-color: #ffffff00;");
-        backButtonScatteringSecond.setGraphic(backViewScatteringSecond);
-
-        backButtonScatteringSecond.hoverProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean show) -> {
-            if (show) {
-                backButtonScatteringSecond.setGraphic(backViewScatteringSecond2);
-            } else {
-                backButtonScatteringSecond.setGraphic(backViewScatteringSecond);
-            }
-        });
-        backButtonScatteringSecond.setOnAction(event -> {
-            stage.setScene(scene1);
-            scatteringRuleViewSecond.setTranslateY(-500);
-            rightButtonScatteringSecond.setTranslateY(-410);
-            leftButtonScatteringSecond.setTranslateY(-410);
-        });
+        ImageView helpView2 = imageView("gui/asset/MenuScene.png", 0, 0);
+        ImageView scatteringRuleViewSecond = imageView("gui/asset/Scattering2.png", 0, -500);
+        ImageView rightViewScatteringSecond = buttonImageView("gui/asset/RIGHT.png");
+        ImageView rightViewScatteringSecond2 = buttonImageView("gui/asset/RIGHT2.png");
+        Button rightButtonScatteringSecond = button(725, -410, rightViewScatteringSecond);
+        ImageView leftViewScatteringSecond = buttonImageView("gui/asset/LEFT.png");
+        ImageView leftViewScatteringSecond2 = buttonImageView("gui/asset/LEFT2.png");
+        Button leftButtonScatteringSecond = button(240, -410, leftViewScatteringSecond);
+        setActionRightButton(rightButtonScatteringSecond, rightViewScatteringSecond2, rightViewScatteringSecond, 5,
+        scatteringRuleViewSecond, rightButtonScatteringSecond, leftButtonScatteringSecond);
+        setActionLeftButton(leftButtonScatteringSecond, leftViewScatteringSecond2, leftViewScatteringSecond, 5,
+        scatteringRuleViewSecond, rightButtonScatteringSecond, leftButtonScatteringSecond);
+        ImageView backViewScatteringSecond = buttonImageView("gui/asset/BACK.png");
+        ImageView backViewScatteringSecond2 = buttonImageView("gui/asset/BACK2.png");
+        Button backButtonScatteringSecond = button(0, 0, backViewScatteringSecond);
+        setActionBackButton(backButtonScatteringSecond, backViewScatteringSecond, backViewScatteringSecond2, 5,
+        scatteringRuleViewSecond, rightButtonScatteringSecond, leftButtonScatteringSecond);
 
         scene5 = new Scene(new Pane(helpView2, scatteringRuleViewSecond, rightButtonScatteringSecond,
                 leftButtonScatteringSecond, backButtonScatteringSecond));
 
         // capturing scene - scene6
-        Image helpMenuImage3 = new Image(getClass().getResource("gui/asset/MenuScene.png").toExternalForm());
-        ImageView helpView3 = new ImageView(helpMenuImage3);
-        helpView3.setY(0);
-        helpView3.setX(0);
-
-        // rule board
-        Image capturingRule = new Image("gui/asset/Capturing.png");
-        ImageView capturingRuleView = new ImageView(capturingRule);
-        capturingRuleView.setTranslateX(0);
-        capturingRuleView.setTranslateY(-500);
-
-//        // right button
-        Image rightImageCapturing = new Image("gui/asset/RIGHT.png");
-        ImageView rightViewCapturing = new ImageView(rightImageCapturing);
-        Image rightImageCapturing2 = new Image("gui/asset/RIGHT2.png");
-        ImageView rightViewCapturing2 = new ImageView(rightImageCapturing2);
-
-        rightViewCapturing.setFitHeight(80);
-        rightViewCapturing.setFitWidth(80);
-        rightViewCapturing2.setFitHeight(80);
-        rightViewCapturing2.setFitWidth(80);
-
-        Button rightButtonCapturing = new Button();
-        rightButtonCapturing.setTranslateX(725);
-        rightButtonCapturing.setTranslateY(-410);
-        rightButtonCapturing.setPrefSize(80, 80);
-        rightButtonCapturing.setStyle("-fx-background-color: #ffffff00;");
-        rightButtonCapturing.setGraphic(rightViewCapturing);
-
-        // left button scattering
-        Image leftImageCapturing = new Image("gui/asset/LEFT.png");
-        ImageView leftViewCapturing = new ImageView(leftImageCapturing);
-        Image leftImageCapturing2 = new Image("gui/asset/LEFT2.png");
-        ImageView leftViewCapturing2 = new ImageView(leftImageCapturing2);
-
-        leftViewCapturing.setFitHeight(80);
-        leftViewCapturing.setFitWidth(80);
-        leftViewCapturing2.setFitHeight(80);
-        leftViewCapturing2.setFitWidth(80);
-
-        Button leftButtonCapturing = new Button();
-        leftButtonCapturing.setTranslateX(240);
-        leftButtonCapturing.setTranslateY(-410);
-        leftButtonCapturing.setPrefSize(80, 80);
-        leftButtonCapturing.setStyle("-fx-background-color: #ffffff00;");
-        leftButtonCapturing.setGraphic(leftViewCapturing);
-
-        rightButtonCapturing.hoverProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean show) -> {
-            if (show) {
-                rightButtonCapturing.setGraphic(rightViewCapturing2);
-            } else {
-                rightButtonCapturing.setGraphic(rightViewCapturing);
-            }
-        });
-        rightButtonCapturing.setOnAction(event -> {
-            stage.setScene(scene7);
-            capturingRuleView.setTranslateY(-500);
-            rightButtonCapturing.setTranslateY(-410);
-            leftButtonCapturing.setTranslateY(-410);
-
-            TranslateTransition passingBoardTransition = new TranslateTransition(Duration.seconds(1), ((Pane) scene7.getRoot()).getChildren().get(1));
-            passingBoardTransition.setByY(500);
-            passingBoardTransition.setInterpolator(Interpolator.EASE_OUT);
-            passingBoardTransition.play();
-
-            TranslateTransition rightTransitionPassing = new TranslateTransition(Duration.seconds(1), ((Pane) scene7.getRoot()).getChildren().get(2));
-            rightTransitionPassing.setInterpolator(Interpolator.EASE_OUT);
-            rightTransitionPassing.setByY(500);
-            rightTransitionPassing.play();
-
-            TranslateTransition leftTransitionPassing = new TranslateTransition(Duration.seconds(1), ((Pane) scene7.getRoot()).getChildren().get(3));
-            leftTransitionPassing.setInterpolator(Interpolator.EASE_OUT);
-            leftTransitionPassing.setByY(500);
-            leftTransitionPassing.play();
-
-        });
-
-        leftButtonCapturing.hoverProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean show) -> {
-            if (show) {
-                leftButtonCapturing.setGraphic(leftViewCapturing2);
-            } else {
-                leftButtonCapturing.setGraphic(leftViewCapturing);
-            }
-        });
-        leftButtonCapturing.setOnAction(event -> {
-            stage.setScene(scene5);
-            capturingRuleView.setTranslateY(-500);
-            rightButtonCapturing.setTranslateY(-410);
-            leftButtonCapturing.setTranslateY(-410);
-
-            TranslateTransition scatteringBoardTransitionSecond = new TranslateTransition(Duration.seconds(1), ((Pane) scene5.getRoot()).getChildren().get(1));
-            scatteringBoardTransitionSecond.setByY(500);
-            scatteringBoardTransitionSecond.setInterpolator(Interpolator.EASE_OUT);
-            scatteringBoardTransitionSecond.play();
-
-            TranslateTransition rightTransitionScatteringSecond = new TranslateTransition(Duration.seconds(1), ((Pane) scene5.getRoot()).getChildren().get(2));
-            rightTransitionScatteringSecond.setInterpolator(Interpolator.EASE_OUT);
-            rightTransitionScatteringSecond.setByY(500);
-            rightTransitionScatteringSecond.play();
-
-            TranslateTransition leftTransitionScatteringSecond = new TranslateTransition(Duration.seconds(1), ((Pane) scene5.getRoot()).getChildren().get(3));
-            leftTransitionScatteringSecond.setInterpolator(Interpolator.EASE_OUT);
-            leftTransitionScatteringSecond.setByY(500);
-            leftTransitionScatteringSecond.play();
-        });
-
-        // back to menu button
-        Image backImageCapturing = new Image("gui/asset/BACK.png");
-        ImageView backViewCapturing = new ImageView(backImageCapturing);
-        Image backImageCapturing2 = new Image("gui/asset/BACK2.png");
-        ImageView backViewCapturing2 = new ImageView(backImageCapturing2);
-
-        backViewCapturing.setFitHeight(80);
-        backViewCapturing.setFitWidth(80);
-        backViewCapturing2.setFitHeight(80);
-        backViewCapturing2.setFitWidth(80);
-
-        Button backButtonCapturing = new Button();
-        backButtonCapturing.setTranslateX(0);
-        backButtonCapturing.setTranslateY(0);
-        backButtonCapturing.setPrefSize(80, 80);
-        backButtonCapturing.setStyle("-fx-background-color: #ffffff00;");
-        backButtonCapturing.setGraphic(backViewCapturing);
-
-        backButtonCapturing.hoverProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean show) -> {
-            if (show) {
-                backButtonCapturing.setGraphic(backViewCapturing2);
-            } else {
-                backButtonCapturing.setGraphic(backViewCapturing);
-            }
-        });
-        backButtonCapturing.setOnAction(event -> {
-            stage.setScene(scene1);
-            capturingRuleView.setTranslateY(-500);
-            rightButtonCapturing.setTranslateY(-410);
-            leftButtonCapturing.setTranslateY(-410);
-        });
+        ImageView helpView3 = imageView("gui/asset/MenuScene.png", 0, 0);
+        ImageView capturingRuleView = imageView("gui/asset/Capturing.png", 0, -500);
+        ImageView rightViewCapturing = buttonImageView("gui/asset/RIGHT.png");
+        ImageView rightViewCapturing2 = buttonImageView("gui/asset/RIGHT2.png");
+        Button rightButtonCapturing = button(725, -410, rightViewCapturing);
+        ImageView leftViewCapturing = buttonImageView("gui/asset/LEFT.png");
+        ImageView leftViewCapturing2 = buttonImageView("gui/asset/LEFT2.png");
+        Button leftButtonCapturing = button(240, -410, leftViewCapturing);
+        setActionRightButton(rightButtonCapturing, rightViewCapturing2, rightViewCapturing, 6,
+        capturingRuleView, rightButtonCapturing, leftButtonCapturing);
+        setActionLeftButton(leftButtonCapturing, leftViewCapturing2, leftViewCapturing, 6,
+        capturingRuleView, rightButtonCapturing, leftButtonCapturing);
+        ImageView backViewCapturing = buttonImageView("gui/asset/BACK.png");
+        ImageView backViewCapturing2 = buttonImageView("gui/asset/BACK2.png");
+        Button backButtonCapturing = button(0, 0, backViewCapturing);
+        setActionBackButton(backButtonCapturing, backViewCapturing, backViewCapturing2, 6,
+        capturingRuleView, rightButtonCapturing, leftButtonCapturing);
 
         scene6 = new Scene(new Pane(helpView3, capturingRuleView, rightButtonCapturing,
                 leftButtonCapturing, backButtonCapturing));
 
         // passing scene - scene7
-        Image helpMenuImage4 = new Image(getClass().getResource("gui/asset/MenuScene.png").toExternalForm());
-        ImageView helpView4 = new ImageView(helpMenuImage4);
-        helpView4.setY(0);
-        helpView4.setX(0);
-
-        // rule board
-        Image passingRule = new Image("gui/asset/Passing.png");
-        ImageView passingRuleView = new ImageView(passingRule);
-        passingRuleView.setTranslateX(0);
-        passingRuleView.setTranslateY(-500);
-
-//        // right button
-        Image rightImagePassing = new Image("gui/asset/RIGHT.png");
-        ImageView rightViewPassing = new ImageView(rightImagePassing);
-        Image rightImagePassing2 = new Image("gui/asset/RIGHT2.png");
-        ImageView rightViewPassing2 = new ImageView(rightImagePassing2);
-
-        rightViewPassing.setFitHeight(80);
-        rightViewPassing.setFitWidth(80);
-        rightViewPassing2.setFitHeight(80);
-        rightViewPassing2.setFitWidth(80);
-
-        Button rightButtonPassing = new Button();
-        rightButtonPassing.setTranslateX(725);
-        rightButtonPassing.setTranslateY(-410);
-        rightButtonPassing.setPrefSize(80, 80);
-        rightButtonPassing.setStyle("-fx-background-color: #ffffff00;");
-        rightButtonPassing.setGraphic(rightViewPassing);
-
-        // left button scattering
-        Image leftImagePassing = new Image("gui/asset/LEFT.png");
-        ImageView leftViewPassing = new ImageView(leftImagePassing);
-        Image leftImagePassing2 = new Image("gui/asset/LEFT2.png");
-        ImageView leftViewPassing2 = new ImageView(leftImagePassing2);
-
-        leftViewPassing.setFitHeight(80);
-        leftViewPassing.setFitWidth(80);
-        leftViewPassing2.setFitHeight(80);
-        leftViewPassing2.setFitWidth(80);
-
-        Button leftButtonPassing = new Button();
-        leftButtonPassing.setTranslateX(240);
-        leftButtonPassing.setTranslateY(-410);
-        leftButtonPassing.setPrefSize(80, 80);
-        leftButtonPassing.setStyle("-fx-background-color: #ffffff00;");
-        leftButtonPassing.setGraphic(leftViewPassing);
-
-        rightButtonPassing.hoverProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean show) -> {
-            if (show) {
-                rightButtonPassing.setGraphic(rightViewPassing2);
-            } else {
-                rightButtonPassing.setGraphic(rightViewPassing);
-            }
-        });
-        rightButtonPassing.setOnAction(event -> {
-            stage.setScene(scene8);
-            passingRuleView.setTranslateY(-500);
-            rightButtonPassing.setTranslateY(-410);
-            leftButtonPassing.setTranslateY(-410);
-
-            TranslateTransition dispatchingBoardTransition = new TranslateTransition(Duration.seconds(1), ((Pane) scene8.getRoot()).getChildren().get(1));
-            dispatchingBoardTransition.setByY(500);
-            dispatchingBoardTransition.setInterpolator(Interpolator.EASE_OUT);
-            dispatchingBoardTransition.play();
-
-            TranslateTransition rightTransitionDispatching = new TranslateTransition(Duration.seconds(1), ((Pane) scene8.getRoot()).getChildren().get(2));
-            rightTransitionDispatching.setInterpolator(Interpolator.EASE_OUT);
-            rightTransitionDispatching.setByY(500);
-            rightTransitionDispatching.play();
-
-            TranslateTransition leftTransitionDispatching = new TranslateTransition(Duration.seconds(1), ((Pane) scene8.getRoot()).getChildren().get(3));
-            leftTransitionDispatching.setInterpolator(Interpolator.EASE_OUT);
-            leftTransitionDispatching.setByY(500);
-            leftTransitionDispatching.play();
-        });
-
-        leftButtonPassing.hoverProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean show) -> {
-            if (show) {
-                leftButtonPassing.setGraphic(leftViewPassing2);
-            } else {
-                leftButtonPassing.setGraphic(leftViewPassing);
-            }
-        });
-        leftButtonPassing.setOnAction(event -> {
-            stage.setScene(scene6);
-            passingRuleView.setTranslateY(-500);
-            rightButtonPassing.setTranslateY(-410);
-            leftButtonPassing.setTranslateY(-410);
-
-            TranslateTransition capturingBoardTransition = new TranslateTransition(Duration.seconds(1), ((Pane) scene6.getRoot()).getChildren().get(1));
-            capturingBoardTransition.setByY(500);
-            capturingBoardTransition.setInterpolator(Interpolator.EASE_OUT);
-            capturingBoardTransition.play();
-
-            TranslateTransition rightTransitionCapturing = new TranslateTransition(Duration.seconds(1), ((Pane) scene6.getRoot()).getChildren().get(2));
-            rightTransitionCapturing.setInterpolator(Interpolator.EASE_OUT);
-            rightTransitionCapturing.setByY(500);
-            rightTransitionCapturing.play();
-
-            TranslateTransition leftTransitionCapturing = new TranslateTransition(Duration.seconds(1), ((Pane) scene6.getRoot()).getChildren().get(3));
-            leftTransitionCapturing.setInterpolator(Interpolator.EASE_OUT);
-            leftTransitionCapturing.setByY(500);
-            leftTransitionCapturing.play();
-        });
-
-        // back to menu button
-        Image backImagePassing = new Image("gui/asset/BACK.png");
-        ImageView backViewPassing = new ImageView(backImagePassing);
-        Image backImagePassing2 = new Image("gui/asset/BACK2.png");
-        ImageView backViewPassing2 = new ImageView(backImagePassing2);
-
-        backViewPassing.setFitHeight(80);
-        backViewPassing.setFitWidth(80);
-        backViewPassing2.setFitHeight(80);
-        backViewPassing2.setFitWidth(80);
-
-        Button backButtonPassing = new Button();
-        backButtonPassing.setTranslateX(0);
-        backButtonPassing.setTranslateY(0);
-        backButtonPassing.setPrefSize(80, 80);
-        backButtonPassing.setStyle("-fx-background-color: #ffffff00;");
-        backButtonPassing.setGraphic(backViewPassing);
-
-        backButtonPassing.hoverProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean show) -> {
-            if (show) {
-                backButtonPassing.setGraphic(backViewPassing2);
-            } else {
-                backButtonPassing.setGraphic(backViewPassing);
-            }
-        });
-        backButtonPassing.setOnAction(event -> {
-            stage.setScene(scene1);
-            passingRuleView.setTranslateY(-500);
-            rightButtonPassing.setTranslateY(-410);
-            leftButtonPassing.setTranslateY(-410);
-        });
+        ImageView helpView4 = imageView("gui/asset/MenuScene.png", 0, 0);
+        ImageView passingRuleView = imageView("gui/asset/Passing.png", 0, -500);
+        ImageView rightViewPassing = buttonImageView("gui/asset/RIGHT.png");
+        ImageView rightViewPassing2 = buttonImageView("gui/asset/RIGHT2.png");
+        Button rightButtonPassing = button(725, -410, rightViewPassing);
+        ImageView leftViewPassing = buttonImageView("gui/asset/LEFT.png");
+        ImageView leftViewPassing2 = buttonImageView("gui/asset/LEFT2.png");
+        Button leftButtonPassing = button(240, -410, leftViewPassing);
+        setActionRightButton(rightButtonPassing, rightViewPassing2, rightViewPassing, 7,
+        passingRuleView, rightButtonPassing, leftButtonPassing);
+        setActionLeftButton(leftButtonPassing, leftViewPassing2, leftViewPassing, 7,
+        passingRuleView, rightButtonPassing, leftButtonPassing);
+        ImageView backViewPassing = buttonImageView("gui/asset/BACK.png");
+        ImageView backViewPassing2 = buttonImageView("gui/asset/BACK2.png");
+        Button backButtonPassing = button(0, 0, backViewPassing);
+        setActionBackButton(backButtonPassing, backViewPassing, backViewPassing2, 7,
+                passingRuleView, rightButtonPassing, leftButtonPassing);
 
         scene7 = new Scene(new Pane(helpView4, passingRuleView, rightButtonPassing,
                 leftButtonPassing, backButtonPassing));
 
+        /////////////
         // dispatching scene - scene8
-        Image helpMenuImage5 = new Image(getClass().getResource("gui/asset/MenuScene.png").toExternalForm());
-        ImageView helpView5 = new ImageView(helpMenuImage5);
-        helpView5.setY(0);
-        helpView5.setX(0);
-
-        // rule board
-        Image dispatchingRule = new Image("gui/asset/Dispatching.png");
-        ImageView dispatchingRuleView = new ImageView(dispatchingRule);
-        dispatchingRuleView.setTranslateX(0);
-        dispatchingRuleView.setTranslateY(-500);
-
-//        // right button
-        Image rightImageDispatching = new Image("gui/asset/RIGHT.png");
-        ImageView rightViewDispatching = new ImageView(rightImageDispatching);
-        Image rightImageDispatching2 = new Image("gui/asset/RIGHT2.png");
-        ImageView rightViewDispatching2 = new ImageView(rightImageDispatching2);
-
-        rightViewDispatching.setFitHeight(80);
-        rightViewDispatching.setFitWidth(80);
-        rightViewDispatching2.setFitHeight(80);
-        rightViewDispatching2.setFitWidth(80);
-
-        Button rightButtonDispatching = new Button();
-        rightButtonDispatching.setTranslateX(725);
-        rightButtonDispatching.setTranslateY(-410);
-        rightButtonDispatching.setPrefSize(80, 80);
-        rightButtonDispatching.setStyle("-fx-background-color: #ffffff00;");
-        rightButtonDispatching.setGraphic(rightViewDispatching);
-
-        // left button scattering
-        Image leftImageDispatching = new Image("gui/asset/LEFT.png");
-        ImageView leftViewDispatching = new ImageView(leftImageDispatching);
-        Image leftImageDispatching2 = new Image("gui/asset/LEFT2.png");
-        ImageView leftViewDispatching2 = new ImageView(leftImageDispatching2);
-
-        leftViewDispatching.setFitHeight(80);
-        leftViewDispatching.setFitWidth(80);
-        leftViewDispatching2.setFitHeight(80);
-        leftViewDispatching2.setFitWidth(80);
-
-        Button leftButtonDispatching = new Button();
-        leftButtonDispatching.setTranslateX(240);
-        leftButtonDispatching.setTranslateY(-410);
-        leftButtonDispatching.setPrefSize(80, 80);
-        leftButtonDispatching.setStyle("-fx-background-color: #ffffff00;");
-        leftButtonDispatching.setGraphic(leftViewDispatching);
-
-        rightButtonDispatching.hoverProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean show) -> {
-            if (show) {
-                rightButtonDispatching.setGraphic(rightViewDispatching2);
-            } else {
-                rightButtonDispatching.setGraphic(rightViewDispatching);
-            }
-        });
-        rightButtonDispatching.setOnAction(event -> {
-            stage.setScene(scene9);
-            dispatchingRuleView.setTranslateY(-500);
-            rightButtonDispatching.setTranslateY(-410);
-            leftButtonDispatching.setTranslateY(-410);
-
-            TranslateTransition winningBoardTransition = new TranslateTransition(Duration.seconds(1), ((Pane) scene9.getRoot()).getChildren().get(1));
-            winningBoardTransition.setByY(500);
-            winningBoardTransition.setInterpolator(Interpolator.EASE_OUT);
-            winningBoardTransition.play();
-
-            TranslateTransition rightTransitionWinning = new TranslateTransition(Duration.seconds(1), ((Pane) scene9.getRoot()).getChildren().get(2));
-            rightTransitionWinning.setInterpolator(Interpolator.EASE_OUT);
-            rightTransitionWinning.setByY(500);
-            rightTransitionWinning.play();
-        });
-
-        leftButtonDispatching.hoverProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean show) -> {
-            if (show) {
-                leftButtonDispatching.setGraphic(leftViewDispatching2);
-            } else {
-                leftButtonDispatching.setGraphic(leftViewDispatching);
-            }
-        });
-        leftButtonDispatching.setOnAction(event -> {
-            stage.setScene(scene7);
-            dispatchingRuleView.setTranslateY(-500);
-            rightButtonDispatching.setTranslateY(-410);
-            leftButtonDispatching.setTranslateY(-410);
-
-            TranslateTransition passingBoardTransition = new TranslateTransition(Duration.seconds(1), ((Pane) scene7.getRoot()).getChildren().get(1));
-            passingBoardTransition.setByY(500);
-            passingBoardTransition.setInterpolator(Interpolator.EASE_OUT);
-            passingBoardTransition.play();
-
-            TranslateTransition rightTransitionPassing = new TranslateTransition(Duration.seconds(1), ((Pane) scene7.getRoot()).getChildren().get(2));
-            rightTransitionPassing.setInterpolator(Interpolator.EASE_OUT);
-            rightTransitionPassing.setByY(500);
-            rightTransitionPassing.play();
-
-            TranslateTransition leftTransitionPassing = new TranslateTransition(Duration.seconds(1), ((Pane) scene7.getRoot()).getChildren().get(3));
-            leftTransitionPassing.setInterpolator(Interpolator.EASE_OUT);
-            leftTransitionPassing.setByY(500);
-            leftTransitionPassing.play();
-        });
-
-        // back to menu button
-        Image backImageDispatching = new Image("gui/asset/BACK.png");
-        ImageView backViewDispatching = new ImageView(backImageDispatching);
-        Image backImageDispatching2 = new Image("gui/asset/BACK2.png");
-        ImageView backViewDispatching2 = new ImageView(backImageDispatching2);
-
-        backViewDispatching.setFitHeight(80);
-        backViewDispatching.setFitWidth(80);
-        backViewDispatching2.setFitHeight(80);
-        backViewDispatching2.setFitWidth(80);
-
-        Button backButtonDispatching = new Button();
-        backButtonDispatching.setTranslateX(0);
-        backButtonDispatching.setTranslateY(0);
-        backButtonDispatching.setPrefSize(80, 80);
-        backButtonDispatching.setStyle("-fx-background-color: #ffffff00;");
-        backButtonDispatching.setGraphic(backViewDispatching);
-
-        backButtonDispatching.hoverProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean show) -> {
-            if (show) {
-                backButtonDispatching.setGraphic(backViewDispatching2);
-            } else {
-                backButtonDispatching.setGraphic(backViewDispatching);
-            }
-        });
-        backButtonDispatching.setOnAction(event -> {
-            stage.setScene(scene1);
-            dispatchingRuleView.setTranslateY(-500);
-            rightButtonDispatching.setTranslateY(-410);
-            leftButtonDispatching.setTranslateY(-410);
-        });
+        ImageView helpView5 = imageView("gui/asset/MenuScene.png", 0, 0);
+        ImageView dispatchingRuleView = imageView("gui/asset/Dispatching.png", 0, -500);
+        ImageView rightViewDispatching = buttonImageView("gui/asset/RIGHT.png");
+        ImageView rightViewDispatching2 = buttonImageView("gui/asset/RIGHT2.png");
+        Button rightButtonDispatching = button(725, -410, rightViewDispatching);
+        ImageView leftViewDispatching = buttonImageView("gui/asset/LEFT.png");
+        ImageView leftViewDispatching2 = buttonImageView("gui/asset/LEFT2.png");
+        Button leftButtonDispatching = button(240, -410, leftViewDispatching);
+        setActionRightButton(rightButtonDispatching, rightViewDispatching2, rightViewDispatching, 8,
+        dispatchingRuleView, rightButtonDispatching, leftButtonDispatching);
+        setActionLeftButton(leftButtonDispatching, leftViewDispatching2, leftViewDispatching, 8,
+        dispatchingRuleView, rightButtonDispatching, leftButtonDispatching);
+        ImageView backViewDispatching = buttonImageView("gui/asset/BACK.png");
+        ImageView backViewDispatching2 = buttonImageView("gui/asset/BACK2.png");
+        Button backButtonDispatching = button(0,0,backViewDispatching);
+        setActionBackButton(backButtonDispatching, backViewDispatching, backViewDispatching2, 8,
+                dispatchingRuleView, rightButtonDispatching, leftButtonDispatching);
 
         scene8 = new Scene(new Pane(helpView5, dispatchingRuleView, rightButtonDispatching,
                 leftButtonDispatching, backButtonDispatching));
 
-
+        ///////////////////////
         // winning scene - scene9
-        Image helpMenuImage6 = new Image(getClass().getResource("gui/asset/MenuScene.png").toExternalForm());
-        ImageView helpView6 = new ImageView(helpMenuImage6);
-        helpView6.setY(0);
-        helpView6.setX(0);
-
-        // rule board
-        Image winningRule = new Image("gui/asset/Winning.png");
-        ImageView winningRuleView = new ImageView(winningRule);
-        winningRuleView.setTranslateX(0);
-        winningRuleView.setTranslateY(-500);
-
-        // left button scattering
-        Image leftImageWinning = new Image("gui/asset/LEFT.png");
-        ImageView leftViewWinning = new ImageView(leftImageWinning);
-        Image leftImageWinning2 = new Image("gui/asset/LEFT2.png");
-        ImageView leftViewWinning2 = new ImageView(leftImageWinning2);
-
-        leftViewWinning.setFitHeight(80);
-        leftViewWinning.setFitWidth(80);
-        leftViewWinning2.setFitHeight(80);
-        leftViewWinning2.setFitWidth(80);
-
-        Button leftButtonWinning = new Button();
-        leftButtonWinning.setTranslateX(240);
-        leftButtonWinning.setTranslateY(-410);
-        leftButtonWinning.setPrefSize(80, 80);
-        leftButtonWinning.setStyle("-fx-background-color: #ffffff00;");
-        leftButtonWinning.setGraphic(leftViewWinning);
-
-        leftButtonWinning.hoverProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean show) -> {
-            if (show) {
-                leftButtonWinning.setGraphic(leftViewWinning2);
-            } else {
-                leftButtonWinning.setGraphic(leftViewWinning);
-            }
-        });
-
-        leftButtonWinning.setOnAction(event -> {
-            stage.setScene(scene8);
-            winningRuleView.setTranslateY(-500);
-            leftButtonWinning.setTranslateY(-410);
-
-            TranslateTransition dispatchingBoardTransition = new TranslateTransition(Duration.seconds(1), ((Pane) scene8.getRoot()).getChildren().get(1));
-            dispatchingBoardTransition.setByY(500);
-            dispatchingBoardTransition.setInterpolator(Interpolator.EASE_OUT);
-            dispatchingBoardTransition.play();
-
-            TranslateTransition rightTransitionDispatching = new TranslateTransition(Duration.seconds(1), ((Pane) scene8.getRoot()).getChildren().get(2));
-            rightTransitionDispatching.setInterpolator(Interpolator.EASE_OUT);
-            rightTransitionDispatching.setByY(500);
-            rightTransitionDispatching.play();
-
-            TranslateTransition leftTransitionDispatching = new TranslateTransition(Duration.seconds(1), ((Pane) scene8.getRoot()).getChildren().get(3));
-            leftTransitionDispatching.setInterpolator(Interpolator.EASE_OUT);
-            leftTransitionDispatching.setByY(500);
-            leftTransitionDispatching.play();
-        });
-
-        // back to menu button
-        Image backImageWinning = new Image("gui/asset/BACK.png");
-        ImageView backViewWinning = new ImageView(backImageDispatching);
-        Image backImageWinning2 = new Image("gui/asset/BACK2.png");
-        ImageView backViewWinning2 = new ImageView(backImageWinning2);
-
-        backViewWinning.setFitHeight(80);
-        backViewWinning.setFitWidth(80);
-        backViewWinning2.setFitHeight(80);
-        backViewWinning2.setFitWidth(80);
-
-        Button backButtonWinning = new Button();
-        backButtonWinning.setTranslateX(0);
-        backButtonWinning.setTranslateY(0);
-        backButtonWinning.setPrefSize(80, 80);
-        backButtonWinning.setStyle("-fx-background-color: #ffffff00;");
-        backButtonWinning.setGraphic(backViewWinning);
-
-        backButtonWinning.hoverProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean show) -> {
-            if (show) {
-                backButtonWinning.setGraphic(backViewWinning2);
-            } else {
-                backButtonWinning.setGraphic(backViewWinning);
-            }
-        });
-        backButtonWinning.setOnAction(event -> {
-            stage.setScene(scene1);
-            winningRuleView.setTranslateY(-500);
-            leftButtonWinning.setTranslateY(-410);
-        });
+        ImageView helpView6 = imageView("gui/asset/MenuScene.png", 0, 0);
+        ImageView winningRuleView = imageView("gui/asset/Winning.png", 0, -500);
+        ImageView leftViewWinning = buttonImageView("gui/asset/LEFT.png");
+        ImageView leftViewWinning2 = buttonImageView("gui/asset/LEFT2.png");
+        Button leftButtonWinning = button(240, -410, leftViewWinning);
+        setActionLeftButton(leftButtonWinning, leftViewWinning2, leftViewWinning, 9,
+        winningRuleView, null, leftButtonWinning);
+        ImageView backViewWinning = buttonImageView("gui/asset/BACK.png");
+        ImageView backViewWinning2 = buttonImageView("gui/asset/BACK2.png");
+        Button backButtonWinning = button(0, 0, backViewWinning);
+        setActionBackButton(backButtonWinning, backViewWinning, backViewWinning2, 9,
+                winningRuleView, null, leftButtonWinning);
 
         scene9 = new Scene(new Pane(helpView6, winningRuleView,
                 leftButtonWinning, backButtonWinning));
-        // point counting
+
+        scenes.add(scene3);
+        scenes.add(scene4);
+        scenes.add(scene5);
+        scenes.add(scene6);
+        scenes.add(scene7);
+        scenes.add(scene8);
+        scenes.add(scene9);
+    }
+
+
+    // create ImageView
+    public ImageView imageView(String path, int X, int Y) {
+        Image image = new Image(getClass().getResource(path).toExternalForm());
+        ImageView imageView = new ImageView(image);
+        imageView.setTranslateX(X);
+        imageView.setTranslateY(Y);
+        return imageView;
+    }
+
+    // create button image view
+    public ImageView buttonImageView(String path) {
+        Image image = new Image(path);
+        ImageView imageView = new ImageView(image);
+        imageView.setFitWidth(80);
+        imageView.setFitHeight(80);
+        return imageView;
+    }
+
+    // create button
+    public Button button(int X, int Y, ImageView imageView) {
+        Button button = new Button();
+        button.setTranslateX(X);
+        button.setTranslateY(Y);
+        button.setPrefSize(80, 80);
+        button.setStyle("-fx-background-color: #ffffff00");
+        button.setGraphic(imageView);
+        return button;
+    }
+
+    // set action for button
+    public void setActionRightButton(Button button, ImageView imageView2, ImageView imageView, int currentScene,
+                                     ImageView currentBoard, Button currentRightButton, Button currentLeftButton) {
+        if (currentScene != 9) {
+            button.hoverProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean show) -> {
+                if(show) {
+                    button.setGraphic(imageView2);
+                } else {
+                    button.setGraphic(imageView);
+                }
+            });
+
+            button.setOnAction(event -> {
+                stage.setScene(scenes.get(currentScene - 2));
+                currentBoard.setTranslateY(-500);
+                currentRightButton.setTranslateY(-410);
+                if (currentLeftButton != null) {
+                    currentLeftButton.setTranslateY(-410);
+                }
+
+                TranslateTransition nextBoardTransition = new TranslateTransition(Duration.seconds(1), ((Pane) scenes.get(currentScene - 2).getRoot()).getChildren().get(1));
+                nextBoardTransition.setByY(500);
+                nextBoardTransition.setInterpolator(Interpolator.EASE_OUT);
+                nextBoardTransition.play();
+                if (currentScene != 8) {
+                    TranslateTransition nextRightButtonTransition = new TranslateTransition(Duration.seconds(1), ((Pane) scenes.get(currentScene - 2).getRoot()).getChildren().get(2));
+                    nextRightButtonTransition.setByY(500);
+                    nextRightButtonTransition.setInterpolator(Interpolator.EASE_OUT);
+                    nextRightButtonTransition.play();
+
+                    TranslateTransition nextLeftButtonTransition = new TranslateTransition(Duration.seconds(1), ((Pane) scenes.get(currentScene - 2).getRoot()).getChildren().get(3));
+                    nextLeftButtonTransition.setByY(500);
+                    nextLeftButtonTransition.setInterpolator(Interpolator.EASE_OUT);
+                    nextLeftButtonTransition.play();
+                } else {
+                    TranslateTransition nextLeftButtonTransition = new TranslateTransition(Duration.seconds(1), ((Pane) scenes.get(currentScene - 2).getRoot()).getChildren().get(2));
+                    nextLeftButtonTransition.setByY(500);
+                    nextLeftButtonTransition.setInterpolator(Interpolator.EASE_OUT);
+                    nextLeftButtonTransition.play();
+                }
+
+            });
+        }
 
     }
+
+    // set action for left button
+    public void setActionLeftButton(Button button, ImageView imageView2, ImageView imageView, int currentScene,
+                               ImageView currentBoard, Button currentRightButton, Button currentLeftButton) {
+        if (currentScene != 3) {
+            button.hoverProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean show) -> {
+                if (show) {
+                    button.setGraphic(imageView2);
+                } else {
+                    button.setGraphic(imageView);
+                }
+            });
+
+            button.setOnAction(event -> {
+                stage.setScene(scenes.get(currentScene - 4));
+                currentBoard.setTranslateY(-500);
+                if (currentRightButton != null) {
+                    currentRightButton.setTranslateY(-410);
+                }
+                currentLeftButton.setTranslateY(-410);
+
+                TranslateTransition previousBoardTransition = new TranslateTransition(Duration.seconds(1), ((Pane) scenes.get(currentScene - 4).getRoot()).getChildren().get(1));
+                previousBoardTransition.setByY(500);
+                previousBoardTransition.setInterpolator(Interpolator.EASE_OUT);
+                previousBoardTransition.play();
+
+                if (currentScene != 4) {
+                    TranslateTransition previousRigthButtonTransition = new TranslateTransition(Duration.seconds(1), ((Pane) scenes.get(currentScene - 4).getRoot()).getChildren().get(2));
+                    previousRigthButtonTransition.setByY(500);
+                    previousRigthButtonTransition.setInterpolator(Interpolator.EASE_OUT);
+                    previousRigthButtonTransition.play();
+
+                    TranslateTransition previousLeftButtonTransition = new TranslateTransition(Duration.seconds(1), ((Pane) scenes.get(currentScene - 4).getRoot()).getChildren().get(3));
+                    previousLeftButtonTransition.setByY(500);
+                    previousLeftButtonTransition.setInterpolator(Interpolator.EASE_OUT);
+                    previousLeftButtonTransition.play();
+                } else {
+                    TranslateTransition previousRightButtonTransition = new TranslateTransition(Duration.seconds(1), ((Pane) scenes.get(currentScene - 4).getRoot()).getChildren().get(2));
+                    previousRightButtonTransition.setByY(500);
+                    previousRightButtonTransition.setInterpolator(Interpolator.EASE_OUT);
+                    previousRightButtonTransition.play();
+                }
+            });
+        }
+    }
+
+    // set action for back button
+    public void setActionBackButton(Button button, ImageView imageView, ImageView imageView2, int currentScene,
+                                    ImageView currentBoard, Button currentRightButton, Button currentLeftButton) {
+        button.hoverProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean show) -> {
+            if (show) {
+                button.setGraphic(imageView2);
+            } else {
+                button.setGraphic(imageView);
+            }
+        });
+
+        button.setOnAction(event -> {
+            stage.setScene(scene1);
+            currentBoard.setTranslateY(-500);
+            if (currentRightButton != null) {
+                currentRightButton.setTranslateY(-410);
+            }
+            if (currentLeftButton != null) {
+                currentLeftButton.setTranslateY(-410);
+            }
+        });
+    }
+
 
     public void setScene(Scene scene) {
         Canvas canvas = new Canvas(1080, 960);
@@ -1412,7 +832,7 @@ public class Menu extends Application{
             this.ciz_stones.add(stone);
         }
 
-        this.MPlayer =  new Utils(new File("gui/asset/soundtrack_2.mp3").toURI().toString());
+        this.MPlayer =  new Utils(new File("src/gui/asset/soundtrack_2.mp3").toURI().toString());
         CitizenSquare CS1 = new CitizenSquare(1, 0);
         CitizenSquare CS2 = new CitizenSquare(2, 0);
         CitizenSquare CS3 = new CitizenSquare(3, 0);
