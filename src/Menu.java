@@ -39,6 +39,8 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.control.Button;
 import javafx.scene.canvas.Canvas;
 import javax.swing.*;
+
+
 import java.io.File;
 
 import javafx.util.Duration;
@@ -1410,7 +1412,7 @@ public class Menu extends Application{
             this.ciz_stones.add(stone);
         }
 
-        this.MPlayer =  new Utils(new File("src/gui/asset/bg_music.mp3").toURI().toString());
+        this.MPlayer =  new Utils(new File("gui/asset/soundtrack_2.mp3").toURI().toString());
         CitizenSquare CS1 = new CitizenSquare(1, 0);
         CitizenSquare CS2 = new CitizenSquare(2, 0);
         CitizenSquare CS3 = new CitizenSquare(3, 0);
