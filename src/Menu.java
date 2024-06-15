@@ -1071,35 +1071,6 @@ public class Menu extends Application{
             }
         }
     }
-    
-    public void confirmBotMove(MinimaxBot bot, int chosenSquareID, boolean isMoveLeft) {
-    	JPanel direction_panel = new JPanel();
-        JLabel label1 = new JLabel("*********Start the bot turn?*********");
-        JButton button = new JButton("Confirm!");
-
-        frame = new JFrame("Confirm bot movement");
-        direction_panel.add(label1);
-        direction_panel.add(button);
-        frame.add(direction_panel);
-        frame.setSize(300, 100);
-        frame.setLocationRelativeTo(null);
-        frame.setVisible(true);
-        button.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				if(e.getSource()==button) {
-					frame.setVisible(false);
-					makeMove(MainGame.getMyBoard(), chosenSquareID, isMoveLeft, bot);
-				}
-
-			}
-		});
-//
-    }
-
-
     public void collectCitizen(int squareID){
         for ( int i= ImageHolder.size()-1;i>=0;i--){
             if (ImageHolder.get(i).square_id== squareID){
