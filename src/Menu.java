@@ -196,7 +196,7 @@ public class Menu extends Application{
 
 
         // help scene - scene3
-        ImageView helpView = imageView("gui/asset/MenuScene.png", 0, 0);
+        ImageView helpView = imageView("gui/asset/MenuScene.gif", 0, 0);
         ImageView setupRuleView = imageView("gui/asset/Setup.png", 0, -500);
         ImageView rightViewSetup = buttonImageView("gui/asset/RIGHT.png");
         ImageView rightViewSetup2 = buttonImageView("gui/asset/RIGHT2.png");
@@ -213,7 +213,7 @@ public class Menu extends Application{
 
 
         // help scene - scene4
-        ImageView helpView1 = imageView("gui/asset/MenuScene.png", 0, 0);
+        ImageView helpView1 = imageView("gui/asset/MenuScene.gif", 0, 0);
         ImageView scatteringRuleView = imageView("gui/asset/Scattering.png", 0, -500);
         ImageView rightViewScattering = buttonImageView("gui/asset/RIGHT.png");
         ImageView rightViewScattering2 = buttonImageView("gui/asset/RIGHT2.png");
@@ -235,7 +235,7 @@ public class Menu extends Application{
 
 
         // 2th scattering scene - scene5
-        ImageView helpView2 = imageView("gui/asset/MenuScene.png", 0, 0);
+        ImageView helpView2 = imageView("gui/asset/MenuScene.gif", 0, 0);
         ImageView scatteringRuleViewSecond = imageView("gui/asset/Scattering2.png", 0, -500);
         ImageView rightViewScatteringSecond = buttonImageView("gui/asset/RIGHT.png");
         ImageView rightViewScatteringSecond2 = buttonImageView("gui/asset/RIGHT2.png");
@@ -257,7 +257,7 @@ public class Menu extends Application{
                 leftButtonScatteringSecond, backButtonScatteringSecond));
 
         // capturing scene - scene6
-        ImageView helpView3 = imageView("gui/asset/MenuScene.png", 0, 0);
+        ImageView helpView3 = imageView("gui/asset/MenuScene.gif", 0, 0);
         ImageView capturingRuleView = imageView("gui/asset/Capturing.png", 0, -500);
         ImageView rightViewCapturing = buttonImageView("gui/asset/RIGHT.png");
         ImageView rightViewCapturing2 = buttonImageView("gui/asset/RIGHT2.png");
@@ -279,7 +279,7 @@ public class Menu extends Application{
                 leftButtonCapturing, backButtonCapturing));
 
         // passing scene - scene7
-        ImageView helpView4 = imageView("gui/asset/MenuScene.png", 0, 0);
+        ImageView helpView4 = imageView("gui/asset/MenuScene.gif", 0, 0);
         ImageView passingRuleView = imageView("gui/asset/Passing.png", 0, -500);
         ImageView rightViewPassing = buttonImageView("gui/asset/RIGHT.png");
         ImageView rightViewPassing2 = buttonImageView("gui/asset/RIGHT2.png");
@@ -302,7 +302,7 @@ public class Menu extends Application{
 
         /////////////
         // dispatching scene - scene8
-        ImageView helpView5 = imageView("gui/asset/MenuScene.png", 0, 0);
+        ImageView helpView5 = imageView("gui/asset/MenuScene.gif", 0, 0);
         ImageView dispatchingRuleView = imageView("gui/asset/Dispatching.png", 0, -500);
         ImageView rightViewDispatching = buttonImageView("gui/asset/RIGHT.png");
         ImageView rightViewDispatching2 = buttonImageView("gui/asset/RIGHT2.png");
@@ -325,7 +325,7 @@ public class Menu extends Application{
 
         ///////////////////////
         // winning scene - scene9
-        ImageView helpView6 = imageView("gui/asset/MenuScene.png", 0, 0);
+        ImageView helpView6 = imageView("gui/asset/MenuScene.gif", 0, 0);
         ImageView winningRuleView = imageView("gui/asset/Winning.png", 0, -500);
         ImageView leftViewWinning = buttonImageView("gui/asset/LEFT.png");
         ImageView leftViewWinning2 = buttonImageView("gui/asset/LEFT2.png");
@@ -1422,7 +1422,7 @@ public class Menu extends Application{
     private Pane createStartMenu() {
         Pane root = new Pane();
         root.setPrefSize(1080,720);
-        Image bgImage =  new Image(getClass().getResource("gui/asset/MenuScene.png").toExternalForm());
+        Image bgImage =  new Image(getClass().getResource("gui/asset/MenuScene.gif").toExternalForm());
 
 //         START button
         Image startImage = new Image("gui/asset/START.png");
