@@ -39,6 +39,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.control.Button;
 import javafx.scene.canvas.Canvas;
 import javax.swing.*;
+import javafx.scene.control.Label;
 
 
 import java.io.File;
@@ -196,7 +197,7 @@ public class Menu extends Application{
 
 
         // help scene - scene3
-        ImageView helpView = imageView("gui/asset/MenuScene.png", 0, 0);
+        ImageView helpView = imageView("gui/asset/MenuScene.gif", 0, 0);
         ImageView setupRuleView = imageView("gui/asset/Setup.png", 0, -500);
         ImageView rightViewSetup = buttonImageView("gui/asset/RIGHT.png");
         ImageView rightViewSetup2 = buttonImageView("gui/asset/RIGHT2.png");
@@ -213,7 +214,7 @@ public class Menu extends Application{
 
 
         // help scene - scene4
-        ImageView helpView1 = imageView("gui/asset/MenuScene.png", 0, 0);
+        ImageView helpView1 = imageView("gui/asset/MenuScene.gif", 0, 0);
         ImageView scatteringRuleView = imageView("gui/asset/Scattering.png", 0, -500);
         ImageView rightViewScattering = buttonImageView("gui/asset/RIGHT.png");
         ImageView rightViewScattering2 = buttonImageView("gui/asset/RIGHT2.png");
@@ -235,7 +236,7 @@ public class Menu extends Application{
 
 
         // 2th scattering scene - scene5
-        ImageView helpView2 = imageView("gui/asset/MenuScene.png", 0, 0);
+        ImageView helpView2 = imageView("gui/asset/MenuScene.gif", 0, 0);
         ImageView scatteringRuleViewSecond = imageView("gui/asset/Scattering2.png", 0, -500);
         ImageView rightViewScatteringSecond = buttonImageView("gui/asset/RIGHT.png");
         ImageView rightViewScatteringSecond2 = buttonImageView("gui/asset/RIGHT2.png");
@@ -257,7 +258,7 @@ public class Menu extends Application{
                 leftButtonScatteringSecond, backButtonScatteringSecond));
 
         // capturing scene - scene6
-        ImageView helpView3 = imageView("gui/asset/MenuScene.png", 0, 0);
+        ImageView helpView3 = imageView("gui/asset/MenuScene.gif", 0, 0);
         ImageView capturingRuleView = imageView("gui/asset/Capturing.png", 0, -500);
         ImageView rightViewCapturing = buttonImageView("gui/asset/RIGHT.png");
         ImageView rightViewCapturing2 = buttonImageView("gui/asset/RIGHT2.png");
@@ -279,7 +280,7 @@ public class Menu extends Application{
                 leftButtonCapturing, backButtonCapturing));
 
         // passing scene - scene7
-        ImageView helpView4 = imageView("gui/asset/MenuScene.png", 0, 0);
+        ImageView helpView4 = imageView("gui/asset/MenuScene.gif", 0, 0);
         ImageView passingRuleView = imageView("gui/asset/Passing.png", 0, -500);
         ImageView rightViewPassing = buttonImageView("gui/asset/RIGHT.png");
         ImageView rightViewPassing2 = buttonImageView("gui/asset/RIGHT2.png");
@@ -302,7 +303,7 @@ public class Menu extends Application{
 
         /////////////
         // dispatching scene - scene8
-        ImageView helpView5 = imageView("gui/asset/MenuScene.png", 0, 0);
+        ImageView helpView5 = imageView("gui/asset/MenuScene.gif", 0, 0);
         ImageView dispatchingRuleView = imageView("gui/asset/Dispatching.png", 0, -500);
         ImageView rightViewDispatching = buttonImageView("gui/asset/RIGHT.png");
         ImageView rightViewDispatching2 = buttonImageView("gui/asset/RIGHT2.png");
@@ -325,7 +326,7 @@ public class Menu extends Application{
 
         ///////////////////////
         // winning scene - scene9
-        ImageView helpView6 = imageView("gui/asset/MenuScene.png", 0, 0);
+        ImageView helpView6 = imageView("gui/asset/MenuScene.gif", 0, 0);
         ImageView winningRuleView = imageView("gui/asset/Winning.png", 0, -500);
         ImageView leftViewWinning = buttonImageView("gui/asset/LEFT.png");
         ImageView leftViewWinning2 = buttonImageView("gui/asset/LEFT2.png");
@@ -832,7 +833,7 @@ public class Menu extends Application{
             this.ciz_stones.add(stone);
         }
 
-        this.MPlayer =  new Utils(new File("gui/asset/soundtrack_2.mp3").toURI().toString());
+        this.MPlayer =  new Utils(new File("src/gui/asset/soundtrack_2.mp3").toURI().toString());
         CitizenSquare CS1 = new CitizenSquare(1, 0);
         CitizenSquare CS2 = new CitizenSquare(2, 0);
         CitizenSquare CS3 = new CitizenSquare(3, 0);
@@ -1421,18 +1422,23 @@ public class Menu extends Application{
     private Pane createStartMenu() {
         Pane root = new Pane();
         root.setPrefSize(1080,720);
-        Image bgImage =  new Image(getClass().getResource("gui/asset/MenuScene.png").toExternalForm());
+        Image bgImage =  new Image(getClass().getResource("gui/asset/MenuScene.gif").toExternalForm());
 
 //         START button
         Image startImage = new Image("gui/asset/START.png");
         ImageView startView = new ImageView(startImage);
         Image startImage2 = new Image("gui/asset/START2.png");
         ImageView startView2 = new ImageView(startImage2);
+        Image leafImage = new Image("gui/asset/leaves.gif");
+        ImageView leafView = new ImageView(leafImage);
+
 
         startView.setFitHeight(80);
         startView.setFitWidth(200);
         startView2.setFitHeight(80);
         startView2.setFitWidth(200);
+        leafView.setFitHeight(80);
+        leafView.setFitWidth(200);
 
         Button startButton = new Button();
         startButton.setTranslateX(645);
@@ -1444,6 +1450,7 @@ public class Menu extends Application{
         startButton.hoverProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean show) -> {
             if (show) {
                 startButton.setGraphic(startView2);
+
             } else {
                 startButton.setGraphic(startView);
             }
