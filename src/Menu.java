@@ -65,7 +65,7 @@ public class Menu extends Application{
     public int dropID;
     public ArrayList<Image> ciz_stones;
     public ArrayList<String> stoneImages;
-    public Timeline mainTimeline;
+    public Timeline mainTimeline = new Timeline(new KeyFrame(Duration.millis(100), e -> run(gc)));;
     public Utils MPlayer;
 
     @Override
@@ -73,13 +73,13 @@ public class Menu extends Application{
         layout1= createStartMenu();
         scene1 =  new Scene(layout1);
         stage = primarystage;
+        mainTimeline.setCycleCount(Timeline.INDEFINITE);
+        mainTimeline.play();
         stage.setScene(scene1);
+        mainTimeline.stop();
         setup();
         Canvas canvas = new Canvas(1080, 960);
         gc = canvas.getGraphicsContext2D();
-        mainTimeline = new Timeline(new KeyFrame(Duration.millis(100), e -> run(gc)));
-        mainTimeline.setCycleCount(Timeline.INDEFINITE);
-        mainTimeline.play();
 
         stage.show();
         //layout2 = RenderUI();
@@ -123,6 +123,7 @@ public class Menu extends Application{
             loadImageHolder();
             this.MPlayer.mediaPlayer.stop();
             stage.setScene(scene1);
+            mainTimeline.stop();
         });
 
         HBox Squares_row1 = new HBox(
@@ -394,6 +395,7 @@ public class Menu extends Application{
 
             button.setOnAction(event -> {
                 stage.setScene(scenes.get(currentScene - 2));
+                mainTimeline.stop();
                 currentBoard.setTranslateY(-500);
                 currentRightButton.setTranslateY(-410);
                 if (currentLeftButton != null) {
@@ -440,6 +442,7 @@ public class Menu extends Application{
 
             button.setOnAction(event -> {
                 stage.setScene(scenes.get(currentScene - 4));
+                mainTimeline.stop();
                 currentBoard.setTranslateY(-500);
                 if (currentRightButton != null) {
                     currentRightButton.setTranslateY(-410);
@@ -484,6 +487,7 @@ public class Menu extends Application{
 
         button.setOnAction(event -> {
             stage.setScene(scene1);
+            mainTimeline.stop();
             currentBoard.setTranslateY(-500);
             if (currentRightButton != null) {
                 currentRightButton.setTranslateY(-410);
@@ -832,7 +836,7 @@ public class Menu extends Application{
             this.ciz_stones.add(stone);
         }
 
-        this.MPlayer =  new Utils(new File("src/gui/asset/soundtrack_2.mp3").toURI().toString());
+        this.MPlayer =  new Utils(new File("gui/asset/soundtrack_2.mp3").toURI().toString());
         CitizenSquare CS1 = new CitizenSquare(1, 0);
         CitizenSquare CS2 = new CitizenSquare(2, 0);
         CitizenSquare CS3 = new CitizenSquare(3, 0);
@@ -1369,6 +1373,7 @@ public class Menu extends Application{
                         public void run() {
                             // do your GUI stuff here
                             stage.setScene(scene2);
+                            mainTimeline.play();
                         }
                     });
                 }
@@ -1391,6 +1396,7 @@ public class Menu extends Application{
                         public void run() {
                             // do your GUI stuff here
                             stage.setScene(scene1);
+                            mainTimeline.stop();
                         }
                     });
                 }
@@ -1449,7 +1455,7 @@ public class Menu extends Application{
                 startButton.setGraphic(startView);
             }
         });
-        startButton.setOnAction(event-> {stage.setScene(scene2); this.MPlayer.mediaPlayer.play();});
+        startButton.setOnAction(event-> {stage.setScene(scene2); mainTimeline.play(); this.MPlayer.mediaPlayer.play();});
 
 
         Image helpImage = new Image("gui/asset/HELP.png");
@@ -1478,7 +1484,7 @@ public class Menu extends Application{
         });
         helpButton.setOnAction(event-> {
             stage.setScene(scene3);
-
+            mainTimeline.stop();
             // transition of rule board
             TranslateTransition boardTransition = new TranslateTransition(Duration.seconds(1), ((Pane)scene3.getRoot()).getChildren().get(1));
             boardTransition.setByY(500);
@@ -1530,9 +1536,11 @@ public class Menu extends Application{
         this.startGame=status;
         if (!status){
             stage.setScene(scene1);
+            mainTimeline.stop();
         }
         else{
             stage.setScene(scene2);
+            mainTimeline.play();
         }
     }
 

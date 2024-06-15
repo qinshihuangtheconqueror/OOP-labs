@@ -281,7 +281,4 @@ public class MinimaxBot extends Player {
 		}
 		return move;
 	}
-
-    public void makeBotMove(Board myBoard) {
-    }
 }
