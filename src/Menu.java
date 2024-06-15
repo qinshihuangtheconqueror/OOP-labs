@@ -18,6 +18,7 @@ import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.beans.value.ObservableValue;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.canvas.GraphicsContext;
@@ -836,7 +837,7 @@ public class Menu extends Application{
             this.ciz_stones.add(stone);
         }
 
-        this.MPlayer =  new Utils(new File("gui/asset/soundtrack_2.mp3").toURI().toString());
+        this.MPlayer =  new Utils(new File("gui/asset/soundtrack.mp3").toURI().toString());
         CitizenSquare CS1 = new CitizenSquare(1, 0);
         CitizenSquare CS2 = new CitizenSquare(2, 0);
         CitizenSquare CS3 = new CitizenSquare(3, 0);
@@ -1037,10 +1038,28 @@ public class Menu extends Application{
                 mainTimeline.play();
             	if(chosenMovement%2==0) {
             		int chosenSquareID = chosenMovement/2;
-            		confirmBotMove(bot, chosenSquareID, false);
+            		Task task = new Task<Void>(){
+                        @Override
+                        protected Void call() throws Exception{
+                            makeMove(MainGame.getMyBoard(), chosenSquareID, false, MainGame.getPlayer2());
+                        return null;
+                        }
+                    };
+                    Thread th = new Thread(task);
+                    th.setDaemon(true);
+                    th.start();
             	}else {
             		int chosenSquareID = chosenMovement/2;
-            		confirmBotMove(bot, chosenSquareID, true);
+            		Task task = new Task<Void>(){
+                        @Override
+                        protected Void call() throws Exception{
+                            makeMove(MainGame.getMyBoard(), chosenSquareID, true, MainGame.getPlayer2());
+                        return null;
+                        }
+                    };
+                    Thread th = new Thread(task);
+                    th.setDaemon(true);
+                    th.start();
             	}
             }else {
             	if (MainGame.getPlayer2().isValidMove(MainGame.getMyBoard(), id)) {
@@ -1133,6 +1152,10 @@ public class Menu extends Application{
             }
         }
 
+        if(flag==false && player.getPoint()<5) {
+        	endGameDialog();
+        }
+        
         // Dispatch the previous-won citizens when there are not any non-empty citizen squares
         ArrayList<BoardSquare> listOfSquare = b.getListOfSquare();
         if (flag == false) {
@@ -1300,23 +1323,6 @@ public class Menu extends Application{
 
         if(MainGame.isEndGame()) {
             endGameDialog();
-            // Collect all the remaining citizens of player's valid squares
-            for(int i = 1; i <= 5; i++) {
-            	if(!MainGame.getMyBoard().getListOfSquare().get(i).isEmpty()) {
-            		MainGame.getPlayer2().setPoint(MainGame.getPlayer2().getPoint()
-            				+ MainGame.getMyBoard().getListOfSquare().get(i).getNumberOfCitizens());
-            		MainGame.getMyBoard().getListOfSquare().get(i).setNumberOfCitizens(0);
-            		collectCitizen(i);
-            	}
-            }
-            for(int i = 7; i <= 11; i++) {
-            	if(!MainGame.getMyBoard().getListOfSquare().get(i).isEmpty()) {
-            		MainGame.getPlayer1().setPoint(MainGame.getPlayer1().getPoint()
-            				+ MainGame.getMyBoard().getListOfSquare().get(i).getNumberOfCitizens());
-            		MainGame.getMyBoard().getListOfSquare().get(i).setNumberOfCitizens(0);
-            		collectCitizen(i);
-            	}
-            }
             return;
         }
 
@@ -1332,6 +1338,23 @@ public class Menu extends Application{
     }
 
     public void endGameDialog() {
+    	for(int i = 1; i <= 5; i++) {
+        	if(!MainGame.getMyBoard().getListOfSquare().get(i).isEmpty()) {
+        		MainGame.getPlayer2().setPoint(MainGame.getPlayer2().getPoint()
+        				+ MainGame.getMyBoard().getListOfSquare().get(i).getNumberOfCitizens());
+        		MainGame.getMyBoard().getListOfSquare().get(i).setNumberOfCitizens(0);
+        		collectCitizen(i);
+        	}
+        }
+        for(int i = 7; i <= 11; i++) {
+        	if(!MainGame.getMyBoard().getListOfSquare().get(i).isEmpty()) {
+        		MainGame.getPlayer1().setPoint(MainGame.getPlayer1().getPoint()
+        				+ MainGame.getMyBoard().getListOfSquare().get(i).getNumberOfCitizens());
+        		MainGame.getMyBoard().getListOfSquare().get(i).setNumberOfCitizens(0);
+        		collectCitizen(i);
+        	}
+        }
+    	
         JPanel dialog_panel = new JPanel();
         Player player = MainGame.winningPlayer();
         JLabel label1;
