@@ -17,6 +17,7 @@ import javafx.animation.*;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
+import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
@@ -48,6 +49,7 @@ import javafx.util.Duration;
 
 
 public class Menu extends Application{
+    public String choice = "BOT";
     public Stage stage;
     public Scene scene1, scene2, scene3, scene4, scene5, scene6, scene7, scene8, scene9;
     public ArrayList<Scene> scenes = new ArrayList<Scene>();
@@ -84,31 +86,37 @@ public class Menu extends Application{
 
         stage.show();
         //layout2 = RenderUI();
-        Image bgImage = new Image(getClass().getResource("gui/asset/mandarin_background.png").toExternalForm());
-        ImageView img_view =  new ImageView(bgImage);
-        img_view.setY(0);
-        img_view.setX(0);
-        Image inGameBackground = new Image(getClass().getResource("gui/asset/IngameMenu.png").toExternalForm());
-        ImageView inGameBackgroundView = new ImageView(inGameBackground);
-        inGameBackgroundView.setX(960);
-        inGameBackgroundView.setY(0);
+//        Image bgImage = new Image(getClass().getResource("gui/asset/mandarin_background.png").toExternalForm());
+//        ImageView img_view =  new ImageView(bgImage);
+//        img_view.setY(0);
+//        img_view.setX(0);
+        ImageView img_view = imageView("gui/asset/mandarin_background.png", 0, 0);
 
-        Image homeImage = new Image(getClass().getResource("gui/asset/HomeButton.png").toExternalForm());
-        ImageView homeImageView = new ImageView(homeImage);
-        Image homeImage2 = new Image(getClass().getResource("gui/asset/HomeButton2.png").toExternalForm());
-        ImageView homeImageView2 = new ImageView(homeImage2);
+//        Image inGameBackground = new Image(getClass().getResource("gui/asset/IngameMenu.png").toExternalForm());
+//        ImageView inGameBackgroundView = new ImageView(inGameBackground);
+//        inGameBackgroundView.setX(960);
+//        inGameBackgroundView.setY(0);
+        ImageView inGameBackgroundView = imageView("gui/asset/IngameMenu.png", 960, 0);
 
-        homeImageView.setFitHeight(280);
-        homeImageView.setFitWidth(210);
-        homeImageView2.setFitHeight(275);
-        homeImageView2.setFitWidth(210);
+//        Image homeImage = new Image(getClass().getResource("gui/asset/HomeButton.png").toExternalForm());
+//        ImageView homeImageView = new ImageView(homeImage);
+//        Image homeImage2 = new Image(getClass().getResource("gui/asset/HomeButton2.png").toExternalForm());
+//        ImageView homeImageView2 = new ImageView(homeImage2);
+//
+//        homeImageView.setFitHeight(280);
+//        homeImageView.setFitWidth(210);
+//        homeImageView2.setFitHeight(275);
+//        homeImageView2.setFitWidth(210);
+        ImageView homeImageView = buttonImageView("gui/asset/HomeButton.png", 280, 210);
+        ImageView homeImageView2 = buttonImageView("gui/asset/HomeButton2.png", 275, 210);
 
-        Button homeButton = new Button();
-        homeButton.setTranslateX(967);
-        homeButton.setTranslateY(205);
-        homeButton.setPrefSize(80, 80);
-        homeButton.setStyle("-fx-background-color: #ffffff00;");
-        homeButton.setGraphic(homeImageView);
+//        Button homeButton = new Button();
+//        homeButton.setTranslateX(967);
+//        homeButton.setTranslateY(205);
+//        homeButton.setPrefSize(80, 80);
+//        homeButton.setStyle("-fx-background-color: #ffffff00;");
+//        homeButton.setGraphic(homeImageView);
+        Button homeButton = button(967, 205, homeImageView);
 
 
         homeButton.hoverProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean show) -> {
@@ -164,12 +172,15 @@ public class Menu extends Application{
         Image mute_button_image = new Image(getClass().getResource("gui/asset/mute.png").toExternalForm());
         ImageView mute_button_view = new ImageView(mute_button_image);
 
-        Button soundButton =  new Button();
-        soundButton.setTranslateX(1000);
-        soundButton.setTranslateY(600);
-        soundButton.setPrefSize(80, 80);
-        soundButton.setStyle("-fx-background-color: #ffffff00;");
-        soundButton.setGraphic(sound_button_view);
+//        Button soundButton =  new Button();
+//        soundButton.setTranslateX(1000);
+//        soundButton.setTranslateY(600);
+//        soundButton.setPrefSize(80, 80);
+//        soundButton.setStyle("-fx-background-color: #ffffff00;");
+//        soundButton.setGraphic(sound_button_view);
+        Button soundButton = button(1000, 600, sound_button_view);
+
+
         soundButton.setOnAction(event -> {
             if (soundButton.getGraphic() == sound_button_view){
                 soundButton.setGraphic(mute_button_view);
@@ -200,13 +211,13 @@ public class Menu extends Application{
         // help scene - scene3
         ImageView helpView = imageView("gui/asset/MenuScene.gif", 0, 0);
         ImageView setupRuleView = imageView("gui/asset/Setup.png", 0, -500);
-        ImageView rightViewSetup = buttonImageView("gui/asset/RIGHT.png");
-        ImageView rightViewSetup2 = buttonImageView("gui/asset/RIGHT2.png");
+        ImageView rightViewSetup = buttonImageView("gui/asset/RIGHT.png", 80, 80);
+        ImageView rightViewSetup2 = buttonImageView("gui/asset/RIGHT2.png", 80, 80);
         Button rightButtonSetup = button(740, -415, rightViewSetup);
         setActionRightButton(rightButtonSetup, rightViewSetup2, rightViewSetup, 3,
         setupRuleView, rightButtonSetup, null);
-        ImageView backView = buttonImageView("gui/asset/BACk.png");
-        ImageView backView2 = buttonImageView("gui/asset/BACK2.png");
+        ImageView backView = buttonImageView("gui/asset/BACk.png", 80, 80);
+        ImageView backView2 = buttonImageView("gui/asset/BACK2.png", 80, 80);
         Button backButton = button(0, 0, backView);
         setActionBackButton(backButton, backView, backView2, 3,
         setupRuleView, rightButtonSetup, null);
@@ -217,18 +228,18 @@ public class Menu extends Application{
         // help scene - scene4
         ImageView helpView1 = imageView("gui/asset/MenuScene.gif", 0, 0);
         ImageView scatteringRuleView = imageView("gui/asset/Scattering.png", 0, -500);
-        ImageView rightViewScattering = buttonImageView("gui/asset/RIGHT.png");
-        ImageView rightViewScattering2 = buttonImageView("gui/asset/RIGHT2.png");
+        ImageView rightViewScattering = buttonImageView("gui/asset/RIGHT.png", 80, 80);
+        ImageView rightViewScattering2 = buttonImageView("gui/asset/RIGHT2.png", 80, 80);
         Button rightButtonScattering = button(725, -410, rightViewScattering);
-        ImageView leftViewScattering = buttonImageView("gui/asset/LEFT.png");
-        ImageView leftViewScattering2 = buttonImageView("gui/asset/LEFT2.png");
+        ImageView leftViewScattering = buttonImageView("gui/asset/LEFT.png", 80, 80);
+        ImageView leftViewScattering2 = buttonImageView("gui/asset/LEFT2.png", 80, 80);
         Button leftButtonScattering= button(240, -410, leftViewScattering);
         setActionRightButton(rightButtonScattering, rightViewScattering2, rightViewScattering, 4,
         scatteringRuleView, rightButtonScattering, leftButtonScattering);
         setActionLeftButton(leftButtonScattering, leftViewScattering2, leftViewScattering, 4,
         scatteringRuleView, rightButtonScattering, leftButtonScattering);
-        ImageView backViewScattering = buttonImageView("gui/asset/BACK.png");
-        ImageView backViewScattering2 = buttonImageView("gui/asset/BACK2.png");
+        ImageView backViewScattering = buttonImageView("gui/asset/BACK.png", 80, 80);
+        ImageView backViewScattering2 = buttonImageView("gui/asset/BACK2.png", 80, 80);
         Button backButtonScattering = button(0, 0, backViewScattering);
         setActionBackButton(backButtonScattering, backViewScattering, backViewScattering2, 4,
         scatteringRuleView, rightButtonScattering, leftButtonScattering);
@@ -239,18 +250,18 @@ public class Menu extends Application{
         // 2th scattering scene - scene5
         ImageView helpView2 = imageView("gui/asset/MenuScene.gif", 0, 0);
         ImageView scatteringRuleViewSecond = imageView("gui/asset/Scattering2.png", 0, -500);
-        ImageView rightViewScatteringSecond = buttonImageView("gui/asset/RIGHT.png");
-        ImageView rightViewScatteringSecond2 = buttonImageView("gui/asset/RIGHT2.png");
+        ImageView rightViewScatteringSecond = buttonImageView("gui/asset/RIGHT.png", 80, 80);
+        ImageView rightViewScatteringSecond2 = buttonImageView("gui/asset/RIGHT2.png", 80, 80);
         Button rightButtonScatteringSecond = button(725, -410, rightViewScatteringSecond);
-        ImageView leftViewScatteringSecond = buttonImageView("gui/asset/LEFT.png");
-        ImageView leftViewScatteringSecond2 = buttonImageView("gui/asset/LEFT2.png");
+        ImageView leftViewScatteringSecond = buttonImageView("gui/asset/LEFT.png", 80, 80);
+        ImageView leftViewScatteringSecond2 = buttonImageView("gui/asset/LEFT2.png", 80, 80);
         Button leftButtonScatteringSecond = button(240, -410, leftViewScatteringSecond);
         setActionRightButton(rightButtonScatteringSecond, rightViewScatteringSecond2, rightViewScatteringSecond, 5,
         scatteringRuleViewSecond, rightButtonScatteringSecond, leftButtonScatteringSecond);
         setActionLeftButton(leftButtonScatteringSecond, leftViewScatteringSecond2, leftViewScatteringSecond, 5,
         scatteringRuleViewSecond, rightButtonScatteringSecond, leftButtonScatteringSecond);
-        ImageView backViewScatteringSecond = buttonImageView("gui/asset/BACK.png");
-        ImageView backViewScatteringSecond2 = buttonImageView("gui/asset/BACK2.png");
+        ImageView backViewScatteringSecond = buttonImageView("gui/asset/BACK.png", 80, 80);
+        ImageView backViewScatteringSecond2 = buttonImageView("gui/asset/BACK2.png", 80, 80);
         Button backButtonScatteringSecond = button(0, 0, backViewScatteringSecond);
         setActionBackButton(backButtonScatteringSecond, backViewScatteringSecond, backViewScatteringSecond2, 5,
         scatteringRuleViewSecond, rightButtonScatteringSecond, leftButtonScatteringSecond);
@@ -261,18 +272,18 @@ public class Menu extends Application{
         // capturing scene - scene6
         ImageView helpView3 = imageView("gui/asset/MenuScene.gif", 0, 0);
         ImageView capturingRuleView = imageView("gui/asset/Capturing.png", 0, -500);
-        ImageView rightViewCapturing = buttonImageView("gui/asset/RIGHT.png");
-        ImageView rightViewCapturing2 = buttonImageView("gui/asset/RIGHT2.png");
+        ImageView rightViewCapturing = buttonImageView("gui/asset/RIGHT.png", 80, 80);
+        ImageView rightViewCapturing2 = buttonImageView("gui/asset/RIGHT2.png", 80, 80);
         Button rightButtonCapturing = button(725, -410, rightViewCapturing);
-        ImageView leftViewCapturing = buttonImageView("gui/asset/LEFT.png");
-        ImageView leftViewCapturing2 = buttonImageView("gui/asset/LEFT2.png");
+        ImageView leftViewCapturing = buttonImageView("gui/asset/LEFT.png", 80, 80);
+        ImageView leftViewCapturing2 = buttonImageView("gui/asset/LEFT2.png", 80, 80);
         Button leftButtonCapturing = button(240, -410, leftViewCapturing);
         setActionRightButton(rightButtonCapturing, rightViewCapturing2, rightViewCapturing, 6,
         capturingRuleView, rightButtonCapturing, leftButtonCapturing);
         setActionLeftButton(leftButtonCapturing, leftViewCapturing2, leftViewCapturing, 6,
         capturingRuleView, rightButtonCapturing, leftButtonCapturing);
-        ImageView backViewCapturing = buttonImageView("gui/asset/BACK.png");
-        ImageView backViewCapturing2 = buttonImageView("gui/asset/BACK2.png");
+        ImageView backViewCapturing = buttonImageView("gui/asset/BACK.png", 80, 80);
+        ImageView backViewCapturing2 = buttonImageView("gui/asset/BACK2.png", 80, 80);
         Button backButtonCapturing = button(0, 0, backViewCapturing);
         setActionBackButton(backButtonCapturing, backViewCapturing, backViewCapturing2, 6,
         capturingRuleView, rightButtonCapturing, leftButtonCapturing);
@@ -283,18 +294,18 @@ public class Menu extends Application{
         // passing scene - scene7
         ImageView helpView4 = imageView("gui/asset/MenuScene.gif", 0, 0);
         ImageView passingRuleView = imageView("gui/asset/Passing.png", 0, -500);
-        ImageView rightViewPassing = buttonImageView("gui/asset/RIGHT.png");
-        ImageView rightViewPassing2 = buttonImageView("gui/asset/RIGHT2.png");
+        ImageView rightViewPassing = buttonImageView("gui/asset/RIGHT.png", 80, 80);
+        ImageView rightViewPassing2 = buttonImageView("gui/asset/RIGHT2.png", 80, 80);
         Button rightButtonPassing = button(725, -410, rightViewPassing);
-        ImageView leftViewPassing = buttonImageView("gui/asset/LEFT.png");
-        ImageView leftViewPassing2 = buttonImageView("gui/asset/LEFT2.png");
+        ImageView leftViewPassing = buttonImageView("gui/asset/LEFT.png", 80, 80);
+        ImageView leftViewPassing2 = buttonImageView("gui/asset/LEFT2.png", 80, 80);
         Button leftButtonPassing = button(240, -410, leftViewPassing);
         setActionRightButton(rightButtonPassing, rightViewPassing2, rightViewPassing, 7,
         passingRuleView, rightButtonPassing, leftButtonPassing);
         setActionLeftButton(leftButtonPassing, leftViewPassing2, leftViewPassing, 7,
         passingRuleView, rightButtonPassing, leftButtonPassing);
-        ImageView backViewPassing = buttonImageView("gui/asset/BACK.png");
-        ImageView backViewPassing2 = buttonImageView("gui/asset/BACK2.png");
+        ImageView backViewPassing = buttonImageView("gui/asset/BACK.png", 80, 80);
+        ImageView backViewPassing2 = buttonImageView("gui/asset/BACK2.png", 80, 80);
         Button backButtonPassing = button(0, 0, backViewPassing);
         setActionBackButton(backButtonPassing, backViewPassing, backViewPassing2, 7,
                 passingRuleView, rightButtonPassing, leftButtonPassing);
@@ -306,18 +317,18 @@ public class Menu extends Application{
         // dispatching scene - scene8
         ImageView helpView5 = imageView("gui/asset/MenuScene.gif", 0, 0);
         ImageView dispatchingRuleView = imageView("gui/asset/Dispatching.png", 0, -500);
-        ImageView rightViewDispatching = buttonImageView("gui/asset/RIGHT.png");
-        ImageView rightViewDispatching2 = buttonImageView("gui/asset/RIGHT2.png");
+        ImageView rightViewDispatching = buttonImageView("gui/asset/RIGHT.png", 80, 80);
+        ImageView rightViewDispatching2 = buttonImageView("gui/asset/RIGHT2.png", 80, 80);
         Button rightButtonDispatching = button(725, -410, rightViewDispatching);
-        ImageView leftViewDispatching = buttonImageView("gui/asset/LEFT.png");
-        ImageView leftViewDispatching2 = buttonImageView("gui/asset/LEFT2.png");
+        ImageView leftViewDispatching = buttonImageView("gui/asset/LEFT.png", 80, 80);
+        ImageView leftViewDispatching2 = buttonImageView("gui/asset/LEFT2.png", 80, 80);
         Button leftButtonDispatching = button(240, -410, leftViewDispatching);
         setActionRightButton(rightButtonDispatching, rightViewDispatching2, rightViewDispatching, 8,
         dispatchingRuleView, rightButtonDispatching, leftButtonDispatching);
         setActionLeftButton(leftButtonDispatching, leftViewDispatching2, leftViewDispatching, 8,
         dispatchingRuleView, rightButtonDispatching, leftButtonDispatching);
-        ImageView backViewDispatching = buttonImageView("gui/asset/BACK.png");
-        ImageView backViewDispatching2 = buttonImageView("gui/asset/BACK2.png");
+        ImageView backViewDispatching = buttonImageView("gui/asset/BACK.png", 80, 80);
+        ImageView backViewDispatching2 = buttonImageView("gui/asset/BACK2.png", 80, 80);
         Button backButtonDispatching = button(0,0,backViewDispatching);
         setActionBackButton(backButtonDispatching, backViewDispatching, backViewDispatching2, 8,
                 dispatchingRuleView, rightButtonDispatching, leftButtonDispatching);
@@ -329,13 +340,13 @@ public class Menu extends Application{
         // winning scene - scene9
         ImageView helpView6 = imageView("gui/asset/MenuScene.gif", 0, 0);
         ImageView winningRuleView = imageView("gui/asset/Winning.png", 0, -500);
-        ImageView leftViewWinning = buttonImageView("gui/asset/LEFT.png");
-        ImageView leftViewWinning2 = buttonImageView("gui/asset/LEFT2.png");
+        ImageView leftViewWinning = buttonImageView("gui/asset/LEFT.png", 80, 80);
+        ImageView leftViewWinning2 = buttonImageView("gui/asset/LEFT2.png", 80, 80);
         Button leftButtonWinning = button(240, -410, leftViewWinning);
         setActionLeftButton(leftButtonWinning, leftViewWinning2, leftViewWinning, 9,
         winningRuleView, null, leftButtonWinning);
-        ImageView backViewWinning = buttonImageView("gui/asset/BACK.png");
-        ImageView backViewWinning2 = buttonImageView("gui/asset/BACK2.png");
+        ImageView backViewWinning = buttonImageView("gui/asset/BACK.png", 80, 80);
+        ImageView backViewWinning2 = buttonImageView("gui/asset/BACK2.png", 80, 80);
         Button backButtonWinning = button(0, 0, backViewWinning);
         setActionBackButton(backButtonWinning, backViewWinning, backViewWinning2, 9,
                 winningRuleView, null, leftButtonWinning);
@@ -363,11 +374,11 @@ public class Menu extends Application{
     }
 
     // create button image view
-    public ImageView buttonImageView(String path) {
+    public ImageView buttonImageView(String path, int width, int height) {
         Image image = new Image(path);
         ImageView imageView = new ImageView(image);
-        imageView.setFitWidth(80);
-        imageView.setFitHeight(80);
+        imageView.setFitWidth(width);
+        imageView.setFitHeight(height);
         return imageView;
     }
 
@@ -837,7 +848,7 @@ public class Menu extends Application{
             this.ciz_stones.add(stone);
         }
 
-        this.MPlayer =  new Utils(new File("gui/asset/soundtrack.mp3").toURI().toString());
+        this.MPlayer =  new Utils(new File("src/gui/asset/soundtrack.mp3").toURI().toString());
         CitizenSquare CS1 = new CitizenSquare(1, 0);
         CitizenSquare CS2 = new CitizenSquare(2, 0);
         CitizenSquare CS3 = new CitizenSquare(3, 0);
@@ -1424,23 +1435,10 @@ public class Menu extends Application{
         root.setPrefSize(1080,720);
         Image bgImage =  new Image(getClass().getResource("gui/asset/MenuScene.gif").toExternalForm());
 
-//         START button
-        Image startImage = new Image("gui/asset/START.png");
-        ImageView startView = new ImageView(startImage);
-        Image startImage2 = new Image("gui/asset/START2.png");
-        ImageView startView2 = new ImageView(startImage2);
 
-        startView.setFitHeight(80);
-        startView.setFitWidth(200);
-        startView2.setFitHeight(80);
-        startView2.setFitWidth(200);
-
-        Button startButton = new Button();
-        startButton.setTranslateX(645);
-        startButton.setTranslateY(200);
-        startButton.setPrefSize(80,80);
-        startButton.setStyle("-fx-background-color: #ffffff00;");
-        startButton.setGraphic(startView);
+        ImageView startView = buttonImageView("gui/asset/START.png", 180, 110);
+        ImageView startView2 = buttonImageView("gui/asset/START2.png", 180, 110);
+        Button startButton = button(550, 120, startView);
 
         startButton.hoverProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean show) -> {
             if (show) {
@@ -1452,22 +1450,9 @@ public class Menu extends Application{
         startButton.setOnAction(event-> {stage.setScene(scene2); mainTimeline.play(); this.MPlayer.mediaPlayer.play();});
 
 
-        Image helpImage = new Image("gui/asset/HELP.png");
-        ImageView helpView = new ImageView(helpImage);
-        Image helpImage2 = new Image("gui/asset/HELP2.png");
-        ImageView helpView2 = new ImageView(helpImage2);
-
-        helpView.setFitHeight(80);
-        helpView.setFitWidth(200);
-        helpView2.setFitHeight(80);
-        helpView2.setFitWidth(200);
-
-        Button helpButton = new Button();
-        helpButton.setTranslateX(650);
-        helpButton.setTranslateY(300);
-        helpButton.setPrefSize(80,80);
-        helpButton.setStyle("-fx-background-color: #ffffff00;");
-        helpButton.setGraphic(helpView);
+        ImageView helpView = buttonImageView("gui/asset/HELP.png", 180, 110);
+        ImageView helpView2 = buttonImageView("gui/asset/HELP2.png", 180, 110);
+        Button helpButton = button(550, 220, helpView);
 
         helpButton.hoverProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean show) -> {
             if (show) {
@@ -1493,22 +1478,116 @@ public class Menu extends Application{
         });
 
 
-        Image exitImage = new Image("gui/asset/EXIT.png");
-        ImageView exitView = new ImageView(exitImage);
-        Image exitImage2 = new Image("gui/asset/EXIT2.png");
-        ImageView exitView2 = new ImageView(exitImage2);
+        ImageView easyView = buttonImageView("gui/asset/EASY.png", 180, 110);
+        ImageView easyView2 = buttonImageView("gui/asset/EASY2.png", 180, 110);
+        Button easyButton = button(750, 280, easyView);
+        ChangeListener<Boolean> easyHoverListener = new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean show) {
+                if (show) {
+                    easyButton.setGraphic(easyView2);
+                } else {
+                    easyButton.setGraphic(easyView);
+                }
+            }
+        };
+        easyButton.hoverProperty().addListener(easyHoverListener);
+        easyButton.setOnAction(event-> {
 
-        exitView.setFitHeight(80);
-        exitView.setFitWidth(200);
-        exitView2.setFitHeight(80);
-        exitView2.setFitWidth(200);
 
-        Button exitButton = new Button();
-        exitButton.setTranslateX(650);
-        exitButton.setTranslateY(400);
-        exitButton.setPrefSize(80,80);
-        exitButton.setStyle("-fx-background-color: #ffffff00;");
-        exitButton.setGraphic(exitView);
+        });
+
+
+        ImageView hardView = buttonImageView("gui/asset/HARD.png", 180, 110);
+        ImageView hardView2 = buttonImageView("gui/asset/HARD2.png", 180, 110);
+        Button hardButton = button(750, 380, hardView);
+        ChangeListener<Boolean> hardHoverListener = new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean show) {
+                if (show) {
+                    hardButton.setGraphic(hardView2);
+                } else {
+                    hardButton.setGraphic(hardView);
+                }
+            }
+        };
+        hardButton.hoverProperty().addListener(hardHoverListener);
+        hardButton.setOnAction(event-> {
+
+
+        });
+
+
+        ImageView botView = buttonImageView("gui/asset/BOT.png", 180, 110);
+        ImageView botView2 = buttonImageView("gui/asset/BOT2.png", 180, 110);
+//        ImageView botView3 = buttonImageView("gui/asset/BOT3.png", 180, 110);
+        Button botButton = button(550, 320, botView);
+
+        ImageView playerView = buttonImageView("gui/asset/PLAYER.png", 180, 110);
+        ImageView playerView2 = buttonImageView("gui/asset/PLAYER2.png", 180, 110);
+//        ImageView playerView3 = buttonImageView("gui/asset/PLAYER3.png", 180, 110);
+        Button playerButton = button(550, 420, playerView);
+
+        botButton.hoverProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean show) -> {
+            if (show) {
+                botButton.setGraphic(botView2);
+            } else {
+                botButton.setGraphic(botView);
+            }
+        });
+        botButton.setOnAction(event-> {
+            if (choice == "PLAYER") {
+                choice = "BOT";
+//                playerButton.setVisible(false);
+//                playerView3.setVisible(true);
+//                botButton.setVisible(true);
+                easyButton.hoverProperty().addListener(easyHoverListener);
+                hardButton.hoverProperty().addListener(hardHoverListener);
+
+                TranslateTransition easyTransition = new TranslateTransition(Duration.millis(500), ((Pane) scene1.getRoot()).getChildren().get(6));
+                easyTransition.setByX(-400);
+                easyTransition.setInterpolator(Interpolator.EASE_OUT);
+                easyTransition.play();
+
+                TranslateTransition hardTransition = new TranslateTransition(Duration.millis(500), ((Pane) scene1.getRoot()).getChildren().get(7));
+                hardTransition.setByX(-400);
+                hardTransition.setInterpolator(Interpolator.EASE_OUT);
+                hardTransition.play();
+            }
+        });
+
+        playerButton.hoverProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean show) -> {
+            if (show) {
+                playerButton.setGraphic(playerView2);
+            } else {
+                playerButton.setGraphic(playerView);
+            }
+        });
+        playerButton.setOnAction(event-> {
+            if (choice == "BOT") {
+                choice = "PLAYER";
+//                botButton.setVisible(false);
+//                botView3.setVisible(true);
+//                playerButton.setVisible(true);
+                easyButton.hoverProperty().removeListener(easyHoverListener);
+                hardButton.hoverProperty().removeListener(hardHoverListener);
+
+                TranslateTransition easyTransition = new TranslateTransition(Duration.millis(500), ((Pane) scene1.getRoot()).getChildren().get(6));
+                easyTransition.setByX(400);
+                easyTransition.setInterpolator(Interpolator.EASE_IN);
+                easyTransition.play();
+
+                TranslateTransition hardTransition = new TranslateTransition(Duration.millis(500), ((Pane) scene1.getRoot()).getChildren().get(7));
+                hardTransition.setByX(400);
+                hardTransition.setInterpolator(Interpolator.EASE_IN);
+                hardTransition.play();
+            }
+        });
+
+
+        ImageView exitView = buttonImageView("gui/asset/EXIT.png", 180, 110);
+        ImageView exitView2 = buttonImageView("gui/asset/EXIT2.png", 180, 110);
+        Button exitButton = button(550, 520, exitView);
 
         exitButton.hoverProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean show) -> {
             if (show) {
@@ -1522,7 +1601,11 @@ public class Menu extends Application{
                 new ImageView(bgImage),
                 startButton,
                 helpButton,
-                exitButton
+                exitButton,
+                playerButton,
+                botButton,
+                easyButton,
+                hardButton
         );
         return root;
     }
