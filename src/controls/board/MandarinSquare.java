@@ -27,10 +27,4 @@ public class MandarinSquare extends BoardSquare {
     	if(IsContainMandarin==false && this.getNumberOfCitizens()==0) return true;
     	else return false;
     }
-
-    @Override
-    void operation() {
-        // Implementation for MandarinSquare specific operation
-        System.out.println("MandarinSquare operation");
-    }
 }

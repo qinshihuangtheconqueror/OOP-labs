@@ -144,7 +144,7 @@ public class MinimaxBot extends Player {
 	}
 
 	
-	private int minimax(Board b, int depth, int h, boolean isMaximizing, int chosenSquare, boolean isMoveLeft) {
+	private int minimax(Board b, int depth, int h, boolean isMaximizing, int chosenSquare, boolean isMoveLeft, int alpha, int beta) {
 		Board board = new Board(b);
 		String dir;
 		if(isMoveLeft) {
@@ -168,8 +168,10 @@ public class MinimaxBot extends Player {
 			dispatch(board, 1);
 			for(int i = 1; i <= 5; i++) {
 				if(!board.getListOfSquare().get(i).isEmpty()==false) {
-					value = Math.max(value, minimax(board, depth+1, h, !isMaximizing, i, isMoveLeft)-score);
-					value = Math.max(value, minimax(board, depth+1, h, !isMaximizing, i, !isMoveLeft)-score);					
+					value = Math.max(value, minimax(board, depth+1, h, !isMaximizing, i, isMoveLeft, alpha, beta)-score);
+					value = Math.max(value, minimax(board, depth+1, h, !isMaximizing, i, !isMoveLeft, alpha, beta)-score);	
+					alpha = Math.max(alpha, value);
+					if(beta<=alpha) break;
 				}
 			}
 			return value;
@@ -183,20 +185,21 @@ public class MinimaxBot extends Player {
 					score(board1, i, isMoveLeft);
 					score(board2, i, !isMoveLeft);
 					if(depth+1==h) {
-						value = Math.min(value, score-minimax(board, depth+1, h, !isMaximizing, i, isMoveLeft));
-						value = Math.min(value, score-minimax(board, depth+1, h, !isMaximizing, i, !isMoveLeft));
+						value = Math.min(value, score-minimax(board, depth+1, h, !isMaximizing, i, isMoveLeft, alpha, beta));
+						value = Math.min(value, score-minimax(board, depth+1, h, !isMaximizing, i, !isMoveLeft, alpha, beta));
 					}else {
 						if(board1.getListOfSquare().get(0).isEmpty()&&board1.getListOfSquare().get(6).isEmpty()) {
-							value = Math.min(value, score-minimax(board, depth+1, h, !isMaximizing, i, isMoveLeft));
+							value = Math.min(value, score-minimax(board, depth+1, h, !isMaximizing, i, isMoveLeft, alpha, beta));
 						}else {
-							value = Math.min(value, score+minimax(board, depth+1, h, !isMaximizing, i, isMoveLeft));
+							value = Math.min(value, score+minimax(board, depth+1, h, !isMaximizing, i, isMoveLeft, alpha, beta));
 						}
 						if(board2.getListOfSquare().get(0).isEmpty()&&board2.getListOfSquare().get(6).isEmpty()) {
-							value = Math.min(value, score-minimax(board, depth+1, h, !isMaximizing, i, !isMoveLeft));
+							value = Math.min(value, score-minimax(board, depth+1, h, !isMaximizing, i, !isMoveLeft, alpha, beta));
 						}else {
-							value = Math.min(value, score+minimax(board, depth+1, h, !isMaximizing, i, !isMoveLeft));
+							value = Math.min(value, score+minimax(board, depth+1, h, !isMaximizing, i, !isMoveLeft, alpha, beta));
 						}
 					}
+					beta = Math.min(value, beta);
 				}
 			}
 			System.out.println("Square ID: " + chosenSquare);
@@ -215,11 +218,15 @@ public class MinimaxBot extends Player {
 		int bestSquareID = 0;
 		boolean bestMove = true;
 		display(b);
+		int height = 5;
+		int depth = 0;
+		int alpha = Integer.MIN_VALUE;
+		int beta = Integer.MAX_VALUE;
 		for(int i = 1; i <= 5; i++) {
 			if(!b.getListOfSquare().get(i).isEmpty()) {
 				int squareID = i;
-				int value1 = minimax(b, 0, 2, true, squareID, isMoveLeft);
-				int value2 = minimax(b, 0, 2, true, squareID, !isMoveLeft);
+				int value1 = minimax(b, depth, height, true, squareID, isMoveLeft, alpha, beta);
+				int value2 = minimax(b, depth, height, true, squareID, !isMoveLeft, alpha, beta);
 				if(bestScore<=value1) {
 					bestScore=value1;
 					bestMove = isMoveLeft;
@@ -261,11 +268,15 @@ public class MinimaxBot extends Player {
 		int bestSquareID = 0;
 		boolean bestMove = true;
 		display(b);
+		int height = 2;
+		int depth = 0;
+		int alpha = Integer.MIN_VALUE;
+		int beta = Integer.MAX_VALUE;
 		for(int i = 1; i <= 5; i++) {
 			if(!b.getListOfSquare().get(i).isEmpty()) {
 				int squareID = i;
-				int value1 = minimax(b, 0, 0, false, squareID, isMoveLeft);
-				int value2 = minimax(b, 0, 0, false, squareID, !isMoveLeft);
+				int value1 = minimax(b, depth, height, false, squareID, isMoveLeft, alpha, beta);
+				int value2 = minimax(b, depth, height, false, squareID, !isMoveLeft, alpha, beta);
 				if(bestScore>=value1) {
 					bestScore=value1;
 					bestMove = isMoveLeft;

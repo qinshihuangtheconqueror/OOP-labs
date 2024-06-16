@@ -14,10 +14,4 @@ public class CitizenSquare extends BoardSquare {
     	if(this.getNumberOfCitizens()==0) return true;
     	else return false;
     }
-
-    @Override
-    void operation() {
-        // Implementation for CitizenSquare specific operation
-        System.out.println("CitizenSquare operation");
-    }
 }
