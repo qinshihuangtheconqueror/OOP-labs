@@ -30,5 +30,4 @@ public abstract class BoardSquare {
 	}
 
     abstract public boolean isEmpty();
-    abstract void operation();
 }
