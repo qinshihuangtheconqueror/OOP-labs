@@ -818,7 +818,7 @@ public class Menu extends Application{
             this.ciz_stones.add(stone);
         }
 
-        this.MPlayer =  new Utils(new File("src/gui/asset/soundtrack.mp3").toURI().toString());
+        this.MPlayer =  new Utils(new File("gui/asset/soundtrack.mp3").toURI().toString());
         CitizenSquare CS1 = new CitizenSquare(1, 5);
         CitizenSquare CS2 = new CitizenSquare(2, 5);
         CitizenSquare CS3 = new CitizenSquare(3, 5);

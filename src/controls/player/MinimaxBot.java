@@ -163,7 +163,7 @@ public class MinimaxBot extends Player {
 		if(depth==h || (board.getListOfSquare().get(0).isEmpty() && board.getListOfSquare().get(6).isEmpty())) {
 			return score;
 		}
-		if(!isMaximizing) {
+		if(isMaximizing==false) {
 			int value = Integer.MIN_VALUE;
 			dispatch(board, 1);
 			for(int i = 1; i <= 5; i++) {
@@ -202,7 +202,7 @@ public class MinimaxBot extends Player {
 					beta = Math.min(value, beta);
 				}
 			}
-			System.out.println("Square ID: " + chosenSquare);
+//			System.out.println("Square ID: " + chosenSquare);
 			System.out.println("Value: " + value);
 			return value;
 		}
@@ -249,7 +249,7 @@ public class MinimaxBot extends Player {
 		}else {
 			dir="right";
 		}
-		System.out.println("Best choice: " + (bestSquareID)/2);
+		System.out.println("Best choice: " + bestSquareID);
 		System.out.println("Best direction: " + dir);
 		if(bestMove) {
 			move +=1;
@@ -268,7 +268,7 @@ public class MinimaxBot extends Player {
 		int bestSquareID = 0;
 		boolean bestMove = true;
 		display(b);
-		int height = 2;
+		int height = 1;
 		int depth = 0;
 		int alpha = Integer.MIN_VALUE;
 		int beta = Integer.MAX_VALUE;
