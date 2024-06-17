@@ -1427,8 +1427,8 @@ public class Menu extends Application{
         ImageView exitView2 = buttonImageView("gui/asset/EXIT.png", 180, 110);
         Button exitButton = button(650, 380, exitView);
 
-        ImageView backView = buttonImageView("gui/asset/BACK.png", 80, 80);
-        ImageView backView2 = buttonImageView("gui/asset/BACK2.png", 80, 80);
+        ImageView backView = buttonImageView("gui/asset/BACKMENU2.png", 80, 80);
+        ImageView backView2 = buttonImageView("gui/asset/BACKMENU.png", 80, 80);
         Button backButton = button(-100, 0, backView);
 
         backButton.hoverProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean show) -> {
