@@ -49,7 +49,7 @@ import javafx.util.Duration;
 
 
 public class Menu extends Application{
-    public String choice = "BOT";
+    public int backButtonOrder = 1;
     public Stage stage;
     public Scene scene1, scene2, scene3, scene4, scene5, scene6, scene7, scene8, scene9;
     public ArrayList<Scene> scenes = new ArrayList<Scene>();
@@ -77,7 +77,6 @@ public class Menu extends Application{
         scene1 =  new Scene(layout1);
         stage = primarystage;
         mainTimeline.setCycleCount(Timeline.INDEFINITE);
-        mainTimeline.play();
         stage.setScene(scene1);
         mainTimeline.stop();
         setup();
@@ -86,38 +85,17 @@ public class Menu extends Application{
 
         stage.show();
         //layout2 = RenderUI();
-//        Image bgImage = new Image(getClass().getResource("gui/asset/mandarin_background.png").toExternalForm());
-//        ImageView img_view =  new ImageView(bgImage);
-//        img_view.setY(0);
-//        img_view.setX(0);
         ImageView img_view = imageView("gui/asset/mandarin_background.png", 0, 0);
 
-//        Image inGameBackground = new Image(getClass().getResource("gui/asset/IngameMenu.png").toExternalForm());
-//        ImageView inGameBackgroundView = new ImageView(inGameBackground);
-//        inGameBackgroundView.setX(960);
-//        inGameBackgroundView.setY(0);
-        ImageView inGameBackgroundView = imageView("gui/asset/IngameMenu.png", 960, 0);
+        Image inGameBackground = new Image(getClass().getResource("gui/asset/IngameMenu.png").toExternalForm());
+        ImageView inGameBackgroundView = new ImageView(inGameBackground);
+        inGameBackgroundView.setX(960);
+        inGameBackgroundView.setY(0);
+//        ImageView inGameBackgroundView = imageView("gui/asset/IngameMenu.png", 960, 0);
 
-//        Image homeImage = new Image(getClass().getResource("gui/asset/HomeButton.png").toExternalForm());
-//        ImageView homeImageView = new ImageView(homeImage);
-//        Image homeImage2 = new Image(getClass().getResource("gui/asset/HomeButton2.png").toExternalForm());
-//        ImageView homeImageView2 = new ImageView(homeImage2);
-//
-//        homeImageView.setFitHeight(280);
-//        homeImageView.setFitWidth(210);
-//        homeImageView2.setFitHeight(275);
-//        homeImageView2.setFitWidth(210);
         ImageView homeImageView = buttonImageView("gui/asset/HomeButton.png", 210, 280);
         ImageView homeImageView2 = buttonImageView("gui/asset/HomeButton2.png", 215, 270);
-
-//        Button homeButton = new Button();
-//        homeButton.setTranslateX(967);
-//        homeButton.setTranslateY(205);
-//        homeButton.setPrefSize(80, 80);
-//        homeButton.setStyle("-fx-background-color: #ffffff00;");
-//        homeButton.setGraphic(homeImageView);
         Button homeButton = button(967, 205, homeImageView);
-
 
         homeButton.hoverProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean show) -> {
             if (show) {
@@ -172,12 +150,6 @@ public class Menu extends Application{
         Image mute_button_image = new Image(getClass().getResource("gui/asset/mute.png").toExternalForm());
         ImageView mute_button_view = new ImageView(mute_button_image);
 
-//        Button soundButton =  new Button();
-//        soundButton.setTranslateX(1000);
-//        soundButton.setTranslateY(600);
-//        soundButton.setPrefSize(80, 80);
-//        soundButton.setStyle("-fx-background-color: #ffffff00;");
-//        soundButton.setGraphic(sound_button_view);
         Button soundButton = button(1000, 600, sound_button_view);
 
 
@@ -196,16 +168,6 @@ public class Menu extends Application{
 
 
         System.out.println("Running...");
-
-        // arraylist of rule boards's path
-        ArrayList<String> rulePaths = new ArrayList<String>();
-        rulePaths.add("gui/asset/Setup.png");
-        rulePaths.add("gui/asset/Scattering.png");
-        rulePaths.add("gui/asset/Scattering2.png");
-        rulePaths.add("gui/asset/Capturing.png");
-        rulePaths.add("gui/asset/Passing.png");
-        rulePaths.add("gui/asset/Dispatching.png");
-        rulePaths.add("gui/asset/Winning.png");
 
 
         // help scene - scene3
@@ -1320,6 +1282,11 @@ public class Menu extends Application{
     }
 
     public void endGameDialog() {
+        try{
+            Thread.sleep(600);}
+        catch(InterruptedException e) {
+            System.out.println("Error@##");
+        }
     	for(int i = 1; i <= 5; i++) {
         	if(!MainGame.getMyBoard().getListOfSquare().get(i).isEmpty()) {
         		MainGame.getPlayer2().setPoint(MainGame.getPlayer2().getPoint()
@@ -1329,6 +1296,7 @@ public class Menu extends Application{
         	}
         }
         for(int i = 7; i <= 11; i++) {
+
         	if(!MainGame.getMyBoard().getListOfSquare().get(i).isEmpty()) {
         		MainGame.getPlayer1().setPoint(MainGame.getPlayer1().getPoint()
         				+ MainGame.getMyBoard().getListOfSquare().get(i).getNumberOfCitizens());
@@ -1378,6 +1346,11 @@ public class Menu extends Application{
                         public void run() {
                             // do your GUI stuff here
                             stage.setScene(scene2);
+                            try{
+                                Thread.sleep(600);}
+                            catch(InterruptedException e) {
+                                System.out.println("Error@##");
+                            }
                             mainTimeline.play();
                         }
                     });
@@ -1401,6 +1374,11 @@ public class Menu extends Application{
                         public void run() {
                             // do your GUI stuff here
                             stage.setScene(scene1);
+                            try{
+                                Thread.sleep(600);}
+                            catch(InterruptedException e) {
+                                System.out.println("Error@##");
+                            }
                             mainTimeline.stop();
                         }
                     });
@@ -1449,6 +1427,77 @@ public class Menu extends Application{
         ImageView exitView2 = buttonImageView("gui/asset/EXIT.png", 180, 110);
         Button exitButton = button(650, 380, exitView);
 
+        ImageView backView = buttonImageView("gui/asset/BACK.png", 80, 80);
+        ImageView backView2 = buttonImageView("gui/asset/BACK2.png", 80, 80);
+        Button backButton = button(-100, 0, backView);
+
+        backButton.hoverProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean show) -> {
+            if (show) {
+                backButton.setGraphic(backView2);
+            } else {
+                backButton.setGraphic(backView);
+            }
+        });
+        backButton.setOnAction(event -> {
+            if (backButtonOrder == 1) {
+                backButton.setTranslateX(-100);
+            }
+            else if (backButtonOrder == 2) {
+                backButtonOrder = 1;
+                TranslateTransition botButtonTransition = new TranslateTransition(Duration.millis(500), ((Pane) scene1.getRoot()).getChildren().get(4));
+                botButtonTransition.setByX(450);
+                botButtonTransition.setInterpolator(Interpolator.EASE_IN);
+                botButtonTransition.play();
+
+                TranslateTransition playerButtonTransition = new TranslateTransition(Duration.millis(500), ((Pane) scene1.getRoot()).getChildren().get(5));
+                playerButtonTransition.setByX(450);
+                playerButtonTransition.setInterpolator(Interpolator.EASE_IN);
+                playerButtonTransition.play();
+
+                TranslateTransition startButtonTransition = new TranslateTransition(Duration.millis(500), ((Pane) scene1.getRoot()).getChildren().get(1));
+                startButtonTransition.setByX(-450);
+                startButtonTransition.setInterpolator(Interpolator.EASE_IN);
+                startButtonTransition.play();
+
+                TranslateTransition helpButtonTransition = new TranslateTransition(Duration.millis(500), ((Pane) scene1.getRoot()).getChildren().get(2));
+                helpButtonTransition.setByX(-450);
+                helpButtonTransition.setInterpolator(Interpolator.EASE_IN);
+                helpButtonTransition.play();
+
+                TranslateTransition exitButtonTransition = new TranslateTransition(Duration.millis(500), ((Pane) scene1.getRoot()).getChildren().get(3));
+                exitButtonTransition.setByX(-450);
+                exitButtonTransition.setInterpolator(Interpolator.EASE_IN);
+                exitButtonTransition.play();
+
+                TranslateTransition backButtonTransition = new TranslateTransition(Duration.millis(500), ((Pane) scene1.getRoot()).getChildren().get(8));
+                backButtonTransition.setByX(-100);
+                backButtonTransition.setInterpolator(Interpolator.EASE_IN);
+                backButtonTransition.play();
+            }
+            else if (backButtonOrder == 3) {
+                backButtonOrder = 2;
+                TranslateTransition botButtonTransition = new TranslateTransition(Duration.millis(500), ((Pane) scene1.getRoot()).getChildren().get(4));
+                botButtonTransition.setByX(-450);
+                botButtonTransition.setInterpolator(Interpolator.EASE_OUT);
+                botButtonTransition.play();
+
+                TranslateTransition playerButtonTransition = new TranslateTransition(Duration.millis(500), ((Pane) scene1.getRoot()).getChildren().get(5));
+                playerButtonTransition.setByX(-450);
+                playerButtonTransition.setInterpolator(Interpolator.EASE_OUT);
+                playerButtonTransition.play();
+
+                TranslateTransition easyButtonTransition = new TranslateTransition(Duration.millis(500), ((Pane) scene1.getRoot()).getChildren().get(6));
+                easyButtonTransition.setByX(450);
+                easyButtonTransition.setInterpolator(Interpolator.EASE_IN);
+                easyButtonTransition.play();
+
+                TranslateTransition hardButtonTransition = new TranslateTransition(Duration.millis(500), ((Pane) scene1.getRoot()).getChildren().get(7));
+                hardButtonTransition.setByX(450);
+                hardButtonTransition.setInterpolator(Interpolator.EASE_IN);
+                hardButtonTransition.play();
+            }
+        });
+
         startButton.hoverProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean show) -> {
             if (show) {
                 startButton.setGraphic(startView2);
@@ -1462,6 +1511,9 @@ public class Menu extends Application{
 //            stage.setScene(scene2);
 //            mainTimeline.play();
 //            this.MPlayer.mediaPlayer.play();
+            backButtonOrder = 2;
+
+
             TranslateTransition startButtonTransition = new TranslateTransition(Duration.millis(500), ((Pane) scene1.getRoot()).getChildren().get(1));
             startButtonTransition.setByX(450);
             startButtonTransition.setInterpolator(Interpolator.EASE_IN);
@@ -1486,6 +1538,11 @@ public class Menu extends Application{
             playerButtonTransition.setByX(-450);
             playerButtonTransition.setInterpolator(Interpolator.EASE_OUT);
             playerButtonTransition.play();
+
+            TranslateTransition backButtonTransition = new TranslateTransition(Duration.millis(500), ((Pane) scene1.getRoot()).getChildren().get(8));
+            backButtonTransition.setByX(100);
+            backButtonTransition.setInterpolator(Interpolator.EASE_OUT);
+            backButtonTransition.play();
         });
 
         helpButton.hoverProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean show) -> {
@@ -1563,6 +1620,8 @@ public class Menu extends Application{
             }
         });
         botButton.setOnAction(event-> {
+            backButtonOrder = 3;
+
             TranslateTransition botButtonTransition = new TranslateTransition(Duration.millis(500), ((Pane) scene1.getRoot()).getChildren().get(4));
             botButtonTransition.setByX(450);
             botButtonTransition.setInterpolator(Interpolator.EASE_IN);
@@ -1621,7 +1680,8 @@ public class Menu extends Application{
                 botButton,
                 playerButton,
                 easyButton,
-                hardButton
+                hardButton,
+                backButton
         );
         return root;
     }
