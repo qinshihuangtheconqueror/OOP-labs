@@ -148,10 +148,13 @@ public class Menu extends Application{
         Mandarin_Square2.setTranslateX(100);
         Mandarin_Square2.setTranslateY(265);
 
-        Image sound_button_image = new Image(getClass().getResource("gui/asset/unmute.png").toExternalForm());
-        ImageView sound_button_view = new ImageView(sound_button_image);
-        Image mute_button_image = new Image(getClass().getResource("gui/asset/mute.png").toExternalForm());
-        ImageView mute_button_view = new ImageView(mute_button_image);
+//        Image sound_button_image = new Image(getClass().getResource("gui/asset/unmute.png").toExternalForm());
+//        ImageView sound_button_view = new ImageView(sound_button_image);
+        ImageView sound_button_view = buttonImageView("gui/asset/unmute.png", 80, 80);
+
+//        Image mute_button_image = new Image(getClass().getResource("gui/asset/mute.png").toExternalForm());
+//        ImageView mute_button_view = new ImageView(mute_button_image);
+        ImageView mute_button_view = buttonImageView("gui/asset/mute.png", 80, 80);
 
         Button soundButton = button(1000, 600, sound_button_view);
 
@@ -815,7 +818,7 @@ public class Menu extends Application{
             this.ciz_stones.add(stone);
         }
 
-        this.MPlayer =  new Utils(new File("gui/asset/soundtrack.mp3").toURI().toString());
+        this.MPlayer =  new Utils(new File("src/gui/asset/soundtrack.mp3").toURI().toString());
         CitizenSquare CS1 = new CitizenSquare(1, 5);
         CitizenSquare CS2 = new CitizenSquare(2, 5);
         CitizenSquare CS3 = new CitizenSquare(3, 5);
@@ -1586,6 +1589,19 @@ public class Menu extends Application{
         ImageView easyView = buttonImageView("gui/asset/EASY2.png", 180, 110);
         ImageView easyView2 = buttonImageView("gui/asset/EASY.png", 180, 110);
         Button easyButton = button(1100, 120, easyView);
+
+        ImageView hardView = buttonImageView("gui/asset/HARD2.png", 180, 110);
+        ImageView hardView2 = buttonImageView("gui/asset/HARD.png", 180, 110);
+        Button hardButton = button(1100, 250, hardView);
+
+        ImageView botView = buttonImageView("gui/asset/BOT2.png", 180, 110);
+        ImageView botView2 = buttonImageView("gui/asset/BOT.png", 180, 110);
+        Button botButton = button(1100, 120, botView);
+
+        ImageView playerView = buttonImageView("gui/asset/PLAYER2.png", 180, 110);
+        ImageView playerView2 = buttonImageView("gui/asset/PLAYER.png", 180, 110);
+        Button playerButton = button(1100, 250, playerView);
+
         easyButton.hoverProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean show) -> {
             if (show) {
                 easyButton.setGraphic(easyView2);
@@ -1602,18 +1618,16 @@ public class Menu extends Application{
             mainTimeline.play();
             this.MPlayer.mediaPlayer.play();
 
-//            startButton.setTranslateX(650);
-//            helpButton.setTranslateX(650);
-//            exitButton.setTranslateX(650);
-//            botButton.setTranslateX(1100);
-//            playerButton.setTranslateX(1100);
-//            easyButton.setTranslateX(1100);
-//            hardButton.setTranslateX(1100);
+            startButton.setTranslateX(650);
+            helpButton.setTranslateX(650);
+            exitButton.setTranslateX(650);
+            botButton.setTranslateX(1100);
+            playerButton.setTranslateX(1100);
+            easyButton.setTranslateX(1100);
+            hardButton.setTranslateX(1100);
+            backButton.setTranslateX(-100);
         });
 
-        ImageView hardView = buttonImageView("gui/asset/HARD2.png", 180, 110);
-        ImageView hardView2 = buttonImageView("gui/asset/HARD.png", 180, 110);
-        Button hardButton = button(1100, 250, hardView);
         hardButton.hoverProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean show) -> {
             if (show) {
                 hardButton.setGraphic(hardView2);
@@ -1630,35 +1644,15 @@ public class Menu extends Application{
             mainTimeline.play();
             this.MPlayer.mediaPlayer.play();
 
-//            startButton.setTranslateX(650);
-//            helpButton.setTranslateX(650);
-//            exitButton.setTranslateX(650);
-//            botButton.setTranslateX(1100);
-//            playerButton.setTranslateX(1100);
-//            easyButton.setTranslateX(650);
-//            hardButton.setTranslateX(650);
+            startButton.setTranslateX(650);
+            helpButton.setTranslateX(650);
+            exitButton.setTranslateX(650);
+            botButton.setTranslateX(1100);
+            playerButton.setTranslateX(1100);
+            easyButton.setTranslateX(1100);
+            hardButton.setTranslateX(1100);
+            backButton.setTranslateX(-100);
         });
-//        ChangeListener<Boolean> hardHoverListener = new ChangeListener<Boolean>() {
-//            @Override
-//            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean show) {
-//                if (show) {
-//                    hardButton.setGraphic(hardView2);
-//                } else {
-//                    hardButton.setGraphic(hardView);
-//                }
-//            }
-//        };
-//        hardButton.hoverProperty().addListener(hardHoverListener);
-//        hardButton.setOnAction(event-> {
-//        });
-
-        ImageView botView = buttonImageView("gui/asset/BOT2.png", 180, 110);
-        ImageView botView2 = buttonImageView("gui/asset/BOT.png", 180, 110);
-        Button botButton = button(1100, 120, botView);
-
-        ImageView playerView = buttonImageView("gui/asset/PLAYER2.png", 180, 110);
-        ImageView playerView2 = buttonImageView("gui/asset/PLAYER.png", 180, 110);
-        Button playerButton = button(1100, 250, playerView);
 
         botButton.hoverProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean show) -> {
             if (show) {
@@ -1712,6 +1706,7 @@ public class Menu extends Application{
             playerButton.setTranslateX(1100);
             easyButton.setTranslateX(1100);
             hardButton.setTranslateX(1100);
+            backButton.setTranslateX(-100);
         });
 
         exitButton.hoverProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean show) -> {
