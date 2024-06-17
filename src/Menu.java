@@ -107,8 +107,8 @@ public class Menu extends Application{
 //        homeImageView.setFitWidth(210);
 //        homeImageView2.setFitHeight(275);
 //        homeImageView2.setFitWidth(210);
-        ImageView homeImageView = buttonImageView("gui/asset/HomeButton.png", 280, 210);
-        ImageView homeImageView2 = buttonImageView("gui/asset/HomeButton2.png", 275, 210);
+        ImageView homeImageView = buttonImageView("gui/asset/HomeButton.png", 210, 280);
+        ImageView homeImageView2 = buttonImageView("gui/asset/HomeButton2.png", 215, 270);
 
 //        Button homeButton = new Button();
 //        homeButton.setTranslateX(967);
@@ -1430,15 +1430,24 @@ public class Menu extends Application{
         }
 
     }
+
     private Pane createStartMenu() {
         Pane root = new Pane();
         root.setPrefSize(1080,720);
         Image bgImage =  new Image(getClass().getResource("gui/asset/MenuScene.gif").toExternalForm());
 
 
-        ImageView startView = buttonImageView("gui/asset/START.png", 180, 110);
-        ImageView startView2 = buttonImageView("gui/asset/START2.png", 180, 110);
-        Button startButton = button(550, 120, startView);
+        ImageView startView = buttonImageView("gui/asset/START2.png", 180, 110);
+        ImageView startView2 = buttonImageView("gui/asset/START.png", 180, 110);
+        Button startButton = button(650, 120, startView);
+
+        ImageView helpView = buttonImageView("gui/asset/HELP2.png", 180, 110);
+        ImageView helpView2 = buttonImageView("gui/asset/HELP.png", 180, 110);
+        Button helpButton = button(650, 250, helpView);
+
+        ImageView exitView = buttonImageView("gui/asset/EXIT2.png", 180, 110);
+        ImageView exitView2 = buttonImageView("gui/asset/EXIT.png", 180, 110);
+        Button exitButton = button(650, 380, exitView);
 
         startButton.hoverProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean show) -> {
             if (show) {
@@ -1447,12 +1456,37 @@ public class Menu extends Application{
                 startButton.setGraphic(startView);
             }
         });
-        startButton.setOnAction(event-> {stage.setScene(scene2); mainTimeline.play(); this.MPlayer.mediaPlayer.play();});
 
 
-        ImageView helpView = buttonImageView("gui/asset/HELP.png", 180, 110);
-        ImageView helpView2 = buttonImageView("gui/asset/HELP2.png", 180, 110);
-        Button helpButton = button(550, 220, helpView);
+        startButton.setOnAction(event-> {
+//            stage.setScene(scene2);
+//            mainTimeline.play();
+//            this.MPlayer.mediaPlayer.play();
+            TranslateTransition startButtonTransition = new TranslateTransition(Duration.millis(500), ((Pane) scene1.getRoot()).getChildren().get(1));
+            startButtonTransition.setByX(450);
+            startButtonTransition.setInterpolator(Interpolator.EASE_IN);
+            startButtonTransition.play();
+
+            TranslateTransition helpButtonTransition = new TranslateTransition(Duration.millis(500), ((Pane) scene1.getRoot()).getChildren().get(2));
+            helpButtonTransition.setByX(450);
+            helpButtonTransition.setInterpolator(Interpolator.EASE_IN);
+            helpButtonTransition.play();
+
+            TranslateTransition exitButtonTransition = new TranslateTransition(Duration.millis(500), ((Pane) scene1.getRoot()).getChildren().get(3));
+            exitButtonTransition.setByX(450);
+            exitButtonTransition.setInterpolator(Interpolator.EASE_IN);
+            exitButtonTransition.play();
+
+            TranslateTransition botButtonTransition = new TranslateTransition(Duration.millis(500), ((Pane) scene1.getRoot()).getChildren().get(4));
+            botButtonTransition.setByX(-450);
+            botButtonTransition.setInterpolator(Interpolator.EASE_OUT);
+            botButtonTransition.play();
+
+            TranslateTransition playerButtonTransition = new TranslateTransition(Duration.millis(500), ((Pane) scene1.getRoot()).getChildren().get(5));
+            playerButtonTransition.setByX(-450);
+            playerButtonTransition.setInterpolator(Interpolator.EASE_OUT);
+            playerButtonTransition.play();
+        });
 
         helpButton.hoverProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean show) -> {
             if (show) {
@@ -1478,55 +1512,48 @@ public class Menu extends Application{
         });
 
 
-        ImageView easyView = buttonImageView("gui/asset/EASY.png", 180, 110);
-        ImageView easyView2 = buttonImageView("gui/asset/EASY2.png", 180, 110);
-        Button easyButton = button(750, 280, easyView);
-        ChangeListener<Boolean> easyHoverListener = new ChangeListener<Boolean>() {
-            @Override
-            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean show) {
-                if (show) {
-                    easyButton.setGraphic(easyView2);
-                } else {
-                    easyButton.setGraphic(easyView);
-                }
+        ImageView easyView = buttonImageView("gui/asset/EASY2.png", 180, 110);
+        ImageView easyView2 = buttonImageView("gui/asset/EASY.png", 180, 110);
+        Button easyButton = button(1100, 120, easyView);
+        easyButton.hoverProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean show) -> {
+            if (show) {
+                easyButton.setGraphic(easyView2);
+            } else {
+                easyButton.setGraphic(easyView);
             }
-        };
-        easyButton.hoverProperty().addListener(easyHoverListener);
-        easyButton.setOnAction(event-> {
-
-
         });
 
-
-        ImageView hardView = buttonImageView("gui/asset/HARD.png", 180, 110);
-        ImageView hardView2 = buttonImageView("gui/asset/HARD2.png", 180, 110);
-        Button hardButton = button(750, 380, hardView);
-        ChangeListener<Boolean> hardHoverListener = new ChangeListener<Boolean>() {
-            @Override
-            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean show) {
-                if (show) {
-                    hardButton.setGraphic(hardView2);
-                } else {
-                    hardButton.setGraphic(hardView);
-                }
+        ImageView hardView = buttonImageView("gui/asset/HARD2.png", 180, 110);
+        ImageView hardView2 = buttonImageView("gui/asset/HARD.png", 180, 110);
+        Button hardButton = button(1100, 250, hardView);
+        hardButton.hoverProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean show) -> {
+            if (show) {
+                hardButton.setGraphic(hardView2);
+            } else {
+                hardButton.setGraphic(hardView);
             }
-        };
-        hardButton.hoverProperty().addListener(hardHoverListener);
-        hardButton.setOnAction(event-> {
-
-
         });
+//        ChangeListener<Boolean> hardHoverListener = new ChangeListener<Boolean>() {
+//            @Override
+//            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean show) {
+//                if (show) {
+//                    hardButton.setGraphic(hardView2);
+//                } else {
+//                    hardButton.setGraphic(hardView);
+//                }
+//            }
+//        };
+//        hardButton.hoverProperty().addListener(hardHoverListener);
+//        hardButton.setOnAction(event-> {
+//        });
 
+        ImageView botView = buttonImageView("gui/asset/BOT2.png", 180, 110);
+        ImageView botView2 = buttonImageView("gui/asset/BOT.png", 180, 110);
+        Button botButton = button(1100, 120, botView);
 
-        ImageView botView = buttonImageView("gui/asset/BOT.png", 180, 110);
-        ImageView botView2 = buttonImageView("gui/asset/BOT2.png", 180, 110);
-//        ImageView botView3 = buttonImageView("gui/asset/BOT3.png", 180, 110);
-        Button botButton = button(550, 320, botView);
-
-        ImageView playerView = buttonImageView("gui/asset/PLAYER.png", 180, 110);
-        ImageView playerView2 = buttonImageView("gui/asset/PLAYER2.png", 180, 110);
-//        ImageView playerView3 = buttonImageView("gui/asset/PLAYER3.png", 180, 110);
-        Button playerButton = button(550, 420, playerView);
+        ImageView playerView = buttonImageView("gui/asset/PLAYER2.png", 180, 110);
+        ImageView playerView2 = buttonImageView("gui/asset/PLAYER.png", 180, 110);
+        Button playerButton = button(1100, 250, playerView);
 
         botButton.hoverProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean show) -> {
             if (show) {
@@ -1536,24 +1563,25 @@ public class Menu extends Application{
             }
         });
         botButton.setOnAction(event-> {
-            if (choice == "PLAYER") {
-                choice = "BOT";
-//                playerButton.setVisible(false);
-//                playerView3.setVisible(true);
-//                botButton.setVisible(true);
-                easyButton.hoverProperty().addListener(easyHoverListener);
-                hardButton.hoverProperty().addListener(hardHoverListener);
+            TranslateTransition botButtonTransition = new TranslateTransition(Duration.millis(500), ((Pane) scene1.getRoot()).getChildren().get(4));
+            botButtonTransition.setByX(450);
+            botButtonTransition.setInterpolator(Interpolator.EASE_IN);
+            botButtonTransition.play();
 
-                TranslateTransition easyTransition = new TranslateTransition(Duration.millis(500), ((Pane) scene1.getRoot()).getChildren().get(6));
-                easyTransition.setByX(-400);
-                easyTransition.setInterpolator(Interpolator.EASE_OUT);
-                easyTransition.play();
+            TranslateTransition playerButtonTransition = new TranslateTransition(Duration.millis(500), ((Pane) scene1.getRoot()).getChildren().get(5));
+            playerButtonTransition.setByX(450);
+            playerButtonTransition.setInterpolator(Interpolator.EASE_IN);
+            playerButtonTransition.play();
 
-                TranslateTransition hardTransition = new TranslateTransition(Duration.millis(500), ((Pane) scene1.getRoot()).getChildren().get(7));
-                hardTransition.setByX(-400);
-                hardTransition.setInterpolator(Interpolator.EASE_OUT);
-                hardTransition.play();
-            }
+            TranslateTransition easyButtonTransition = new TranslateTransition(Duration.millis(500), ((Pane) scene1.getRoot()).getChildren().get(6));
+            easyButtonTransition.setByX(-450);
+            easyButtonTransition.setInterpolator(Interpolator.EASE_OUT);
+            easyButtonTransition.play();
+
+            TranslateTransition hardButtonTransition = new TranslateTransition(Duration.millis(500), ((Pane) scene1.getRoot()).getChildren().get(7));
+            hardButtonTransition.setByX(-450);
+            hardButtonTransition.setInterpolator(Interpolator.EASE_OUT);
+            hardButtonTransition.play();
         });
 
         playerButton.hoverProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean show) -> {
@@ -1564,30 +1592,18 @@ public class Menu extends Application{
             }
         });
         playerButton.setOnAction(event-> {
-            if (choice == "BOT") {
-                choice = "PLAYER";
-//                botButton.setVisible(false);
-//                botView3.setVisible(true);
-//                playerButton.setVisible(true);
-                easyButton.hoverProperty().removeListener(easyHoverListener);
-                hardButton.hoverProperty().removeListener(hardHoverListener);
+            stage.setScene(scene2);
+            mainTimeline.play();
+            this.MPlayer.mediaPlayer.play();
 
-                TranslateTransition easyTransition = new TranslateTransition(Duration.millis(500), ((Pane) scene1.getRoot()).getChildren().get(6));
-                easyTransition.setByX(400);
-                easyTransition.setInterpolator(Interpolator.EASE_IN);
-                easyTransition.play();
-
-                TranslateTransition hardTransition = new TranslateTransition(Duration.millis(500), ((Pane) scene1.getRoot()).getChildren().get(7));
-                hardTransition.setByX(400);
-                hardTransition.setInterpolator(Interpolator.EASE_IN);
-                hardTransition.play();
-            }
+            startButton.setTranslateX(650);
+            helpButton.setTranslateX(650);
+            exitButton.setTranslateX(650);
+            botButton.setTranslateX(1100);
+            playerButton.setTranslateX(1100);
+            easyButton.setTranslateX(1100);
+            hardButton.setTranslateX(1100);
         });
-
-
-        ImageView exitView = buttonImageView("gui/asset/EXIT.png", 180, 110);
-        ImageView exitView2 = buttonImageView("gui/asset/EXIT2.png", 180, 110);
-        Button exitButton = button(550, 520, exitView);
 
         exitButton.hoverProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean show) -> {
             if (show) {
@@ -1602,8 +1618,8 @@ public class Menu extends Application{
                 startButton,
                 helpButton,
                 exitButton,
-                playerButton,
                 botButton,
+                playerButton,
                 easyButton,
                 hardButton
         );
