@@ -816,18 +816,18 @@ public class Menu extends Application{
         }
 
         this.MPlayer =  new Utils(new File("gui/asset/soundtrack.mp3").toURI().toString());
-        CitizenSquare CS1 = new CitizenSquare(1, 0);
-        CitizenSquare CS2 = new CitizenSquare(2, 0);
-        CitizenSquare CS3 = new CitizenSquare(3, 0);
-        CitizenSquare CS4 = new CitizenSquare(4, 0);
-        CitizenSquare CS5 = new CitizenSquare(5, 0);
-        CitizenSquare CS7 = new CitizenSquare(7, 0);
-        CitizenSquare CS8= new CitizenSquare(8, 0);
-        CitizenSquare CS9 = new CitizenSquare(9, 1);
-        CitizenSquare CS10 = new CitizenSquare(10, 0);
-        CitizenSquare CS11 = new CitizenSquare(11, 0);
+        CitizenSquare CS1 = new CitizenSquare(1, 5);
+        CitizenSquare CS2 = new CitizenSquare(2, 5);
+        CitizenSquare CS3 = new CitizenSquare(3, 5);
+        CitizenSquare CS4 = new CitizenSquare(4, 5);
+        CitizenSquare CS5 = new CitizenSquare(5, 5);
+        CitizenSquare CS7 = new CitizenSquare(7, 5);
+        CitizenSquare CS8= new CitizenSquare(8, 5);
+        CitizenSquare CS9 = new CitizenSquare(9, 5);
+        CitizenSquare CS10 = new CitizenSquare(10, 5);
+        CitizenSquare CS11 = new CitizenSquare(11, 5);
 
-        MandarinSquare MQ0=  new MandarinSquare(0, 0, false);
+        MandarinSquare MQ0=  new MandarinSquare(0, 0, true);
         MandarinSquare MQ6=  new MandarinSquare(6, 0, true);
         squares = new ArrayList<BoardSquare>();
         squares.add(MQ0);
