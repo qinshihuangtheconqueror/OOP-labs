@@ -43,6 +43,7 @@ import javafx.scene.canvas.Canvas;
 import javax.swing.*;
 
 
+
 import java.io.File;
 
 import javafx.util.Duration;
@@ -70,6 +71,8 @@ public class Menu extends Application{
     public ArrayList<String> stoneImages;
     public Timeline mainTimeline = new Timeline(new KeyFrame(Duration.millis(100), e -> run(gc)));;
     public Utils MPlayer;
+    public boolean isP2Bot;
+    public boolean isEasyBot;
 
     @Override
     public void start(Stage primarystage) throws Exception {
@@ -736,6 +739,7 @@ public class Menu extends Application{
     }
 
     public void loadImageHolder() {
+    	ImageHolder.clear();
         int step_x= 100;
         for (int i=0;i<squares.size();i++){
             if (i==0) {
@@ -792,6 +796,7 @@ public class Menu extends Application{
     }
 
     public void setup(){
+    	
         this.ciz_stones = new ArrayList<>();
         this.stoneImages = new ArrayList<>();
         this.stoneImages.add("gui/asset/CizStone1.png");
@@ -810,7 +815,7 @@ public class Menu extends Application{
             this.ciz_stones.add(stone);
         }
 
-        this.MPlayer =  new Utils(new File("src/gui/asset/soundtrack.mp3").toURI().toString());
+        this.MPlayer =  new Utils(new File("gui/asset/soundtrack.mp3").toURI().toString());
         CitizenSquare CS1 = new CitizenSquare(1, 0);
         CitizenSquare CS2 = new CitizenSquare(2, 0);
         CitizenSquare CS3 = new CitizenSquare(3, 0);
@@ -841,7 +846,9 @@ public class Menu extends Application{
         Player player1 =  new Player(1,0);
         Player player2 = new Player(2,0);
         Player botPlayer = new MinimaxBot(2, 0);
-        MainGame =  new Game(MainBoard,player1,botPlayer, true);
+//        MainGame =  new Game(MainBoard,player1,botPlayer, true);
+        if(isP2Bot) MainGame = new Game(MainBoard, player1, botPlayer, true);
+        else MainGame = new Game(MainBoard, player1, player2, true);
 
         loadImageHolder();
 
@@ -881,6 +888,8 @@ public class Menu extends Application{
         this.drop_animation.add(img);
         this.drop_animation.add(img);
     }
+    
+    
 
 
 
@@ -1007,7 +1016,12 @@ public class Menu extends Application{
             	MinimaxBot bot = (MinimaxBot) MainGame.getPlayer2();
                 mainTimeline.stop();
                 System.out.println("Interrupted");
-            	int chosenMovement = bot.makeHardBotMove(MainGame.getMyBoard());
+                int chosenMovement;
+                if(isEasyBot) {
+                	chosenMovement = bot.makeEasyBotMove(MainGame.getMyBoard());
+                }else {
+                	chosenMovement = bot.makeHardBotMove(MainGame.getMyBoard());
+                }
                 mainTimeline.play();
             	if(chosenMovement%2==0) {
             		int chosenSquareID = chosenMovement/2;
@@ -1579,6 +1593,23 @@ public class Menu extends Application{
                 easyButton.setGraphic(easyView);
             }
         });
+        
+        easyButton.setOnAction(event-> {
+            isP2Bot = true;
+            isEasyBot = true;
+            setup();
+            stage.setScene(scene2);
+            mainTimeline.play();
+            this.MPlayer.mediaPlayer.play();
+
+//            startButton.setTranslateX(650);
+//            helpButton.setTranslateX(650);
+//            exitButton.setTranslateX(650);
+//            botButton.setTranslateX(1100);
+//            playerButton.setTranslateX(1100);
+//            easyButton.setTranslateX(1100);
+//            hardButton.setTranslateX(1100);
+        });
 
         ImageView hardView = buttonImageView("gui/asset/HARD2.png", 180, 110);
         ImageView hardView2 = buttonImageView("gui/asset/HARD.png", 180, 110);
@@ -1589,6 +1620,23 @@ public class Menu extends Application{
             } else {
                 hardButton.setGraphic(hardView);
             }
+        });
+        
+        hardButton.setOnAction(event-> {
+            isP2Bot = true;
+            isEasyBot = false;
+            setup();
+            stage.setScene(scene2);
+            mainTimeline.play();
+            this.MPlayer.mediaPlayer.play();
+
+//            startButton.setTranslateX(650);
+//            helpButton.setTranslateX(650);
+//            exitButton.setTranslateX(650);
+//            botButton.setTranslateX(1100);
+//            playerButton.setTranslateX(1100);
+//            easyButton.setTranslateX(650);
+//            hardButton.setTranslateX(650);
         });
 //        ChangeListener<Boolean> hardHoverListener = new ChangeListener<Boolean>() {
 //            @Override
@@ -1651,6 +1699,8 @@ public class Menu extends Application{
             }
         });
         playerButton.setOnAction(event-> {
+            isP2Bot = false;
+            setup();
             stage.setScene(scene2);
             mainTimeline.play();
             this.MPlayer.mediaPlayer.play();
