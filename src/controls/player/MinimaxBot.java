@@ -156,6 +156,7 @@ public class MinimaxBot extends Player {
 		System.out.println("Depth: " + depth);
 		System.out.println("Direction: " + dir);
 		System.out.println("Chosen square: " + chosenSquare);
+		System.out.println("Is Maximizing: " + isMaximizing);
 		int score = score(board, chosenSquare, isMoveLeft);
 		System.out.println("Score: " + score);
 		display(board);
@@ -218,7 +219,7 @@ public class MinimaxBot extends Player {
 		int bestSquareID = 0;
 		boolean bestMove = true;
 		display(b);
-		int height = 5;
+		int height = 3;
 		int depth = 0;
 		int alpha = Integer.MIN_VALUE;
 		int beta = Integer.MAX_VALUE;
@@ -249,6 +250,7 @@ public class MinimaxBot extends Player {
 		}else {
 			dir="right";
 		}
+		System.out.println("Best score: " + bestScore);
 		System.out.println("Best choice: " + bestSquareID);
 		System.out.println("Best direction: " + dir);
 		if(bestMove) {
