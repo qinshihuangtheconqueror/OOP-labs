@@ -270,7 +270,7 @@ public class MinimaxBot extends Player {
 		int bestSquareID = 0;
 		boolean bestMove = true;
 		display(b);
-		int height = 1;
+		int height = 0;
 		int depth = 0;
 		int alpha = Integer.MIN_VALUE;
 		int beta = Integer.MAX_VALUE;
