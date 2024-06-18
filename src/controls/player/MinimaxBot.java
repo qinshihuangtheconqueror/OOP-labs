@@ -168,7 +168,7 @@ public class MinimaxBot extends Player {
 			int value = Integer.MIN_VALUE;
 			dispatch(board, 1);
 			for(int i = 1; i <= 5; i++) {
-				if(!board.getListOfSquare().get(i).isEmpty()==false) {
+				if(board.getListOfSquare().get(i).isEmpty()==false) {
 					value = Math.max(value, minimax(board, depth+1, h, !isMaximizing, i, isMoveLeft, alpha, beta)-score);
 					value = Math.max(value, minimax(board, depth+1, h, !isMaximizing, i, !isMoveLeft, alpha, beta)-score);	
 					alpha = Math.max(alpha, value);
