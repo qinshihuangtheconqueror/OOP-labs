@@ -1,4 +1,4 @@
-package controls.board;
+package logic.board;
 
 public abstract class BoardSquare {
     private int boardSquareID;

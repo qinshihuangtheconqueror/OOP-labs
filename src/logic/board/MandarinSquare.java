@@ -1,4 +1,4 @@
-package controls.board;
+package logic.board;
 
 public class MandarinSquare extends BoardSquare {
     public boolean IsContainMandarin;

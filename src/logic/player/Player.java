@@ -1,8 +1,7 @@
-package controls.player;
+package logic.player;
 import java.util.ArrayList;
 
-import controls.Game;
-import controls.board.*;
+import logic.board.*;
 
 public class Player {
 	private int playerID;

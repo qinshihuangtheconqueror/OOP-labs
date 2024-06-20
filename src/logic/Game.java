@@ -1,8 +1,8 @@
-package controls;
+package logic;
 
-import controls.board.Board;
-import controls.board.MandarinSquare;
-import controls.player.Player;
+import logic.board.Board;
+import logic.board.MandarinSquare;
+import logic.player.Player;
 
 public class Game {
 	private Board myBoard;

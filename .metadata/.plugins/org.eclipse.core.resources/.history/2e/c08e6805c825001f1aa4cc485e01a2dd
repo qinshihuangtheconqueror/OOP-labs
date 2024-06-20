@@ -1,4 +1,4 @@
-package controls.player;
+package logic.player;
 
 public class Bot extends Player {
 

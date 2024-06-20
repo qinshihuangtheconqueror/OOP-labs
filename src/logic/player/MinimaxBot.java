@@ -1,12 +1,11 @@
-package controls.player;
+package logic.player;
 
 import java.util.ArrayList;
 
-import controls.Game;
-import controls.board.Board;
-import controls.board.BoardSquare;
-import controls.board.CitizenSquare;
-import controls.board.MandarinSquare;
+import logic.board.Board;
+import logic.board.BoardSquare;
+import logic.board.CitizenSquare;
+import logic.board.MandarinSquare;
 
 public class MinimaxBot extends Player {
 	public MinimaxBot(int playerID, int point) {

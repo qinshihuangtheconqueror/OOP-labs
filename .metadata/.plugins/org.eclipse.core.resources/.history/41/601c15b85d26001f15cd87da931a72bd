@@ -4,12 +4,12 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.concurrent.ThreadLocalRandom;
-import controls.Game;
-import controls.board.Board;
-import controls.board.BoardSquare;
-import controls.board.CitizenSquare;
-import controls.board.MandarinSquare;
-import controls.player.Player;
+import logic.Game;
+import logic.board.Board;
+import logic.board.BoardSquare;
+import logic.board.CitizenSquare;
+import logic.board.MandarinSquare;
+import logic.player.Player;
 import javafx.animation.*;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -38,7 +38,7 @@ import javax.swing.*;
 import javafx.util.Duration;
 
 
-public class Menu extends Application{
+public class control.Menu extends Application{
 	public Stage stage;
     public Scene scene1, scene2, scene3, scene4, scene5, scene6, scene7, scene8, scene9;
     public Parent layout1, layout2;

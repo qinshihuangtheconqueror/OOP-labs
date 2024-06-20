@@ -1,6 +1,6 @@
-package controls.player;
+package logic.player;
 
-import controls.board.Board;
+import logic.board.Board;
 
 public class Bot extends Player {
 

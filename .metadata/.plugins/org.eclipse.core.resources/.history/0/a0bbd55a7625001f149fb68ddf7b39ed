@@ -2,12 +2,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.concurrent.ThreadLocalRandom;
-import controls.Game;
-import controls.board.Board;
-import controls.board.BoardSquare;
-import controls.board.CitizenSquare;
-import controls.board.MandarinSquare;
-import controls.player.Player;
+import logic.Game;
+import logic.board.Board;
+import logic.board.BoardSquare;
+import logic.board.CitizenSquare;
+import logic.board.MandarinSquare;
+import logic.player.Player;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
@@ -34,7 +34,7 @@ import javax.swing.text.View;
 import javafx.util.Duration;
 
 
-public class Menu extends Application{
+public class control.Menu extends Application{
     public Stage stage;
     public Scene scene1, scene2;
     public Parent layout1, layout2;
