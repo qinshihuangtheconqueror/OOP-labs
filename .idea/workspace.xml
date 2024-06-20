@@ -24,7 +24,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="menu12" />
+        <entry key="$PROJECT_DIR$" value="gui" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -40,23 +40,23 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.Menu.executor&quot;: &quot;Run&quot;,
-    &quot;Application.Unnamed.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;gui&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/JavaFX/openjfx-22.0.1_windows-x64_bin-sdk/javafx-sdk-22.0.1/lib&quot;,
-    &quot;onboarding.tips.debug.path&quot;: &quot;D:/MandarinSquare/src/Main.java&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Libraries&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.JavaFX&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.Menu.executor": "Run",
+    "Application.Unnamed.executor": "Run",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "master",
+    "ignore.virus.scanning.warn.message": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "D:/javafx-sdk-22.0.1/lib",
+    "onboarding.tips.debug.path": "D:/MandarinSquare/src/Main.java",
+    "project.structure.last.edited": "Libraries",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "preferences.JavaFX"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\New folder (3)\OOP-labs\src\gui\asset" />
@@ -73,9 +73,9 @@
   <component name="RunManager" selected="Application.Menu">
     <configuration name="Menu" type="Application" factoryName="Application">
       <option name="ALTERNATIVE_JRE_PATH" value="22" />
-      <option name="MAIN_CLASS_NAME" value="Menu" />
+      <option name="MAIN_CLASS_NAME" value="control.Menu" />
       <module name="MandarinSquare" />
-      <option name="VM_PARAMETERS" value="--module-path &quot;D:\JavaFX\openjfx-22.0.1_windows-x64_bin-sdk\javafx-sdk-22.0.1\lib&quot; --add-modules=javafx.controls,javafx.media " />
+      <option name="VM_PARAMETERS" value="--module-path &quot;D:\javafx-sdk-22.0.1\lib&quot; --add-modules=javafx.controls,javafx.media " />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
