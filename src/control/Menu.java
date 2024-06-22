@@ -810,9 +810,9 @@ public class Menu extends Application{
         CitizenSquare CS3 = new CitizenSquare(3, 5);
         CitizenSquare CS4 = new CitizenSquare(4, 5);
         CitizenSquare CS5 = new CitizenSquare(5, 5);
-        CitizenSquare CS7 = new CitizenSquare(7, 0);
+        CitizenSquare CS7 = new CitizenSquare(7, 5);
         CitizenSquare CS8= new CitizenSquare(8, 5);
-        CitizenSquare CS9 = new CitizenSquare(9, 1);
+        CitizenSquare CS9 = new CitizenSquare(9, 5);
         CitizenSquare CS10 = new CitizenSquare(10, 5);
         CitizenSquare CS11 = new CitizenSquare(11, 5);
 
