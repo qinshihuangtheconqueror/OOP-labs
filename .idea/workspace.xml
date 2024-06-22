@@ -1,33 +1,107 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="e1cb5f09-1c33-426a-a423-5e922d744247" name="Changes" comment="" />
+    <list default="true" id="e1cb5f09-1c33-426a-a423-5e922d744247" name="Changes" comment="Adding GUI for leaves">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+        <option value="FxmlFile" />
+        <option value="JavaFXApplication" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="gui" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 2
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 2
+}</component>
   <component name="ProjectId" id="2ge3SKYRISoZPt4HtjBQPTMLIeD" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Application.Menu.executor": "Run",
+    "Application.Unnamed.executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "git-widget-placeholder": "master",
+    "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
-    "onboarding.tips.debug.path": "D:/MandarinSquare/src/Main.java"
+    "last_opened_file_path": "D:/javafx-sdk-22.0.1/lib",
+    "onboarding.tips.debug.path": "D:/MandarinSquare/src/Main.java",
+    "project.structure.last.edited": "Libraries",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "preferences.JavaFX"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\New folder (3)\OOP-labs\src\gui\asset" />
+      <recent name="D:\MandarinSquare\Design" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\New folder (3)\OOP-labs\src\gui\asset" />
+      <recent name="C:\Users\admin\Documents\GitHub\OOP-labs" />
+    </key>
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Application.Menu">
+    <configuration name="Menu" type="Application" factoryName="Application">
+      <option name="ALTERNATIVE_JRE_PATH" value="22" />
+      <option name="MAIN_CLASS_NAME" value="control.Menu" />
+      <module name="MandarinSquare" />
+      <option name="VM_PARAMETERS" value="--module-path &quot;D:\javafx-sdk-22.0.1\lib&quot; --add-modules=javafx.controls,javafx.media " />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Unnamed" type="Remote" nameIsGenerated="true">
+      <module name="MandarinSquare" />
+      <option name="USE_SOCKET_TRANSPORT" value="true" />
+      <option name="SERVER_MODE" value="false" />
+      <option name="SHMEM_ADDRESS" />
+      <option name="HOST" value="localhost" />
+      <option name="PORT" value="5005" />
+      <option name="AUTO_RESTART" value="false" />
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Application.Menu" />
+      <item itemvalue="Remote JVM Debug.Unnamed" />
+    </list>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="jdk-22-openjdk-22-3183f394aec4-bad0321e" />
+      </set>
+    </attachedChunks>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -37,17 +111,153 @@
       <option name="presentableId" value="Default" />
       <updated>1716044215054</updated>
     </task>
+    <task id="LOCAL-00001" summary="controls package">
+      <option name="closed" value="true" />
+      <created>1716189782125</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1716189782125</updated>
+    </task>
+    <task id="LOCAL-00002" summary="update design pattern">
+      <option name="closed" value="true" />
+      <created>1716780845913</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1716780845913</updated>
+    </task>
+    <task id="LOCAL-00003" summary="update design pattern">
+      <option name="closed" value="true" />
+      <created>1717563669755</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1717563669755</updated>
+    </task>
+    <task id="LOCAL-00004" summary="update design pattern">
+      <option name="closed" value="true" />
+      <created>1717599369998</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1717599369998</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Adding GUI">
+      <option name="closed" value="true" />
+      <created>1717600485082</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1717600485082</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Adding GUI">
+      <option name="closed" value="true" />
+      <created>1717600679719</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1717600679719</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Adding GUI">
+      <option name="closed" value="true" />
+      <created>1717692942530</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1717692942530</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Adding GUI">
+      <option name="closed" value="true" />
+      <created>1717941349184</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1717941349184</updated>
+    </task>
+    <task id="LOCAL-00009" summary="Adding GUI for leaves">
+      <option name="closed" value="true" />
+      <created>1718419704168</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1718419704168</updated>
+    </task>
+    <task id="LOCAL-00010" summary="Adding GUI for leaves">
+      <option name="closed" value="true" />
+      <created>1718419890037</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1718419890037</updated>
+    </task>
+    <task id="LOCAL-00011" summary="Adding GUI for leaves">
+      <option name="closed" value="true" />
+      <created>1718523142271</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1718523142272</updated>
+    </task>
+    <task id="LOCAL-00012" summary="Adding GUI for leaves">
+      <option name="closed" value="true" />
+      <created>1718606653193</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1718606653193</updated>
+    </task>
+    <task id="LOCAL-00013" summary="Adding GUI for leaves">
+      <option name="closed" value="true" />
+      <created>1718606737958</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1718606737958</updated>
+    </task>
+    <task id="LOCAL-00014" summary="Adding GUI for leaves">
+      <option name="closed" value="true" />
+      <created>1718610631669</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1718610631669</updated>
+    </task>
+    <task id="LOCAL-00015" summary="Adding GUI for leaves">
+      <option name="closed" value="true" />
+      <created>1718634749592</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1718634749592</updated>
+    </task>
+    <task id="LOCAL-00016" summary="Adding GUI for leaves">
+      <option name="closed" value="true" />
+      <created>1718635298721</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1718635298722</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/Main.java</url>
-          <line>11</line>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="controls package" />
+    <MESSAGE value="update design pattern" />
+    <MESSAGE value="Adding GUI" />
+    <MESSAGE value="Adding GUI for leaves" />
+    <option name="LAST_COMMIT_MESSAGE" value="Adding GUI for leaves" />
   </component>
 </project>

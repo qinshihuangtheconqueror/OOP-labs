@@ -1,0 +1,15 @@
+package logic.player;
+
+import logic.board.Board;
+
+public class Bot extends Player {
+
+	public Bot(int playerID, int point) {
+		super(playerID, point);
+	}
+	
+	public void makeMove(Board b, boolean isTurnLeft) {
+		
+	}
+	
+}
