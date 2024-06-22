@@ -6,8 +6,10 @@ This is a project of group 19 for our OOP mid-term assignment. Our groups contai
 - Lê Hoàng Huy 20225976
 - Trần Việt Anh 20226012
 
-##Introduction
+## Introduction
+
 Our project is a popular children's game called Mandarin Square Capturing. Mandarin square capturing, also known as Ô ăn quan in Vietnamese, is a fascinating traditional children’s board game with origins dating back centuries. Beyond its simple rules and materials, the game offers a surprising depth of strategy, requiring players to carefully plan their moves to capture their opponent’s pieces and ultimately achieve victory. With this project we have implemented core principles of OOP and have spent upwards of 100 hours into creating this game for you to enjoy
+
 ## Configuration
 
 We are currently using this configuration to run the project
