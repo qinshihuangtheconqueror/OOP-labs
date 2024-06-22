@@ -816,7 +816,7 @@ public class Menu extends Application{
         CitizenSquare CS10 = new CitizenSquare(10, 5);
         CitizenSquare CS11 = new CitizenSquare(11, 5);
 
-        MandarinSquare MQ0=  new MandarinSquare(0, 0, false);
+        MandarinSquare MQ0=  new MandarinSquare(0, 0, true);
         MandarinSquare MQ6=  new MandarinSquare(6, 0, true);
         squares = new ArrayList<BoardSquare>();
         squares.add(MQ0);
